@@ -385,7 +385,7 @@ public class Gui extends Application {
             }
         } catch (StringIndexOutOfBoundsException e) {
 
-            System.out.println("А вот ХУЙ ");
+
         }catch (Exception e){
 
         }
@@ -405,7 +405,7 @@ public class Gui extends Application {
                 + taskClSr.getMessage());
     }
 
-
+//Функция по закраске подпитых квадратиков
     public static void workWithMyField(int x, int y) {
         if (Gui.rectMY[x + (y * 10)].getFill() == Color.BLUE) {
         Gui.rectMY[x + (y * 10)].privateShip.impairment();

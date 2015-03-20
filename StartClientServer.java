@@ -146,7 +146,6 @@ public class StartClientServer extends Task {
 
             System.out.println("Наши позиции атакованы " + dX + "  " + dY);
             SendingResultOfFire.sendResult(dX, dY);
-            //SendingResultOfFire.workWithMyField(dX, dY);
 
         } else if (line.charAt(0) == '!') {
             System.out.print("Прислан результат нашей атаки ");

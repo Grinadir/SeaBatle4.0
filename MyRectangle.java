@@ -9,7 +9,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import sample.Gui;
 
 public class MyRectangle extends Rectangle {
 
@@ -21,16 +20,14 @@ public class MyRectangle extends Rectangle {
     * Рефактринг сделаю позже
     */
 
+    static Ship[] shipSingle = new Ship[5];
+    static Ship[] shipDouble = new Ship[4];
+    static Ship[] shipTriple = new Ship[3];
+    static Ship shipQuadruple = new Ship(4);
     int x;
     int y;
     int veto = 0;
     Ship privateShip;
-    static Ship[] shipSingle = new Ship[5];
-    static Ship[] shipDouble = new Ship[4];
-    static Ship[] shipTriple = new Ship[3];
-
-    static Ship shipQuadruple= new Ship(4);
-
 
 
     public MyRectangle(double width, double height, int e) {
@@ -152,7 +149,7 @@ public class MyRectangle extends Rectangle {
     //Функции создания кораблей
     private void makeSingleShip() {
         shipSingle[Gui.oneAmount] = new Ship(1);
-        privateShip=shipSingle[Gui.oneAmount];
+        privateShip = shipSingle[Gui.oneAmount];
 
         if (getFill() == Color.GREEN) {
 
@@ -164,18 +161,19 @@ public class MyRectangle extends Rectangle {
         } else {
             FunctionsOfMarkedByDifferntColor.marketGreen(x, y);
             setFill(Color.GREEN);
-            privateShip=null;
-            shipSingle[Gui.oneAmount]=null;
+            privateShip = null;
+            shipSingle[Gui.oneAmount] = null;
             Gui.oneAmount++;
         }
         ;
     }
 
     private void makeDoubleShipForThree() {
-        shipDouble[Gui.twoAmount] = new Ship(2);
-        privateShip=shipDouble[Gui.twoAmount];
-        if (Gui.count2 == 0) {
 
+
+        if (Gui.count2 == 0) {
+            shipDouble[Gui.twoAmount] = new Ship(2);
+            privateShip = shipDouble[Gui.twoAmount];
             shipDouble[Gui.twoAmount].setX1(x);
             shipDouble[Gui.twoAmount].setY1(y);
 
@@ -187,6 +185,7 @@ public class MyRectangle extends Rectangle {
                 && Gui.count2 != 0
                 && (Gui.saveX == x + 1 || Gui.saveY == y + 1
                 || Gui.saveX == x - 1 || Gui.saveY == y - 1)) {
+            privateShip = shipDouble[Gui.twoAmount];
             shipDouble[Gui.twoAmount].setX2(x);
             shipDouble[Gui.twoAmount].setY2(y);
 
@@ -211,8 +210,8 @@ public class MyRectangle extends Rectangle {
 
 
         if (Gui.count3 == 0) {
-            privateShip = shipTriple[Gui.threeAmount];
             shipTriple[Gui.threeAmount] = new Ship(3);
+            privateShip = shipTriple[Gui.threeAmount];
             shipTriple[Gui.threeAmount].setX1(x);
             shipTriple[Gui.threeAmount].setY1(y);
             Gui.saveX = x;
@@ -224,6 +223,7 @@ public class MyRectangle extends Rectangle {
                 && (Gui.saveX == x + 1 || Gui.saveY == y + 1
                 || Gui.saveX == x - 1 || Gui.saveY == y - 1)
                 && Gui.threeAmount != 0) {
+            privateShip = shipTriple[Gui.threeAmount];
             shipTriple[Gui.threeAmount].setX2(x);
             shipTriple[Gui.threeAmount].setY2(y);
             setFill(Color.BLUE);
@@ -235,8 +235,10 @@ public class MyRectangle extends Rectangle {
         } else if ((Gui.saveX == x || Gui.saveY == y) && Gui.count3 == 2
                 && Gui.threeAmount != 0) {
 
+
             if (Gui.saveX1 == x
                     && (Gui.saveY1 == y + 1 || Gui.saveY1 == y - 1)) {
+                privateShip = shipTriple[Gui.threeAmount];
                 setFill(Color.BLUE);
                 shipTriple[Gui.threeAmount].setX3(x);
                 shipTriple[Gui.threeAmount].setY3(y);
@@ -250,6 +252,7 @@ public class MyRectangle extends Rectangle {
             } else if (Gui.saveY == y
                     && (Gui.saveX1 == x + 1 || Gui.saveX1 == x - 1)
                     && Gui.threeAmount != 0) {
+                privateShip = shipTriple[Gui.threeAmount];
                 setFill(Color.BLUE);
                 shipTriple[Gui.threeAmount].setX3(x);
                 shipTriple[Gui.threeAmount].setY3(y);
