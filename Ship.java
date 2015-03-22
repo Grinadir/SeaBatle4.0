@@ -5,14 +5,14 @@ package sample;
  */
 public class Ship {
     boolean afloat;
-    private int x1;
-    private int x2;
-    private int x3;
-    private int x4;
-    private int y1;
-    private int y2;
-    private int y3;
-    private int y4;
+    private int x1=400;
+    private int x2=400;
+    private int x3=400;
+    private int x4=400;
+    private int y1=400;
+    private int y2=400;
+    private int y3=400;
+    private int y4=400;
     private int countOfAliveRect;
 
     public Ship(int i) {

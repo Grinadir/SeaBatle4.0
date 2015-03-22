@@ -25,15 +25,6 @@ import java.io.IOException;
 
 public class Gui extends Application {
 
-    /*
-    *Класс GUI
-    *Все постраение описывается в JAVA коде.
-    *Файл FXML не используется
-    *Изначально создан в Eclipse
-    */
-    static Object tt = new JFXPanel();
-
-
     static public String line = " ";
     public static MyRectangle[] rectMY = new MyRectangle[100];
     public static EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
@@ -43,8 +34,13 @@ public class Gui extends Application {
     public static int saveY1;
     public static int saveX2;
     public static int saveY2;
-
-
+    /*
+    *Класс GUI
+    *Все постраение описывается в JAVA коде.
+    *Файл FXML не используется
+    *Изначально создан в Eclipse
+    */
+    static Object tt = new JFXPanel();
     static TextArea commonChat = new TextArea();
     static TextArea sendingMessage = new TextArea();
     static Button bStart = new Button("Start");
@@ -83,6 +79,72 @@ public class Gui extends Application {
 
     }
 
+    //Функция по закраске подпитых квадратиков
+    public static void workWithMyField(int x, int y) {
+        if (Gui.rectMY[x + (y * 10)].getFill() == Color.BLUE) {
+            Gui.rectMY[x + (y * 10)].privateShip.impairment();
+            System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (Gui.rectMY[x + (y * 10)].privateShip.isValidShip()));
+
+            if (Gui.rectMY[x + (y * 10)].privateShip.isValidShip()) {
+                Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE);
+                System.out.println("Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE); " + (x + (y * 10)));
+
+            } else if (!(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())) {
+
+                Gui.rectMY[x + (y * 10)].setFill(Color.BLACK);
+
+                int lX = Gui.rectMY[x + (y * 10)].privateShip.getX1();
+                int lY = Gui.rectMY[x + (y * 10)].privateShip.getY1();
+                if(lX+lY<=18) {
+                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                }
+                lX = Gui.rectMY[x + (y * 10)].privateShip.getX2();
+                lY = Gui.rectMY[x + (y * 10)].privateShip.getY2();
+                if(lX+lY<=18) {
+                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                }
+                lX = Gui.rectMY[x + (y * 10)].privateShip.getX3();
+                lY = Gui.rectMY[x + (y * 10)].privateShip.getY3();
+                if(lX+lY<=18) {
+                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                }
+                lX = Gui.rectMY[x + (y * 10)].privateShip.getX4();
+                lY = Gui.rectMY[x + (y * 10)].privateShip.getY4();
+                if(lX+lY<=18) {
+                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                }
+
+
+
+            }
+        }
+
+
+    }
+
+    public static void workWithEnemyField(int x, int y, String str, int ind1, int ind2, int ind3, int ind4) {
+        if (str.equals("DAM")) {
+            Gui.rectENEMY[x + (y * 10)].setFill(Color.ORANGE);
+        } else if (str.equals("DESTROY")) {
+            Gui.rectENEMY[x + (y * 10)].setFill(Color.BLACK);
+            if (ind1 != 4400) {
+                Gui.rectENEMY[ind1].setFill(Color.BLACK);
+            }
+            if (ind2 != 4400) {
+                Gui.rectENEMY[ind2].setFill(Color.BLACK);
+            }
+            if (ind3 != 4400) {
+                Gui.rectENEMY[ind3].setFill(Color.BLACK);
+            }
+            if (ind4 != 4400) {
+                Gui.rectENEMY[ind4].setFill(Color.BLACK);
+            }
+        } else if (str.equals("MISS")) {
+            Gui.rectENEMY[x + (y * 10)].setFill(Color.YELLOW);
+        }
+
+
+    }
 
     @Override
     public void start(Stage primaryStage) throws IOException,
@@ -368,69 +430,56 @@ public class Gui extends Application {
 
         try {
             System.out.println("StartClientServer.line.toString().charAt(0) " + StartClientServer.line.toString().charAt(0));
-            if (StartClientServer.line.toString().charAt(0) != '!') {
+            if (StartClientServer.line.toString().charAt(0) != '!' && StartClientServer.line.toString().charAt(0) != '#') {
                 setTextInCommonChat(taskClSr);
-                //System.out.println("taskClSr.messageProperty().toString().charAt(0) " + taskClSr.messageProperty().toString());
+
             }
             if (StartClientServer.line.toString().charAt(0) == '#') {
-                //markAquamarineRect(taskClSr);
-                //System.out.println("n " + n);
+                setTextInCommonChat(taskClSr);
+
                 System.out.println("Проверка");
                 int dX = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("$") + 1, taskClSr.getMessage().indexOf("%")));
                 int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
-                //SendingResultOfFire.sendResult(dX, dY);
+                //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
                 workWithMyField(dX, dY);
+                SendingResultOfFire.sendResult(dX, dY);
 
+            }
+            if (StartClientServer.line.toString().charAt(0) == '!') {
+
+                setTextInCommonChat(taskClSr);
+
+                int index1=400;
+                int index2=440;
+                int index3=440;
+                int index4=440;
+
+                String result;
+                int dX = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("$") + 1, taskClSr.getMessage().indexOf("%")));
+                int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
+                result = taskClSr.getMessage().toString().substring(taskClSr.getMessage().indexOf("*") + 1, taskClSr.getMessage().indexOf(";"));
+                if(result.equals("DESTROY")) {
+                    index1 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf(";") + 1, taskClSr.getMessage().indexOf("&")));
+                    index2 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("&") + 1, taskClSr.getMessage().indexOf("@")));
+                    index3 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("@") + 1, taskClSr.getMessage().indexOf("#")));
+                    index4 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("#") + 1, taskClSr.getMessage().indexOf("~")));
+                }
+                System.out.println("--------------------result: " + result);
+
+                workWithEnemyField(dX, dY, result, index1, index2, index3, index4);
 
             }
         } catch (StringIndexOutOfBoundsException e) {
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
-    }
-
-    private void markAquamarineRect(StartClientServer taskClSr) {
-        //System.out.println("GUI list");
-
-        int dX = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("$") + 1, taskClSr.getMessage().indexOf("%")));
-        int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
-        int n = dX + (dY * 10);
-        workWithMyField(dX, dY);
     }
 
     private void setTextInCommonChat(StartClientServer taskClSr) {
         commonChat.setText(commonChat.getText() + "\n"
                 + taskClSr.getMessage());
-    }
-
-//Функция по закраске подпитых квадратиков
-    public static void workWithMyField(int x, int y) {
-        if (Gui.rectMY[x + (y * 10)].getFill() == Color.BLUE) {
-        Gui.rectMY[x + (y * 10)].privateShip.impairment();
-        System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())"+(Gui.rectMY[x + (y * 10)].privateShip.isValidShip()));
-
-        if(Gui.rectMY[x + (y * 10)].privateShip.isValidShip()){
-            Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE);
-            System.out.println("Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE); "+(x+(y*10)));
-        }else if(!(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())){
-
-            int lX=Gui.rectMY[x + (y * 10)].privateShip.getX1();
-            int lY=Gui.rectMY[x + (y * 10)].privateShip.getY1();
-            Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
-            lX=Gui.rectMY[x + (y * 10)].privateShip.getX2();
-            lY=Gui.rectMY[x + (y * 10)].privateShip.getY2();
-            Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
-            lX=Gui.rectMY[x + (y * 10)].privateShip.getX3();
-            lY=Gui.rectMY[x + (y * 10)].privateShip.getY3();
-            Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
-            lX=Gui.rectMY[x + (y * 10)].privateShip.getX4();
-            lY=Gui.rectMY[x + (y * 10)].privateShip.getY4();
-            Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);}}
-
-
-
     }
 
 
