@@ -28,12 +28,7 @@ public class Gui extends Application {
     static public String line = " ";
     public static MyRectangle[] rectMY = new MyRectangle[100];
     public static EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
-    public static int saveX;
-    public static int saveY;
-    public static int saveX1;
-    public static int saveY1;
-    public static int saveX2;
-    public static int saveY2;
+
     /*
     *Класс GUI
     *Все постраение описывается в JAVA коде.
@@ -54,16 +49,13 @@ public class Gui extends Application {
     static RadioButton three = new RadioButton("Three 2 pcs.");
     static RadioButton two = new RadioButton("Two 3 pcs.");
     static RadioButton one = new RadioButton("One 4 pcs.");
-    static int count2 = 0;
-    static int count3 = 0;
-    static int count4 = 0;
+
     static boolean forCircle = false;
-    static int oneAmount = 4;
-    static int twoAmount = 3;
-    static int threeAmount = 2;
-    static int fourAmount = 1;
+
 
     static boolean followStep;
+
+     static StartClientServer GtaskClSr;
 
     GridPane mySeaField = new GridPane();
     GridPane myPane = new GridPane();
@@ -82,34 +74,34 @@ public class Gui extends Application {
     //Функция по закраске подпитых квадратиков
     public static void workWithMyField(int x, int y) {
         if (Gui.rectMY[x + (y * 10)].getFill() == Color.BLUE) {
-            Gui.rectMY[x + (y * 10)].privateShip.impairment();
-            System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (Gui.rectMY[x + (y * 10)].privateShip.isValidShip()));
+            Gui.rectMY[x + (y * 10)].getPrivateShip().impairment();
+            System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (Gui.rectMY[x + (y * 10)].getPrivateShip().isValidShip()));
 
-            if (Gui.rectMY[x + (y * 10)].privateShip.isValidShip()) {
+            if (Gui.rectMY[x + (y * 10)].getPrivateShip().isValidShip()) {
                 Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE);
                 System.out.println("Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE); " + (x + (y * 10)));
 
-            } else if (!(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())) {
+            } else if (!(Gui.rectMY[x + (y * 10)].getPrivateShip().isValidShip())) {
 
                 Gui.rectMY[x + (y * 10)].setFill(Color.BLACK);
 
-                int lX = Gui.rectMY[x + (y * 10)].privateShip.getX1();
-                int lY = Gui.rectMY[x + (y * 10)].privateShip.getY1();
+                int lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX1();
+                int lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY1();
                 if(lX+lY<=18) {
                     Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
-                lX = Gui.rectMY[x + (y * 10)].privateShip.getX2();
-                lY = Gui.rectMY[x + (y * 10)].privateShip.getY2();
+                lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX2();
+                lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY2();
                 if(lX+lY<=18) {
                     Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
-                lX = Gui.rectMY[x + (y * 10)].privateShip.getX3();
-                lY = Gui.rectMY[x + (y * 10)].privateShip.getY3();
+                lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX3();
+                lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY3();
                 if(lX+lY<=18) {
                     Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
-                lX = Gui.rectMY[x + (y * 10)].privateShip.getX4();
-                lY = Gui.rectMY[x + (y * 10)].privateShip.getY4();
+                lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX4();
+                lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY4();
                 if(lX+lY<=18) {
                     Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
@@ -238,6 +230,8 @@ public class Gui extends Application {
             public void handle(Event event) {
                 // Создание класса Task, существующий для работы с JavaFX
                 final StartClientServer taskClSr = new StartClientServer();
+                GtaskClSr=taskClSr;
+                System.out.println("GtaskClSr "+GtaskClSr.getValue());
                 // Делаем слушателя на текстовое свойство
 
                 taskClSr.messageProperty().addListener(
@@ -270,7 +264,8 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate();
+                System.out.println("GtaskClSr "+GtaskClSr.getValue());
+                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(GtaskClSr);
 
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
@@ -307,7 +302,8 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                final SendingMessage sendMess = new SendingMessage();
+                System.out.println("GtaskClSr "+GtaskClSr.getValue());
+                final SendingMessage sendMess = new SendingMessage(GtaskClSr);
 
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
@@ -402,8 +398,8 @@ public class Gui extends Application {
         rectENEMY[i].setFill(Color.GREEN);
 
         int numLine = (int) (10 - (10 - i * 0.1));
-        rectENEMY[i].x = (i - numLine * 10);
-        rectENEMY[i].y = numLine;
+        rectENEMY[i].setXenemyRect(i - numLine * 10);
+        rectENEMY[i].setYenemyRect(numLine);
 
 
         enemySeaField.add(rectENEMY[i], (i - numLine * 10), numLine);
@@ -419,8 +415,8 @@ public class Gui extends Application {
         int numLine = (int) (10 - (10 - i * 0.1));
 
 
-        rectMY[i].x = (i - numLine * 10);
-        rectMY[i].y = numLine;
+        rectMY[i].setXinMyRect(i - numLine * 10);
+        rectMY[i].setYinMyRect(numLine);
 
         mySeaField.add(rectMY[i], (i - numLine * 10), numLine);
     }
@@ -442,7 +438,7 @@ public class Gui extends Application {
                 int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
                 //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
                 workWithMyField(dX, dY);
-                SendingResultOfFire.sendResult(dX, dY);
+                SendingResultOfFire.sendResult(GtaskClSr, dX, dY);
 
             }
             if (StartClientServer.line.toString().charAt(0) == '!') {
@@ -480,6 +476,11 @@ public class Gui extends Application {
     private void setTextInCommonChat(StartClientServer taskClSr) {
         commonChat.setText(commonChat.getText() + "\n"
                 + taskClSr.getMessage());
+    }
+
+    //Геттеры
+    public StartClientServer getGtaskClSr(){
+        return GtaskClSr;
     }
 
 

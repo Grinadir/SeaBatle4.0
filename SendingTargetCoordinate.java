@@ -18,16 +18,23 @@ public class SendingTargetCoordinate extends Task {
     *запускаемый из GUI
     *нужен для того, чтобы передовать координаты атаки
     */
+    private StartClientServer SCS;
 
-    DataOutputStream outServer = new DataOutputStream(Server.outS);
-    DataOutputStream outClient = new DataOutputStream(Client.outC);
+    public SendingTargetCoordinate(StartClientServer SCS){
+        this.SCS=SCS;
+    }
+
+    DataOutputStream outServer = new DataOutputStream(Gui.GtaskClSr.getSr().getOutS());
+    DataOutputStream outClient = new DataOutputStream(Gui.GtaskClSr.getCl().getOutC());
     String line;
     Date currentDate = new Date();
 
+
+
     @Override
     protected Object call() throws Exception {
-        if (StartClientServer.sr.serS != null
-                && !StartClientServer.sr.serS.isClosed()) {
+        if (SCS.getSr().getSerS()!= null
+                && !SCS.getSr().getSerS().isClosed()) {
 
 
             sendStrikeCoord(outServer, "server");
@@ -42,11 +49,11 @@ public class SendingTargetCoordinate extends Task {
         try {
             updateMessage("#attack of "+s+" (I AM)" + "(" + currentDate + ")"
                     + " attacked coordinates: " + "("
-                    + "$" + EnemyRectangle.targetX + "%" + EnemyRectangle.targetY
+                    + "$" + EnemyRectangle.getTargetX() + "%" + EnemyRectangle.getTargetY()
                     + "*;");
             out.writeUTF("#attack of "+s+ " (" + currentDate + ")"
                     + " attacked coordinates: " + "("
-                    + "$" + EnemyRectangle.targetX + "%" + EnemyRectangle.targetY
+                    + "$" + EnemyRectangle.getTargetX() + "%" + EnemyRectangle.getTargetY()
                     + "*;");
 
             updateMessage("");

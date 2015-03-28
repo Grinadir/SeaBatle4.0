@@ -11,12 +11,12 @@ import java.io.OutputStream;
 import java.net.*;
 
 public class Server {
-    public static InputStream inS;
-    public static OutputStream outS;
-    InetAddress ip;
-    ServerSocket serS;
-    Socket s;
-    int port = 8080;
+    private static InputStream inS;
+    private static OutputStream outS;
+    private InetAddress ip;
+    private ServerSocket serS;
+    private Socket s;
+    private int port = 8080;
 
     public Server() throws IOException {
         ip = InetAddress.getLocalHost();
@@ -34,8 +34,8 @@ public class Server {
             s = serS.accept();
             System.out.println("Пришел клиент!!");
 
-            Server.inS = s.getInputStream();
-            Server.outS = s.getOutputStream();
+            inS = s.getInputStream();
+            outS = s.getOutputStream();
         } catch (SocketTimeoutException e) {
             serS.close();
 
@@ -44,4 +44,19 @@ public class Server {
         }
 
     }
+
+    //Геттеры
+    public ServerSocket getSerS(){
+        return serS;
+    }
+    public InputStream getInS(){
+        return inS;
+    }
+
+    public OutputStream getOutS(){
+        return outS;
+    }
+
+
+
 }

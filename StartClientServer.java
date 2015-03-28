@@ -22,11 +22,12 @@ public class StartClientServer extends Task {
     */
 
 
+
+    private static Server sr;
+    private static Client cl;
+    static String line;
     static public int dX;
     static public int dY;
-    static Server sr;
-    static Client cl;
-    static String line;
 
 
     @Override
@@ -34,7 +35,9 @@ public class StartClientServer extends Task {
 
         updateMessage("Пуск клиент сервера");
         sr = new Server();
-        cl = new Client();
+        cl = new Client(this);
+
+
         String mess = "";
 
         tryFuctionToConnection(mess);
@@ -58,7 +61,7 @@ public class StartClientServer extends Task {
     private void systemOfIncomingMessage() throws IOException {
         try {
             System.out.println("Запуск входящего потока сервера");
-            DataInputStream inServer = new DataInputStream(Server.inS);
+            DataInputStream inServer = new DataInputStream(sr.getInS());
 
             while (true) {
                 // Ожидаем пока клиент пришлет строку текста.
@@ -67,7 +70,7 @@ public class StartClientServer extends Task {
 
         } catch (NullPointerException e) {
             System.out.println("Срыв входящего потока сервера");
-            DataInputStream inClient = new DataInputStream(Client.inC);
+            DataInputStream inClient = new DataInputStream(cl.getInC());
 
             while (true) {
 
@@ -88,7 +91,7 @@ public class StartClientServer extends Task {
             sr.serverWorking();
             //mess = "После первого выполнения sr.serSv=" + sr.serS + "\n";
             updateMessage(mess);
-            System.out.print("После первого выполнения sr.serSv=" + sr.serS
+            System.out.print("После первого выполнения sr.serSv=" + sr.getSerS()
                     + "\n");
             try {
                 //mess = "После первого выполнения sr.serSv.isClosed()="
@@ -96,12 +99,12 @@ public class StartClientServer extends Task {
                 updateMessage(mess);
                 System.out
                         .print("После первого выполнения sr.serSv.isClosed()="
-                                + sr.serS.isClosed() + "\n");
+                                + sr.getSerS().isClosed() + "\n");
             } catch (NullPointerException e) {
 
             }
 
-            if ((sr.serS != null && sr.serS.isClosed()) || sr.serS == null) {
+            if ((sr.getSerS() != null && sr.getSerS().isClosed()) || sr.getSerS() == null) {
                 try {
                     System.out.println("Попытка создать клиент");
                     cl.clientWorking();
@@ -115,18 +118,18 @@ public class StartClientServer extends Task {
 
             System.out.println("Прошел цикл, Итоги:");
 
-            System.out.println("sr.serSv: " + sr.serS);
+            System.out.println("sr.serSv: " + sr.getSerS());
 
             try {
                 System.out.println("sr.serS.isClosed()"
-                        + sr.serS.isClosed());
+                        + sr.getSerS().isClosed());
             } catch (NullPointerException e) {
-                System.out.println("catch sr.serS=" + sr.serS + "\n");
+                System.out.println("catch sr.serS=" + sr.getSerS() + "\n");
             }
-            System.out.println("cl.clS: " + cl.clS);
+            System.out.println("cl.clS: " + cl.getClS());
 
 
-        } while (sr.serS != null && sr.serS.isClosed() && cl.clS == null);
+        } while (sr.getSerS() != null && sr.getSerS().isClosed() && cl.getClS() == null);
     }
 
     private void inputMessageHandler(DataInputStream in, String s) throws IOException {
@@ -145,7 +148,7 @@ public class StartClientServer extends Task {
             dY = Integer.parseInt(line.substring(line.indexOf("%") + 1, line.indexOf("*")));
 
             System.out.println("Наши позиции атакованы " + dX + "  " + dY);
-            SendingResultOfFire.sendResult(dX, dY);
+            //SendingResultOfFire.sendResult(Gui. ,dX, dY);
 
         } else if (line.charAt(0) == '!') {
             System.out.print("Прислан результат нашей атаки ");
@@ -164,13 +167,24 @@ public class StartClientServer extends Task {
 
 
     private void setFirstfollowStep() {
-        if (sr.serS != null&& sr.serS.isClosed()){
+        if (sr.getSerS() != null&& sr.getSerS().isClosed()){
 
             Gui.followStep=true;
 
         }
-        else if(cl.clS != null){
+        else if(cl.getClS() != null){
             Gui.followStep=false;
         }
     }
+
+    //Геттеры
+
+    public Server getSr(){
+        return sr;
+    }
+
+    public Client getCl(){
+        return cl;
+    }
+
 }

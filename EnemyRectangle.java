@@ -10,10 +10,10 @@ import javafx.event.EventHandler;
 import javafx.scene.shape.Rectangle;
 
 public class EnemyRectangle extends Rectangle {
-    static int targetX;
-    static int targetY;
-    int x;
-    int y;
+    private static int targetX;
+    private static int targetY;
+    private int x;
+    private int y;
 
 
     public EnemyRectangle(double width, double height, int e) {
@@ -40,5 +40,25 @@ public class EnemyRectangle extends Rectangle {
         });
 
     }
+    //Геттеры и сеттеры
+
+    public void setXenemyRect(int x){
+        this.x=x;
+    }
+
+    public void setYenemyRect(int y){
+        this.y=y;
+
+    }
+
+    public static int getTargetX(){
+        return targetX;
+    }
+
+    public static int getTargetY(){
+        return targetY;
+    }
+
+
 }
 

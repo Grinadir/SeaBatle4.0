@@ -18,24 +18,26 @@ public class Client {
     * *Изначально создан в Eclipse
     */
 
-    static public InputStream inC;
-    static public OutputStream outC;
-    InetAddress ip;
-    Socket clS;
-    int port = 8080;
+    private static InputStream inC;
+    private static OutputStream outC;
+    private InetAddress ip;
+    private Socket clS;
+    private int port = 8080;
+    private StartClientServer SCS;
 
     //static public OutputStream infoOutputC;
 
-    public Client() throws IOException {
+    public Client(StartClientServer SCS) throws IOException {
 
         ip = InetAddress.getByName("192.168.100.5");
+        this.SCS=SCS;
 
 
     }
 
     public void clientWorking() throws IOException, InterruptedException {
         System.out.println("Attetion! clientWorking");
-        DataInputStream in = new DataInputStream(Server.inS);
+        DataInputStream in = new DataInputStream(SCS.getSr().getInS());
         clS = new Socket(ip, port);
         inC = clS.getInputStream();
         outC = clS.getOutputStream();
@@ -48,6 +50,18 @@ public class Client {
             clS.close();
             System.out.println("Выполнена команда close, cls.isClose: " + clS.isClosed());
         }
+    }
+    //Геттеры
+    public InputStream getInC(){
+        return inC;
+    }
+
+    public OutputStream getOutC(){
+        return outC;
+    }
+
+    public Socket getClS(){
+        return clS;
     }
 
 }

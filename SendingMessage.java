@@ -20,8 +20,15 @@ public class SendingMessage extends Task {
     *Изначально создан в Eclipse
     */
 
-    String line;
-    Date currentDate = new Date();
+    private String line;
+    private Date currentDate = new Date();
+    private StartClientServer SCS;
+
+
+    public SendingMessage(StartClientServer SCS){
+        this.SCS=SCS;
+    }
+
 
     @Override
     protected Void call() throws Exception {
@@ -40,12 +47,13 @@ public class SendingMessage extends Task {
 
 //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
-        if (StartClientServer.sr.serS != null && !StartClientServer.sr.serS.isClosed()) {
+        if (SCS.getSr().getSerS() != null && !SCS.getSr().getSerS().isClosed()) {
 
-            DataOutputStream out = new DataOutputStream(Server.outS);
+
+            DataOutputStream out = new DataOutputStream(SCS.getSr().getOutS());
             outputAndUpdateMess(out, "Server");
         } else {
-            DataOutputStream out = new DataOutputStream(Client.outC);
+            DataOutputStream out = new DataOutputStream(SCS.getCl().getOutC());
 
                 outputAndUpdateMess(out, "Client");
 

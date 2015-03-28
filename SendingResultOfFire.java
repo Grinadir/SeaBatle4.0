@@ -18,23 +18,22 @@ public class SendingResultOfFire {
     */
 
 
-    static Date currentDate = new Date();
+    private static Date currentDate = new Date();
 
+    public static void sendResult(StartClientServer SCS, int x, int y) {
 
-    static public void sendResult(int x, int y) {
-
-        if (StartClientServer.sr.serS != null
-                && !StartClientServer.sr.serS.isClosed()) {
+        if (SCS.getSr().getSerS() != null
+                && !SCS.getSr().getSerS().isClosed()) {
 
             //workWithMyField(x, y);
 
-            DataOutputStream out = new DataOutputStream(Server.outS);
+            DataOutputStream out = new DataOutputStream(SCS.getSr().getOutS());
             sendResultOne(out, "Server");
         } else {
 
             //workWithMyField(x, y);
 
-            DataOutputStream out = new DataOutputStream(Client.outC);
+            DataOutputStream out = new DataOutputStream(SCS.getCl().getOutC());
             sendResultOne(out, "Client");
 
 
@@ -54,17 +53,17 @@ public class SendingResultOfFire {
                         + "*DAM;");
             } else if (Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getFill() == Color.BLACK) {
                 System.out.println("_____________Заход");
-                int index1=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getX1()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getY1());
+                int index1=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX1()+
+                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY1());
 
-                int index2=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getX2()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getY2());
+                int index2=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX2()+
+                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY2());
 
-                int index3=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getX3()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getY3());
+                int index3=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX3()+
+                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY3());
 
-                int index4=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getX4()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].privateShip.getY4());
+                int index4=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX4()+
+                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY4());
 
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("

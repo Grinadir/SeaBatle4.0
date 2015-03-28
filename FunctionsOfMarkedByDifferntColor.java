@@ -29,15 +29,16 @@ public class FunctionsOfMarkedByDifferntColor {
 
     public static void setVeto(int s) {
 
-        if (Gui.rectMY[s].veto == 1) {
+        if (Gui.rectMY[s].getVeto() == 1) {
 
             Gui.rectMY[s].setFill(Color.GREEN);
-            Gui.rectMY[s].veto--;
+            Gui.rectMY[s].setVeto(Gui.rectMY[s].getVeto()-1);
+
 
         } else {
 
 
-            Gui.rectMY[s].veto--;
+            Gui.rectMY[s].setVeto(Gui.rectMY[s].getVeto()-1);
         }
     }
 
@@ -51,36 +52,36 @@ public class FunctionsOfMarkedByDifferntColor {
                     setColorYellowRect(i + 1);
                     setColorYellowRect(i + 10);
                     setColorYellowRect(i + 11);
-                    Gui.rectMY[i + 1].veto++;
-                    Gui.rectMY[i + 10].veto++;
-                    Gui.rectMY[i + 11].veto++;
+                    Gui.rectMY[i + 1].setVeto(Gui.rectMY[i+1].getVeto()+1);
+                    Gui.rectMY[i + 10].setVeto(Gui.rectMY[i+10].getVeto()+1);
+                    Gui.rectMY[i + 11].setVeto(Gui.rectMY[i+1].getVeto()+11);
 
 
                 } else if (x == 0 && y == 9) {
                     setColorYellowRect(i + 1);
                     setColorYellowRect(i - 10);
                     setColorYellowRect(i - 9);
-                    Gui.rectMY[i + 1].veto++;
-                    Gui.rectMY[i - 10].veto++;
-                    Gui.rectMY[i - 9].veto++;
+                    Gui.rectMY[i + 1].setVeto(Gui.rectMY[i+1].getVeto()+1);
+                    Gui.rectMY[i - 10].setVeto(Gui.rectMY[i-10].getVeto()+1);
+                    Gui.rectMY[i - 9].setVeto(Gui.rectMY[i-9].getVeto()+1);
 
                 } else if (x == 9 && y == 9) {
                     setColorYellowRect(i - 1);
                     setColorYellowRect(i - 10);
                     setColorYellowRect(i - 11);
 
-                    Gui.rectMY[i - 1].veto++;
-                    Gui.rectMY[i - 10].veto++;
-                    Gui.rectMY[i - 11].veto++;
+                    Gui.rectMY[i - 1].setVeto(Gui.rectMY[i-1].getVeto()+1);
+                    Gui.rectMY[i - 10].setVeto(Gui.rectMY[i-10].getVeto()+1);
+                    Gui.rectMY[i - 11].setVeto(Gui.rectMY[i-11].getVeto()+1);
 
                 } else if (x == 9 && y == 0) {
                     setColorYellowRect(i - 1);
                     setColorYellowRect(i + 10);
                     setColorYellowRect(i + 9);
 
-                    Gui.rectMY[i - 1].veto++;
-                    Gui.rectMY[i + 10].veto++;
-                    Gui.rectMY[i + 9].veto++;
+                    Gui.rectMY[i - 1].setVeto(Gui.rectMY[i-1].getVeto()+1);
+                    Gui.rectMY[i + 10].setVeto(Gui.rectMY[i+10].getVeto()+1);
+                    Gui.rectMY[i + 9].setVeto(Gui.rectMY[i+9].getVeto()+1);
 
                 } else if (x == 0) {
                     setColorYellowRect(i + 1);
@@ -89,11 +90,11 @@ public class FunctionsOfMarkedByDifferntColor {
                     setColorYellowRect(i - 9);
                     setColorYellowRect(i + 11);
 
-                    Gui.rectMY[i + 1].veto++;
-                    Gui.rectMY[i + 10].veto++;
-                    Gui.rectMY[i - 10].veto++;
-                    Gui.rectMY[i - 9].veto++;
-                    Gui.rectMY[i + 11].veto++;
+                    Gui.rectMY[i + 1].setVeto(Gui.rectMY[i+1].getVeto()+1);
+                    Gui.rectMY[i + 10].setVeto(Gui.rectMY[i+10].getVeto()+1);
+                    Gui.rectMY[i - 10].setVeto(Gui.rectMY[i-10].getVeto()+1);
+                    Gui.rectMY[i - 9].setVeto(Gui.rectMY[i-9].getVeto()+1);
+                    Gui.rectMY[i + 11].setVeto(Gui.rectMY[i+11].getVeto()+1);
 
                 } else if (x == 9) {
                     setColorYellowRect(i - 1);
@@ -102,11 +103,11 @@ public class FunctionsOfMarkedByDifferntColor {
                     setColorYellowRect(i + 9);
                     setColorYellowRect(i - 11);
 
-                    Gui.rectMY[i - 1].veto++;
-                    Gui.rectMY[i + 10].veto++;
-                    Gui.rectMY[i - 10].veto++;
-                    Gui.rectMY[i + 9].veto++;
-                    Gui.rectMY[i - 11].veto++;
+                    Gui.rectMY[i - 1].setVeto(Gui.rectMY[i-1].getVeto()+1);
+                    Gui.rectMY[i + 10].setVeto(Gui.rectMY[i+10].getVeto()+1);
+                    Gui.rectMY[i - 10].setVeto(Gui.rectMY[i-10].getVeto()+1);
+                    Gui.rectMY[i + 9].setVeto(Gui.rectMY[i+9].getVeto()+1);
+                    Gui.rectMY[i - 11].setVeto(Gui.rectMY[i-11].getVeto()+1);
 
                 } else if (y == 0) {
                     setColorYellowRect(i - 1);
@@ -115,11 +116,11 @@ public class FunctionsOfMarkedByDifferntColor {
                     setColorYellowRect(i + 9);
                     setColorYellowRect(i + 11);
 
-                    Gui.rectMY[i - 1].veto++;
-                    Gui.rectMY[i + 1].veto++;
-                    Gui.rectMY[i + 10].veto++;
-                    Gui.rectMY[i + 9].veto++;
-                    Gui.rectMY[i + 11].veto++;
+                    Gui.rectMY[i - 1].setVeto(Gui.rectMY[i-1].getVeto()+1);
+                    Gui.rectMY[i + 1].setVeto(Gui.rectMY[i+1].getVeto()+1);
+                    Gui.rectMY[i + 10].setVeto(Gui.rectMY[i+10].getVeto()+1);
+                    Gui.rectMY[i + 9].setVeto(Gui.rectMY[i+9].getVeto()+1);
+                    Gui.rectMY[i + 11].setVeto(Gui.rectMY[i+11].getVeto()+1);
 
                 } else if (y == 9) {
                     setColorYellowRect(i - 1);
@@ -128,11 +129,11 @@ public class FunctionsOfMarkedByDifferntColor {
                     setColorYellowRect(i - 9);
                     setColorYellowRect(i - 11);
 
-                    Gui.rectMY[i - 1].veto++;
-                    Gui.rectMY[i + 1].veto++;
-                    Gui.rectMY[i - 10].veto++;
-                    Gui.rectMY[i - 9].veto++;
-                    Gui.rectMY[i - 11].veto++;
+                    Gui.rectMY[i - 1].setVeto(Gui.rectMY[i-1].getVeto()+1);
+                    Gui.rectMY[i + 1].setVeto(Gui.rectMY[i+1].getVeto()+1);
+                    Gui.rectMY[i - 10].setVeto(Gui.rectMY[i-10].getVeto()+1);
+                    Gui.rectMY[i - 9].setVeto(Gui.rectMY[i-9].getVeto()+1);
+                    Gui.rectMY[i - 11].setVeto(Gui.rectMY[i-11].getVeto()+1);
                 } else {
                     setColorYellowRect(i + 1);
                     setColorYellowRect(i - 1);
@@ -144,15 +145,15 @@ public class FunctionsOfMarkedByDifferntColor {
                     setColorYellowRect(i + 9);
                     setColorYellowRect(i - 9);
 
-                    Gui.rectMY[i + 1].veto++;
-                    Gui.rectMY[i - 1].veto++;
-                    Gui.rectMY[i + 10].veto++;
-                    Gui.rectMY[i - 10].veto++;
+                    Gui.rectMY[i + 1].setVeto(Gui.rectMY[i+1].getVeto()+1);
+                    Gui.rectMY[i - 1].setVeto(Gui.rectMY[i-1].getVeto()+1);
+                    Gui.rectMY[i + 10].setVeto(Gui.rectMY[i+10].getVeto()+1);
+                    Gui.rectMY[i - 10].setVeto(Gui.rectMY[i-10].getVeto()+1);
 
-                    Gui.rectMY[i + 11].veto++;
-                    Gui.rectMY[i - 11].veto++;
-                    Gui.rectMY[i + 9].veto++;
-                    Gui.rectMY[i - 9].veto++;
+                    Gui.rectMY[i + 11].setVeto(Gui.rectMY[i+11].getVeto()+1);
+                    Gui.rectMY[i - 11].setVeto(Gui.rectMY[i-11].getVeto()+1);
+                    Gui.rectMY[i + 9].setVeto(Gui.rectMY[i+9].getVeto()+1);
+                    Gui.rectMY[i - 9].setVeto(Gui.rectMY[i-9].getVeto()+1);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
 
