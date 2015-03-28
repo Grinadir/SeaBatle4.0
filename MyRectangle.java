@@ -20,26 +20,26 @@ public class MyRectangle extends Rectangle {
     * Рефактринг сделаю позже
     */
 
-    private static Ship[] shipSingle = new Ship[5];
-    private static Ship[] shipDouble = new Ship[4];
-    private static Ship[] shipTriple = new Ship[3];
-    private static Ship shipQuadruple = new Ship(4);
+    private static Ship[] shipSingle = new Ship[5];//Эту статику не могу убрать, так как она должна быть по логике
+    private static Ship[] shipDouble = new Ship[4];//Эту статику не могу убрать, так как она должна быть по логике
+    private static Ship[] shipTriple = new Ship[3];//Эту статику не могу убрать, так как она должна быть по логике
+    private static Ship shipQuadruple = new Ship(4);//Эту статику не могу убрать, так как она должна быть по логике
 
-    private static int count2 = 0;
-    private static int count3 = 0;
-    private static int count4 = 0;
+    private static int count2 = 0;//Эту статику не могу убрать, так как она должна быть по логике
+    private static int count3 = 0;//Эту статику не могу убрать, так как она должна быть по логике
+    private static int count4 = 0;//Эту статику не могу убрать, так как она должна быть по логике
 
-    private static int oneAmount = 4;
-    private static int twoAmount = 3;
-    private static int threeAmount = 2;
-    private static int fourAmount = 1;
+    private static int oneAmount = 4;//Эту статику не могу убрать, так как она должна быть по логике
+    private static int twoAmount = 3;//Эту статику не могу убрать, так как она должна быть по логике
+    private static int threeAmount = 2;//Эту статику не могу убрать, так как она должна быть по логике
+    private static int fourAmount = 1;//Эту статику не могу убрать, так как она должна быть по логике
 
-    private static int saveX;
-    private static int saveY;
-    public static int saveX1;
-    public static int saveY1;
-    public static int saveX2;
-    public static int saveY2;
+    private static int saveX;//Эту статику не могу убрать, так как она должна быть по логике
+    private static int saveY;//Эту статику не могу убрать, так как она должна быть по логике
+    public static int saveX1;//Эту статику не могу убрать, так как она должна быть по логике
+    public static int saveY1;//Эту статику не могу убрать, так как она должна быть по логике
+    public static int saveX2;//Эту статику не могу убрать, так как она должна быть по логике
+    public static int saveY2;//Эту статику не могу убрать, так как она должна быть по логике
 
     private int x;
     private int y;

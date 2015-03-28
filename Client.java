@@ -18,8 +18,8 @@ public class Client {
     * *Изначально создан в Eclipse
     */
 
-    private static InputStream inC;
-    private static OutputStream outC;
+    private InputStream inC;
+    private OutputStream outC;
     private InetAddress ip;
     private Socket clS;
     private int port = 8080;

@@ -11,8 +11,8 @@ import java.io.OutputStream;
 import java.net.*;
 
 public class Server {
-    private static InputStream inS;
-    private static OutputStream outS;
+    private InputStream inS;
+    private OutputStream outS;
     private InetAddress ip;
     private ServerSocket serS;
     private Socket s;

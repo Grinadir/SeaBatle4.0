@@ -23,9 +23,9 @@ public class StartClientServer extends Task {
 
 
 
-    private static Server sr;
-    private static Client cl;
-    static String line;
+    private static Server sr;//Эту статику пока не трогаю
+    private static Client cl;//Эту статику пока не трогаю
+    static String line;//Эту статику пока не трогаю
     static public int dX;
     static public int dY;
 
