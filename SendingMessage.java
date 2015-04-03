@@ -22,10 +22,10 @@ public class SendingMessage extends Task {
 
     private String line;
     private Date currentDate = new Date();
-    private StartClientServer SCS;
+    private clientServerConnector SCS;
 
 
-    public SendingMessage(StartClientServer SCS){
+    public SendingMessage(clientServerConnector SCS){
         this.SCS=SCS;
     }
 
@@ -66,11 +66,11 @@ public class SendingMessage extends Task {
             updateMessage(str+" " + "(" + currentDate + ")" + ":" + Gui.sendingMessage.getText());
             out.writeUTF(str+" " + "(" + currentDate + ")" + ":" + Gui.sendingMessage.getText());
 
-            updateMessage("");
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }
+
 
 }

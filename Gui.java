@@ -25,8 +25,8 @@ import java.io.IOException;
 
 public class Gui extends Application {
 
-    static public String line = " ";
-    public static MyRectangle[] rectMY = new MyRectangle[100];
+    private String line = " ";
+    private MyRectangle[] rectMY = new MyRectangle[100];
     public static EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
 
     /*
@@ -55,7 +55,7 @@ public class Gui extends Application {
 
     static boolean followStep;
 
-     static StartClientServer GtaskClSr;
+    private clientServerConnector connector;
 
     GridPane mySeaField = new GridPane();
     GridPane myPane = new GridPane();
@@ -72,38 +72,38 @@ public class Gui extends Application {
     }
 
     //Функция по закраске подпитых квадратиков
-    public static void workWithMyField(int x, int y) {
-        if (Gui.rectMY[x + (y * 10)].getFill() == Color.BLUE) {
-            Gui.rectMY[x + (y * 10)].getPrivateShip().impairment();
-            System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (Gui.rectMY[x + (y * 10)].getPrivateShip().isValidShip()));
+    public void workWithMyField(int x, int y) {
+        if (rectMY[x + (y * 10)].getFill() == Color.BLUE) {
+            rectMY[x + (y * 10)].getPrivateShip().impairment();
+            System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (rectMY[x + (y * 10)].getPrivateShip().isValidShip()));
 
-            if (Gui.rectMY[x + (y * 10)].getPrivateShip().isValidShip()) {
-                Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE);
+            if (rectMY[x + (y * 10)].getPrivateShip().isValidShip()) {
+                rectMY[x + (y * 10)].setFill(Color.ORANGE);
                 System.out.println("Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE); " + (x + (y * 10)));
 
-            } else if (!(Gui.rectMY[x + (y * 10)].getPrivateShip().isValidShip())) {
+            } else if (!(rectMY[x + (y * 10)].getPrivateShip().isValidShip())) {
 
-                Gui.rectMY[x + (y * 10)].setFill(Color.BLACK);
+                rectMY[x + (y * 10)].setFill(Color.BLACK);
 
-                int lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX1();
-                int lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY1();
+                int lX = rectMY[x + (y * 10)].getPrivateShip().getX1();
+                int lY = rectMY[x + (y * 10)].getPrivateShip().getY1();
                 if(lX+lY<=18) {
-                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
-                lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX2();
-                lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY2();
+                lX = rectMY[x + (y * 10)].getPrivateShip().getX2();
+                lY = rectMY[x + (y * 10)].getPrivateShip().getY2();
                 if(lX+lY<=18) {
-                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
-                lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX3();
-                lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY3();
+                lX = rectMY[x + (y * 10)].getPrivateShip().getX3();
+                lY = rectMY[x + (y * 10)].getPrivateShip().getY3();
                 if(lX+lY<=18) {
-                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
-                lX = Gui.rectMY[x + (y * 10)].getPrivateShip().getX4();
-                lY = Gui.rectMY[x + (y * 10)].getPrivateShip().getY4();
+                lX = rectMY[x + (y * 10)].getPrivateShip().getX4();
+                lY = rectMY[x + (y * 10)].getPrivateShip().getY4();
                 if(lX+lY<=18) {
-                    Gui.rectMY[lX + (lY * 10)].setFill(Color.BLACK);
+                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
                 }
 
 
@@ -229,12 +229,12 @@ public class Gui extends Application {
             @Override
             public void handle(Event event) {
                 // Создание класса Task, существующий для работы с JavaFX
-                final StartClientServer taskClSr = new StartClientServer();
-                GtaskClSr=taskClSr;
-                System.out.println("GtaskClSr "+GtaskClSr.getValue());
+
+                connector =new clientServerConnector();
+                System.out.println("After press Start connector " + connector.getValue());
                 // Делаем слушателя на текстовое свойство
 
-                taskClSr.messageProperty().addListener(
+                connector.messageProperty().addListener(
                         new ChangeListener<String>() {
 
                             @Override
@@ -242,7 +242,7 @@ public class Gui extends Application {
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
 
-                                whatDoWhenMessageDiliverd(taskClSr);
+                                whatDoWhenMessageDiliverd(connector);
                             }
                         });
 
@@ -251,7 +251,7 @@ public class Gui extends Application {
                     @Override
                     protected Task<Void> createTask() {
                         // TODO Auto-generated method stub
-                        return taskClSr;
+                        return connector;
                     }
 
                 };
@@ -264,8 +264,8 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                System.out.println("GtaskClSr "+GtaskClSr.getValue());
-                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(GtaskClSr);
+                System.out.println("connector " + connector.getValue());
+                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(connector);
 
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
@@ -274,8 +274,10 @@ public class Gui extends Application {
                             public void changed(
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
-                                commonChat.setText(commonChat.getText() + "\n"
-                                        + sendMess.getMessage());
+                                commonChat.setText(commonChat.getText().toString()+"\n");
+                                commonChat.end();
+                                commonChat.setText(commonChat.getText().toString() + sendMess.getMessage().toString());
+                               // sendMess.getMessage().toString()
 
                             }
                         });
@@ -302,8 +304,8 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                System.out.println("GtaskClSr "+GtaskClSr.getValue());
-                final SendingMessage sendMess = new SendingMessage(GtaskClSr);
+                System.out.println("connector " + connector.getValue());
+                final SendingMessage sendMess = new SendingMessage(connector);
 
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
@@ -312,8 +314,11 @@ public class Gui extends Application {
                             public void changed(
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
-                                commonChat.setText(commonChat.getText() + "\n"
-                                        + sendMess.getMessage());
+                                commonChat.setText(commonChat.getText()+"\n");
+                                commonChat.setText(commonChat.getText().toString() + sendMess.getMessage());
+                                //commonChat.positionCaret(commonChat.get);
+                                //setTextInCommonChat(getConnector());
+                                commonChat.end();
 
                             }
                         });
@@ -408,7 +413,7 @@ public class Gui extends Application {
     //makeOneIterationRectMY создает одну клетку(квадрат) поля для игрока
     private void makeOneIterationRectMY(int i) {
 
-        rectMY[i] = new MyRectangle(10, 10, i);
+        rectMY[i] = new MyRectangle(this, 10, 10, i);
         rectMY[i].setFill(Color.GREEN);
 
 
@@ -421,16 +426,16 @@ public class Gui extends Application {
         mySeaField.add(rectMY[i], (i - numLine * 10), numLine);
     }
 
-    private void whatDoWhenMessageDiliverd(StartClientServer taskClSr) {
+    private void whatDoWhenMessageDiliverd(clientServerConnector taskClSr) {
         System.out.println("taskClSr.messageProperty().toString().charAt(0) " + taskClSr.messageProperty().toString().charAt(0));
 
         try {
-            System.out.println("StartClientServer.line.toString().charAt(0) " + StartClientServer.line.toString().charAt(0));
-            if (StartClientServer.line.toString().charAt(0) != '!' && StartClientServer.line.toString().charAt(0) != '#') {
+            System.out.println("StartClientServer.line.toString().charAt(0) " + connector.getFirstCharOfLine());
+            if (connector.getFirstCharOfLine() != '!' && connector.getFirstCharOfLine() != '#') {
                 setTextInCommonChat(taskClSr);
 
             }
-            if (StartClientServer.line.toString().charAt(0) == '#') {
+            if (connector.getFirstCharOfLine() == '#') {
                 setTextInCommonChat(taskClSr);
 
                 System.out.println("Проверка");
@@ -438,10 +443,10 @@ public class Gui extends Application {
                 int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
                 //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
                 workWithMyField(dX, dY);
-                SendingResultOfFire.sendResult(GtaskClSr, dX, dY);
+                new SendingResultOfFire(this, connector).sendResult(dX, dY);
 
             }
-            if (StartClientServer.line.toString().charAt(0) == '!') {
+            if (connector.getFirstCharOfLine() == '!') {
 
                 setTextInCommonChat(taskClSr);
 
@@ -473,14 +478,21 @@ public class Gui extends Application {
         }
     }
 
-    private void setTextInCommonChat(StartClientServer taskClSr) {
+    private void setTextInCommonChat(clientServerConnector taskClSr) {
         commonChat.setText(commonChat.getText() + "\n"
                 + taskClSr.getMessage());
+        commonChat.end();
     }
 
     //Геттеры
-    public StartClientServer getGtaskClSr(){
-        return GtaskClSr;
+    public clientServerConnector getConnector(){
+        return connector;
+    }
+    public MyRectangle getMyRect(int x, int y){
+        return rectMY[x+(10*y)];
+    }
+    public MyRectangle getMyRect(int i){
+        return rectMY[i];
     }
 
 

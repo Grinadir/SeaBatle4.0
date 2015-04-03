@@ -23,11 +23,11 @@ public class Client {
     private InetAddress ip;
     private Socket clS;
     private int port = 8080;
-    private StartClientServer SCS;
+    private clientServerConnector SCS;
 
     //static public OutputStream infoOutputC;
 
-    public Client(StartClientServer SCS) throws IOException {
+    public Client(clientServerConnector SCS) throws IOException {
 
         ip = InetAddress.getByName("192.168.100.5");
         this.SCS=SCS;

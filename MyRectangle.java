@@ -45,9 +45,11 @@ public class MyRectangle extends Rectangle {
     private int y;
     private int veto = 0;
     private Ship getPrivateShip;
+    private final Gui gui;
 
 
-    public MyRectangle(double width, double height, int e) {
+    public MyRectangle(final Gui gui, double width, double height, int e) {
+        this.gui=gui;
         setWidth(width);
         setHeight(height);
 
@@ -79,7 +81,7 @@ public class MyRectangle extends Rectangle {
 
                         setFill(Color.GREEN);
                         oneAmount++;
-                        FunctionsOfMarkedByDifferntColor.marketGreen(x, y);
+                        new FunctionsOfMarkedByDifferentColor(gui).marketGreen(x, y);
                     }
 // -1-
 
@@ -173,10 +175,10 @@ public class MyRectangle extends Rectangle {
             shipSingle[oneAmount].setX1(x);
             shipSingle[oneAmount].setY1(y);
             setFill(Color.BLUE);
-            FunctionsOfMarkedByDifferntColor.marketYellow(x, y);
+            new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y);
             oneAmount--;
         } else {
-            FunctionsOfMarkedByDifferntColor.marketGreen(x, y);
+            new FunctionsOfMarkedByDifferentColor(gui).marketGreen(x, y);
             setFill(Color.GREEN);
             getPrivateShip = null;
             shipSingle[oneAmount] = null;
@@ -207,14 +209,14 @@ public class MyRectangle extends Rectangle {
             shipDouble[twoAmount].setY2(y);
 
             setFill(Color.BLUE);
-            FunctionsOfMarkedByDifferntColor.marketYellow(x, y);
+            new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y);
             if (saveX == x) {
-                FunctionsOfMarkedByDifferntColor.marketYellow(x, y - 1);
-                FunctionsOfMarkedByDifferntColor.marketYellow(x, y + 1);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y - 1);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y + 1);
 
             } else if (saveY == y) {
-                FunctionsOfMarkedByDifferntColor.marketYellow(x - 1, y);
-                FunctionsOfMarkedByDifferntColor.marketYellow(x + 1, y);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x - 1, y);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x + 1, y);
             }
             count2 = 0;
             twoAmount--;
@@ -259,9 +261,9 @@ public class MyRectangle extends Rectangle {
                 setFill(Color.BLUE);
                 shipTriple[threeAmount].setX3(x);
                 shipTriple[threeAmount].setY3(y);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX, saveY);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX1, saveY1);
-                FunctionsOfMarkedByDifferntColor.marketYellow(x, y);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX, saveY);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX1, saveY1);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y);
 
                 count3 = 0;
                 threeAmount--;
@@ -273,9 +275,9 @@ public class MyRectangle extends Rectangle {
                 setFill(Color.BLUE);
                 shipTriple[threeAmount].setX3(x);
                 shipTriple[threeAmount].setY3(y);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX, saveY);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX1, saveY1);
-                FunctionsOfMarkedByDifferntColor.marketYellow(x, y);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX, saveY);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX1, saveY1);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y);
                 count3 = 0;
                 threeAmount--;
 
@@ -344,10 +346,10 @@ public class MyRectangle extends Rectangle {
                 setFill(Color.BLUE);
                 shipQuadruple.setX4(x);
                 shipQuadruple.setY4(y);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX, saveY);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX1, saveY1);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX2, saveY2);
-                FunctionsOfMarkedByDifferntColor.marketYellow(x, y);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX, saveY);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX1, saveY1);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX2, saveY2);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y);
                 count4 = 0;
                 fourAmount--;
 
@@ -357,10 +359,10 @@ public class MyRectangle extends Rectangle {
                 setFill(Color.BLUE);
                 shipQuadruple.setX4(x);
                 shipQuadruple.setY4(y);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX, saveY);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX1, saveY1);
-                FunctionsOfMarkedByDifferntColor.marketYellow(saveX2, saveY2);
-                FunctionsOfMarkedByDifferntColor.marketYellow(x, y);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX, saveY);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX1, saveY1);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(saveX2, saveY2);
+                new FunctionsOfMarkedByDifferentColor(gui).marketYellow(x, y);
                 count4 = 0;
                 fourAmount--;
 

@@ -11,7 +11,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.SocketException;
 
-public class StartClientServer extends Task {
+public class clientServerConnector extends Task {
 
      /*
     *Класс StartClientServer
@@ -23,11 +23,11 @@ public class StartClientServer extends Task {
 
 
 
-    private static Server sr;//Эту статику пока не трогаю
-    private static Client cl;//Эту статику пока не трогаю
-    static String line;//Эту статику пока не трогаю
-    static public int dX;
-    static public int dY;
+    private Server sr;
+    private Client cl;
+    private String line;
+    private int dX;
+    private int dY;
 
 
     @Override
@@ -177,7 +177,15 @@ public class StartClientServer extends Task {
         }
     }
 
+    public  void updateMessageSCS(String s){
+        updateMessage(s);
+    }
+
     //Геттеры
+
+    public char getFirstCharOfLine(){
+        return line.charAt(0);
+    }
 
     public Server getSr(){
         return sr;
@@ -185,6 +193,13 @@ public class StartClientServer extends Task {
 
     public Client getCl(){
         return cl;
+    }
+
+    public int getDx(){
+        return dX;
+    }
+    public int getDy(){
+        return dY;
     }
 
 }

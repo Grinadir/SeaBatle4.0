@@ -20,20 +20,28 @@ public class SendingResultOfFire {
 
     private static Date currentDate = new Date();
 
-    public static void sendResult(StartClientServer SCS, int x, int y) {
+    Gui gui;
+    clientServerConnector connector;
+    public SendingResultOfFire(Gui gui, clientServerConnector connector){
+        this.gui=gui;
+        this.connector=connector;
 
-        if (SCS.getSr().getSerS() != null
-                && !SCS.getSr().getSerS().isClosed()) {
+    }
+
+    public void sendResult(int x, int y) {
+
+        if (connector.getSr().getSerS() != null
+                && !connector.getSr().getSerS().isClosed()) {
 
             //workWithMyField(x, y);
 
-            DataOutputStream out = new DataOutputStream(SCS.getSr().getOutS());
+            DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
             sendResultOne(out, "Server");
         } else {
 
             //workWithMyField(x, y);
 
-            DataOutputStream out = new DataOutputStream(SCS.getCl().getOutC());
+            DataOutputStream out = new DataOutputStream(connector.getCl().getOutC());
             sendResultOne(out, "Client");
 
 
@@ -43,37 +51,39 @@ public class SendingResultOfFire {
 
 
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
-    private static void sendResultOne(DataOutputStream out, String s) {
+    private void sendResultOne(DataOutputStream out, String s) {
         try {
 
-            if (Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getFill() == Color.ORANGE) {
+            MyRectangle rectangle=gui.getMyRect(connector.getDx(), (connector.getDy() * 10));
+
+            if (rectangle.getFill() == Color.ORANGE) {
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("
-                        + "$" + StartClientServer.dX + "%" + StartClientServer.dY
+                        + "$" + connector.getDx() + "%" + connector.getDy()
                         + "*DAM;");
-            } else if (Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getFill() == Color.BLACK) {
+            } else if (rectangle.getFill() == Color.BLACK) {
                 System.out.println("_____________Заход");
-                int index1=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX1()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY1());
+                int index1=rectangle.getPrivateShip().getX1()+
+                        (10*rectangle.getPrivateShip().getY1());
 
-                int index2=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX2()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY2());
+                int index2=rectangle.getPrivateShip().getX2()+
+                        (10*rectangle.getPrivateShip().getY2());
 
-                int index3=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX3()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY3());
+                int index3=rectangle.getPrivateShip().getX3()+
+                        (10*rectangle.getPrivateShip().getY3());
 
-                int index4=Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getX4()+
-                        (10*Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getPrivateShip().getY4());
+                int index4=rectangle.getPrivateShip().getX4()+
+                        (10*rectangle.getPrivateShip().getY4());
 
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("
-                        + "$" + StartClientServer.dX + "%" + StartClientServer.dY
+                        + "$" + connector.getDx() + "%" + connector.getDy()
                         + "*DESTROY;"+index1+"&"+index2+"@"+index3+"#"+index4+"~");
 
-            } else if ((Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getFill() == Color.YELLOW )|| (Gui.rectMY[StartClientServer.dX + (StartClientServer.dY * 10)].getFill() == Color.GREEN)) {
+            } else if ((rectangle.getFill() == Color.YELLOW )|| (rectangle.getFill() == Color.GREEN)) {
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("
-                        + "$" + StartClientServer.dX + "%" + StartClientServer.dY
+                        + "$" + connector.getDx() + "%" + connector.getDy()
                         + "*MISS;");
 
             }

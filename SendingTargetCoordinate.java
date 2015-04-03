@@ -18,14 +18,14 @@ public class SendingTargetCoordinate extends Task {
     *запускаемый из GUI
     *нужен для того, чтобы передовать координаты атаки
     */
-    private StartClientServer SCS;
+    private clientServerConnector serverConnector;
 
-    public SendingTargetCoordinate(StartClientServer SCS){
-        this.SCS=SCS;
+    public SendingTargetCoordinate(clientServerConnector serverConnector){
+        this.serverConnector=serverConnector;
     }
+    //Gui.GtaskClSr
 
-    DataOutputStream outServer = new DataOutputStream(Gui.GtaskClSr.getSr().getOutS());
-    DataOutputStream outClient = new DataOutputStream(Gui.GtaskClSr.getCl().getOutC());
+
     String line;
     Date currentDate = new Date();
 
@@ -33,12 +33,13 @@ public class SendingTargetCoordinate extends Task {
 
     @Override
     protected Object call() throws Exception {
-        if (SCS.getSr().getSerS()!= null
-                && !SCS.getSr().getSerS().isClosed()) {
-
+        if (serverConnector.getSr().getSerS()!= null
+                && !serverConnector.getSr().getSerS().isClosed()) {
+            DataOutputStream outServer = new DataOutputStream(serverConnector.getSr().getOutS());
 
             sendStrikeCoord(outServer, "server");
         } else {
+            DataOutputStream outClient = new DataOutputStream(serverConnector.getCl().getOutC());
 
             sendStrikeCoord(outClient, "client");
         }
