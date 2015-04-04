@@ -50,11 +50,9 @@ public class Gui extends Application {
     private RadioButton three = new RadioButton("Three 2 pcs.");
     private RadioButton two = new RadioButton("Two 3 pcs.");
     private RadioButton one = new RadioButton("One 4 pcs.");
-
-    static boolean forCircle = false;
-
-
-    static boolean followStep;
+    private Counters count=new Counters();
+    //boolean forCircle = false;
+    // boolean followStep;
 
     private clientServerConnector connector;
 
@@ -414,7 +412,7 @@ public class Gui extends Application {
     //makeOneIterationRectMY создает одну клетку(квадрат) поля для игрока
     private void makeOneIterationRectMY(int i) {
 
-        rectMY[i] = new MyRectangle(this, 10, 10, i);
+        rectMY[i] = new MyRectangle(this, count, 10, 10, i);
         rectMY[i].setFill(Color.GREEN);
 
 

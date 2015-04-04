@@ -21,14 +21,11 @@ public class clientServerConnector extends Task {
     *сообщений
     */
 
-
-
     private Server sr;
     private Client cl;
     private String line;
     private int dX;
     private int dY;
-
 
     @Override
     protected Void call() throws Exception {
@@ -37,22 +34,11 @@ public class clientServerConnector extends Task {
         sr = new Server();
         cl = new Client(this);
 
-
         String mess = "";
-
         tryFuctionToConnection(mess);
-
-
         systemOfIncomingMessage();
-
-
-        setFirstfollowStep();
-
-
+        //setFirstfollowStep();
         return null;
-
-
-
     }
 
 
@@ -166,7 +152,7 @@ public class clientServerConnector extends Task {
     }
 
 
-    private void setFirstfollowStep() {
+    /*private void setFirstfollowStep() {
         if (sr.getSerS() != null&& sr.getSerS().isClosed()){
 
             Gui.followStep=true;
@@ -175,7 +161,7 @@ public class clientServerConnector extends Task {
         else if(cl.getClS() != null){
             Gui.followStep=false;
         }
-    }
+    }*/
 
     public  void updateMessageSCS(String s){
         updateMessage(s);

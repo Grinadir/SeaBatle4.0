@@ -20,26 +20,7 @@ public class MyRectangle extends Rectangle {
     * Рефактринг сделаю позже
     */
 
-    private static Ship[] shipSingle = new Ship[5];//Эту статику не могу убрать, так как она должна быть по логике
-    private static Ship[] shipDouble = new Ship[4];//Эту статику не могу убрать, так как она должна быть по логике
-    private static Ship[] shipTriple = new Ship[3];//Эту статику не могу убрать, так как она должна быть по логике
-    private static Ship shipQuadruple = new Ship(4);//Эту статику не могу убрать, так как она должна быть по логике
 
-    private static int count2 = 0;//Эту статику не могу убрать, так как она должна быть по логике
-    private static int count3 = 0;//Эту статику не могу убрать, так как она должна быть по логике
-    private static int count4 = 0;//Эту статику не могу убрать, так как она должна быть по логике
-
-    private static int oneAmount = 4;//Эту статику не могу убрать, так как она должна быть по логике
-    private static int twoAmount = 3;//Эту статику не могу убрать, так как она должна быть по логике
-    private static int threeAmount = 2;//Эту статику не могу убрать, так как она должна быть по логике
-    private static int fourAmount = 1;//Эту статику не могу убрать, так как она должна быть по логике
-
-    private static int saveX;//Эту статику не могу убрать, так как она должна быть по логике
-    private static int saveY;//Эту статику не могу убрать, так как она должна быть по логике
-    public static int saveX1;//Эту статику не могу убрать, так как она должна быть по логике
-    public static int saveY1;//Эту статику не могу убрать, так как она должна быть по логике
-    public static int saveX2;//Эту статику не могу убрать, так как она должна быть по логике
-    public static int saveY2;//Эту статику не могу убрать, так как она должна быть по логике
 
     private int x;
     private int y;
@@ -47,9 +28,11 @@ public class MyRectangle extends Rectangle {
     private Ship getPrivateShip;
     private final Gui gui;
     private FunctionsOfMarkedByDifferentColor func;
+    private Counters count;
 
 
-    public MyRectangle(final Gui gui, double width, double height, int e) {
+    public MyRectangle(final Gui gui, final Counters count, double width, double height, int e) {
+        this.count=count;
         this.gui=gui;
         setWidth(width);
         setHeight(height);
@@ -75,14 +58,14 @@ public class MyRectangle extends Rectangle {
 
                 if (gui.getRanking().isSelected()
                         && gui.getOne().isSelected()
-                        && oneAmount == 0
+                        && count.getOneAmount() == 0
                         && (getFill() != Color.YELLOW && getFill() != Color.GREEN)) {
 
 
                     if (getFill() == Color.BLUE) {
 
                         setFill(Color.GREEN);
-                        oneAmount++;
+                        count.setOneAmount(count.getOneAmount()+1);
                         func.marketGreen(x, y);
                     }
 // -1-
@@ -90,7 +73,7 @@ public class MyRectangle extends Rectangle {
                 } else if (isSelectedSingleShip()) {
 
 
-                    switch (oneAmount) {
+                    switch (count.getOneAmount()) {
                         case 4:
                             makeSingleShip();
                             break;
@@ -139,201 +122,202 @@ public class MyRectangle extends Rectangle {
     //Extract функции выборов кораблей
     private boolean isSelectedSingleShip() {
         return gui.getRanking().isSelected() && gui.getOne().isSelected()
-                && oneAmount != 0
+                && count.getOneAmount() != 0
                 && (getFill() != Color.YELLOW);
     }
 
     private boolean isSelectedDoubleShip() {
         return gui.getRanking().isSelected() && gui.getTwo().isSelected()
                 && (getFill() != Color.YELLOW)
-                && twoAmount != 0;
+                && count.getTwoAmount() != 0;
     }
 
     private boolean isSelectedTripleShip() {
         return gui.getRanking().isSelected() && gui.getThree().isSelected()
                 && (getFill() != Color.YELLOW)
-                && threeAmount != 0;
+                && count.getThreeAmount() != 0;
     }
 
     private boolean isSelectedQuadrupleShip() {
         return gui.getRanking().isSelected() && gui.getFour().isSelected()
                 && (getFill() != Color.YELLOW)
-                && fourAmount != 0;
+                && count.getFourAmount() != 0;
     }
 
 
     //Extract функций создания кораблей
     private void makeSingleShip() {
-        shipSingle[oneAmount] = new Ship(1);
-        getPrivateShip = shipSingle[oneAmount];
+        count.getShipSingle()[count.getOneAmount()] = new Ship(1);
+        getPrivateShip = count.getShipSingle()[count.getOneAmount()];
 
         if (getFill() == Color.GREEN) {
 
-            shipSingle[oneAmount].setX1(x);
-            shipSingle[oneAmount].setY1(y);
+            count.getShipSingle()[count.getOneAmount()].setX1(x);
+            count.getShipSingle()[count.getOneAmount()].setY1(y);
             setFill(Color.BLUE);
             func.marketYellow(x, y);
-            oneAmount--;
+            count.setOneAmount(count.getOneAmount()-1);
         } else {
             func.marketGreen(x, y);
             setFill(Color.GREEN);
             getPrivateShip = null;
-            shipSingle[oneAmount] = null;
-            oneAmount++;
+            count.getShipSingle()[count.getOneAmount()] = null;
+            count.setOneAmount(count.getOneAmount()+1);
         }
         ;
     }
 
     private void makeDoubleShipForThree() {
-        if (count2 == 0) {
-            shipDouble[twoAmount] = new Ship(2);
-            getPrivateShip = shipDouble[twoAmount];
-            shipDouble[twoAmount].setX1(x);
-            shipDouble[twoAmount].setY1(y);
-            saveX = x;
-            saveY = y;
+        if (count.getCount2() == 0) {
+            count.getShipDouble()[count.getTwoAmount()] = new Ship(2);
+            getPrivateShip = count.getShipDouble()[count.getTwoAmount()];
+            count.getShipDouble()[count.getTwoAmount()].setX1(x);
+            count.getShipDouble()[count.getTwoAmount()].setY1(y);
+            count.setSaveX(x);
+            count.setSaveY(y);
             setFill(Color.BLUE);
-            ++count2;
-        } else if ((saveX == x || saveY == y)
-                && count2 != 0
-                && (saveX == x + 1 || saveY == y + 1
-                || saveX == x - 1 || saveY == y - 1)) {
-            getPrivateShip = shipDouble[twoAmount];
-            shipDouble[twoAmount].setX2(x);
-            shipDouble[twoAmount].setY2(y);
+            count.setCount2(count.getCount2()+1);
+        } else if ((count.getSaveX() == x || count.getSaveY() == y)
+                && count.getCount2() != 0
+                && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
+                || count.getSaveX() == x - 1 || count.getSaveY() == y - 1)) {
+            getPrivateShip = count.getShipDouble()[count.getTwoAmount()];
+            count.getShipDouble()[count.getTwoAmount()].setX2(x);
+            count.getShipDouble()[count.getTwoAmount()].setY2(y);
             setFill(Color.BLUE);
             func.marketYellow(x, y);
-            if (saveX == x) {
+            if (count.getSaveX() == x) {
                 func.marketYellow(x, y - 1);
                 func.marketYellow(x, y + 1);
-            } else if (saveY == y) {
+            } else if (count.getSaveY() == y) {
                 func.marketYellow(x - 1, y);
                 func.marketYellow(x + 1, y);
             }
-            count2 = 0;
-            twoAmount--;
+            count.setCount2(0);
+            count.setTwoAmount(count.getTwoAmount()-1);
         }
     }
 
 
     private void makeTripleShipForBoth() {
-        if (count3 == 0) {
-            shipTriple[threeAmount] = new Ship(3);
-            getPrivateShip = shipTriple[threeAmount];
-            shipTriple[threeAmount].setX1(x);
-            shipTriple[threeAmount].setY1(y);
-            saveX = x;
-            saveY = y;
+        if (count.getCount3() == 0) {
+            count.getShipTriple()[count.getThreeAmount()] = new Ship(3);
+            getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
+            count.getShipTriple()[count.getThreeAmount()].setX1(x);
+            count.getShipTriple()[count.getThreeAmount()].setY1(y);
+            count.setSaveX(x);
+            count.setSaveY(y);
             setFill(Color.BLUE);
-            ++count3;
-        } else if ((saveX == x || saveY == y)
-                && count3 == 1
-                && (saveX == x + 1 || saveY == y + 1
-                || saveX == x - 1 || saveY == y - 1)
-                && threeAmount != 0) {
-            getPrivateShip = shipTriple[threeAmount];
-            shipTriple[threeAmount].setX2(x);
-            shipTriple[threeAmount].setY2(y);
+            count.setCount3(count.getCount3()+1);
+        } else if ((count.getSaveX() == x || count.getSaveY() == y)
+                && count.getCount3() == 1
+                && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
+                || count.getSaveX() == x - 1 || count.getSaveY() == y - 1)
+                && count.getThreeAmount() != 0) {
+            getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
+            count.getShipTriple()[count.getThreeAmount()].setX2(x);
+            count.getShipTriple()[count.getThreeAmount()].setY2(y);
             setFill(Color.BLUE);
-            saveX1 = x;
-            saveY1 = y;
-            ++count3;
-        } else if ((saveX == x || saveY == y) && count3 == 2
-                && threeAmount != 0) {
-            if (saveX1 == x
-                    && (saveY1 == y + 1 || saveY1 == y - 1)) {
-                getPrivateShip = shipTriple[threeAmount];
+            count.setSaveX1(x);
+            count.setSaveY1(y);
+            count.setCount3(count.getCount3() + 1);
+        } else if ((count.getSaveX() == x || count.getSaveY() == y) && count.getCount3() == 2
+                && count.getThreeAmount() != 0) {
+            if (count.getSaveX1() == x
+                    && (count.getSaveY1() == y + 1 || count.getSaveY1() == y - 1)) {
+                getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
                 setFill(Color.BLUE);
-                shipTriple[threeAmount].setX3(x);
-                shipTriple[threeAmount].setY3(y);
-                func.marketYellow(saveX, saveY);
-                func.marketYellow(saveX1, saveY1);
+                count.getShipTriple()[count.getThreeAmount()].setX3(x);
+                count.getShipTriple()[count.getThreeAmount()].setY3(y);
+                func.marketYellow(count.getSaveX(), count.getSaveY());
+                func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(x, y);
-                count3 = 0;
-                threeAmount--;
-            } else if (saveY == y
-                    && (saveX1 == x + 1 || saveX1 == x - 1)
-                    && threeAmount != 0) {
-                getPrivateShip = shipTriple[threeAmount];
+                count.setCount3(0);
+                count.setThreeAmount(count.getThreeAmount()-1);
+            } else if (count.getSaveY() == y
+                    && (count.getSaveX1() == x + 1 || count.getSaveX1() == x - 1)
+                    && count.getThreeAmount() != 0) {
+                getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
                 setFill(Color.BLUE);
-                shipTriple[threeAmount].setX3(x);
-                shipTriple[threeAmount].setY3(y);
-                func.marketYellow(saveX, saveY);
-                func.marketYellow(saveX1, saveY1);
+                count.getShipTriple()[count.getThreeAmount()].setX3(x);
+                count.getShipTriple()[count.getThreeAmount()].setY3(y);
+                func.marketYellow(count.getSaveX(), count.getSaveY());
+                func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(x, y);
-                count3 = 0;
-                threeAmount--;
+                count.setCount3(0);
+                count.setThreeAmount(count.getThreeAmount()-1);
             }
         }
     }
 
 
     private void makeQuadrupleShip() {
-        getPrivateShip = shipQuadruple;
-        if (count4 == 0) {
-            shipQuadruple.setX1(x);
-            shipQuadruple.setY1(y);
-            saveX = x;
-            saveY = y;
+        getPrivateShip = count.getShipQuadruple();
+        if (count.getCount4() == 0) {
+            count.getShipQuadruple().setX1(x);
+            count.getShipQuadruple().setY1(y);
+            count.setSaveX (x);
+            count.setSaveY (y);
             setFill(Color.BLUE);
-            ++count4;
-        } else if ((saveX == x || saveY == y)
-                && count4 == 1
-                && (saveX == x + 1 || saveY == y + 1
-                || saveX == x - 1 || saveY == y - 1)
-                && fourAmount != 0) {
+            count.setCount4(count.getCount4()+1);
+        } else if ((count.getSaveX() == x || count.getSaveY() == y)
+                && count.getCount4() == 1
+                && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
+                || count.getSaveX() == x - 1 || count.getSaveY() == y - 1)
+                && count.getFourAmount() != 0) {
             setFill(Color.BLUE);
-            shipQuadruple.setX2(x);
-            shipQuadruple.setY2(y);
-            saveX1 = x;
-            saveY1 = y;
-            ++count4;
-        } else if ((saveX == x || saveY == y) && fourAmount != 0
-                && count4 == 2) {
-            if (saveX1 == x
-                    && (saveY1 == y + 1 || saveY1 == y - 1)) {
+            count.getShipQuadruple().setX2(x);
+            count.getShipQuadruple().setY2(y);
+            count.setSaveX1(x);
+            count.setSaveY1(y);
+            count.setCount4(count.getCount4()+1);
+        } else if ((count.getSaveX() == x || count.getSaveY() == y) && count.getFourAmount() != 0
+                && count.getCount4() == 2) {
+            if (count.getSaveX1() == x
+                    && (count.getSaveY1() == y + 1 || count.getSaveY1() == y - 1)) {
                 setFill(Color.BLUE);
-                shipQuadruple.setX3(x);
-                shipQuadruple.setY3(y);
-                saveX2 = x;
-                saveY2 = y;
-                ++count4;
-            } else if (saveY == y
-                    && (saveX1 == x + 1 || saveX1 == x - 1)
-                    && fourAmount != 0) {
+                count.getShipQuadruple().setX3(x);
+                count.getShipQuadruple().setY3(y);
+                count.setSaveX2(x);
+                count.setSaveY2(y);
+                count.setCount4(count.getCount4() + 1);
+
+            } else if (count.getSaveY() == y
+                    && (count.getSaveX1() == x + 1 || count.getSaveX1() == x - 1)
+                    && count.getFourAmount() != 0) {
                 setFill(Color.BLUE);
-                shipQuadruple.setX3(x);
-                shipQuadruple.setY3(y);
-                saveX2 = x;
-                saveY2 = y;
-                ++count4;
+                count.getShipQuadruple().setX3(x);
+                count.getShipQuadruple().setY3(y);
+                count.setSaveX2(x);
+                count.setSaveY2(y);
+                count.setCount4(count.getCount4()+1);
             }
 
-        } else if ((saveX == x || saveY == y) && count4 == 3
-                && fourAmount != 0) {
-            if (saveX2 == x
-                    && (saveY2 == y + 1 || saveY2 == y - 1)) {
+        } else if ((count.getSaveX() == x || count.getSaveY() == y) && count.getCount4() == 3
+                && count.getFourAmount() != 0) {
+            if (count.getSaveX2() == x
+                    && (count.getSaveY2() == y + 1 || count.getSaveY2() == y - 1)) {
                 setFill(Color.BLUE);
-                shipQuadruple.setX4(x);
-                shipQuadruple.setY4(y);
-                func.marketYellow(saveX, saveY);
-                func.marketYellow(saveX1, saveY1);
-                func.marketYellow(saveX2, saveY2);
+                count.getShipQuadruple().setX4(x);
+                count.getShipQuadruple().setY4(y);
+                func.marketYellow(count.getSaveX(), count.getSaveY());
+                func.marketYellow(count.getSaveX1(), count.getSaveY1());
+                func.marketYellow(count.getSaveX2(), count.getSaveY2());
                 func.marketYellow(x, y);
-                count4 = 0;
-                fourAmount--;
-            } else if (saveY2 == y
-                    && (saveX2 == x + 1 || saveX2 == x - 1)
-                    && threeAmount != 0) {
+                count.setCount4 (0);
+                count.setFourAmount(count.getFourAmount()-1);
+            } else if (count.getSaveY2() == y
+                    && (count.getSaveX2() == x + 1 || count.getSaveX2() == x - 1)
+                    && count.getThreeAmount() != 0) {
                 setFill(Color.BLUE);
-                shipQuadruple.setX4(x);
-                shipQuadruple.setY4(y);
-                func.marketYellow(saveX, saveY);
-                func.marketYellow(saveX1, saveY1);
-                func.marketYellow(saveX2, saveY2);
+                count.getShipQuadruple().setX4(x);
+                count.getShipQuadruple().setY4(y);
+                func.marketYellow(count.getSaveX(), count.getSaveY());
+                func.marketYellow(count.getSaveX1(), count.getSaveY1());
+                func.marketYellow(count.getSaveX2(), count.getSaveY2());
                 func.marketYellow(x, y);
-                count4 = 0;
-                fourAmount--;
+                count.setCount4 (0);
+                count.setFourAmount(count.getFourAmount()-1);
             }
         }
     }
