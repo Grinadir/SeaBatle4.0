@@ -10,13 +10,14 @@ import javafx.event.EventHandler;
 import javafx.scene.shape.Rectangle;
 
 public class EnemyRectangle extends Rectangle {
-    private static int targetX;
-    private static int targetY;
+    private int targetIndex;
     private int x;
     private int y;
+    private Gui gui;
 
 
-    public EnemyRectangle(double width, double height, int e) {
+    public EnemyRectangle(final Gui gui, double width, double height, int e) {
+        this.gui=gui;
 
         setWidth(width);
         setHeight(height);
@@ -27,13 +28,13 @@ public class EnemyRectangle extends Rectangle {
             public void handle(Event event) {
                 if (getFill() == javafx.scene.paint.Color.GREEN) {
                     setFill(javafx.scene.paint.Color.RED);
-                    targetX = x;
-                    targetY = y;
+                    gui.setTargetIndex(x+10*y);
+
 
                 } else {
                     setFill(javafx.scene.paint.Color.GREEN);
-                    targetX = 999;
-                    targetY = 999;
+                    gui.setTargetIndex(999);
+
                 }
             }
 
@@ -51,13 +52,6 @@ public class EnemyRectangle extends Rectangle {
 
     }
 
-    public static int getTargetX(){
-        return targetX;
-    }
-
-    public static int getTargetY(){
-        return targetY;
-    }
 
 
 }

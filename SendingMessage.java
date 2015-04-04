@@ -22,11 +22,13 @@ public class SendingMessage extends Task {
 
     private String line;
     private Date currentDate = new Date();
-    private clientServerConnector SCS;
+    private clientServerConnector connector;
+    private Gui gui;
 
 
-    public SendingMessage(clientServerConnector SCS){
-        this.SCS=SCS;
+    public SendingMessage(Gui gui, clientServerConnector connector){
+        this.gui=gui;
+        this.connector=connector;
     }
 
 
@@ -47,13 +49,13 @@ public class SendingMessage extends Task {
 
 //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
-        if (SCS.getSr().getSerS() != null && !SCS.getSr().getSerS().isClosed()) {
+        if (connector.getSr().getSerS() != null && !connector.getSr().getSerS().isClosed()) {
 
 
-            DataOutputStream out = new DataOutputStream(SCS.getSr().getOutS());
+            DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
             outputAndUpdateMess(out, "Server");
         } else {
-            DataOutputStream out = new DataOutputStream(SCS.getCl().getOutC());
+            DataOutputStream out = new DataOutputStream(connector.getCl().getOutC());
 
                 outputAndUpdateMess(out, "Client");
 
@@ -63,8 +65,8 @@ public class SendingMessage extends Task {
     private void outputAndUpdateMess(DataOutputStream out, String str) {
         try {
 
-            updateMessage(str+" " + "(" + currentDate + ")" + ":" + Gui.sendingMessage.getText());
-            out.writeUTF(str+" " + "(" + currentDate + ")" + ":" + Gui.sendingMessage.getText());
+            updateMessage(str+" " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
+            out.writeUTF(str+" " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
 
         } catch (IOException e1) {
             // TODO Auto-generated catch block

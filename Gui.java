@@ -27,7 +27,8 @@ public class Gui extends Application {
 
     private String line = " ";
     private MyRectangle[] rectMY = new MyRectangle[100];
-    public static EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
+    public EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
+    private int targetIndex;
 
     /*
     *Класс GUI
@@ -35,20 +36,20 @@ public class Gui extends Application {
     *Файл FXML не используется
     *Изначально создан в Eclipse
     */
-    static Object tt = new JFXPanel();
-    static TextArea commonChat = new TextArea();
-    static TextArea sendingMessage = new TextArea();
-    static Button bStart = new Button("Start");
-    static Button bsendMessage = new Button("Send");
-    static Button fireButton = new Button("Огонь");
-    static ToggleGroup group = new ToggleGroup();
-    static RadioButton ranking = new RadioButton("Ranking");
-    static RadioButton no = new RadioButton("NO");
-    static ToggleGroup ships = new ToggleGroup();
-    static RadioButton four = new RadioButton("Four 1 pcs.");
-    static RadioButton three = new RadioButton("Three 2 pcs.");
-    static RadioButton two = new RadioButton("Two 3 pcs.");
-    static RadioButton one = new RadioButton("One 4 pcs.");
+    private Object tt = new JFXPanel();
+    private TextArea commonChat = new TextArea();
+    private TextArea sendingMessage = new TextArea();
+    private Button bStart = new Button("Start");
+    private Button bsendMessage = new Button("Send");
+    private Button fireButton = new Button("Огонь");
+    private ToggleGroup group = new ToggleGroup();
+    private RadioButton ranking = new RadioButton("Ranking");
+    private RadioButton no = new RadioButton("NO");
+    private ToggleGroup ships = new ToggleGroup();
+    private RadioButton four = new RadioButton("Four 1 pcs.");
+    private RadioButton three = new RadioButton("Three 2 pcs.");
+    private RadioButton two = new RadioButton("Two 3 pcs.");
+    private RadioButton one = new RadioButton("One 4 pcs.");
 
     static boolean forCircle = false;
 
@@ -57,13 +58,13 @@ public class Gui extends Application {
 
     private clientServerConnector connector;
 
-    GridPane mySeaField = new GridPane();
-    GridPane myPane = new GridPane();
-    GridPane enemySeaField = new GridPane();
-    GridPane shipType = new GridPane();
-    int i = 0;
-    int e = 0;
-    int a = 0;
+    private GridPane mySeaField = new GridPane();
+    private GridPane myPane = new GridPane();
+    private GridPane enemySeaField = new GridPane();
+    private GridPane shipType = new GridPane();
+    private int i = 0;
+    private int e = 0;
+    private int a = 0;
 
     public static void main(String[] args) throws Exception {
 
@@ -114,25 +115,25 @@ public class Gui extends Application {
 
     }
 
-    public static void workWithEnemyField(int x, int y, String str, int ind1, int ind2, int ind3, int ind4) {
+    public void workWithEnemyField(int x, int y, String str, int ind1, int ind2, int ind3, int ind4) {
         if (str.equals("DAM")) {
-            Gui.rectENEMY[x + (y * 10)].setFill(Color.ORANGE);
+            rectENEMY[x + (y * 10)].setFill(Color.ORANGE);
         } else if (str.equals("DESTROY")) {
-            Gui.rectENEMY[x + (y * 10)].setFill(Color.BLACK);
+            rectENEMY[x + (y * 10)].setFill(Color.BLACK);
             if (ind1 != 4400) {
-                Gui.rectENEMY[ind1].setFill(Color.BLACK);
+                rectENEMY[ind1].setFill(Color.BLACK);
             }
             if (ind2 != 4400) {
-                Gui.rectENEMY[ind2].setFill(Color.BLACK);
+                rectENEMY[ind2].setFill(Color.BLACK);
             }
             if (ind3 != 4400) {
-                Gui.rectENEMY[ind3].setFill(Color.BLACK);
+                rectENEMY[ind3].setFill(Color.BLACK);
             }
             if (ind4 != 4400) {
-                Gui.rectENEMY[ind4].setFill(Color.BLACK);
+                rectENEMY[ind4].setFill(Color.BLACK);
             }
         } else if (str.equals("MISS")) {
-            Gui.rectENEMY[x + (y * 10)].setFill(Color.YELLOW);
+            rectENEMY[x + (y * 10)].setFill(Color.YELLOW);
         }
 
 
@@ -265,7 +266,7 @@ public class Gui extends Application {
             @Override
             public void handle(Event event) {
                 System.out.println("connector " + connector.getValue());
-                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(connector);
+                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(Gui.this, connector);
 
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
@@ -305,7 +306,7 @@ public class Gui extends Application {
             @Override
             public void handle(Event event) {
                 System.out.println("connector " + connector.getValue());
-                final SendingMessage sendMess = new SendingMessage(connector);
+                final SendingMessage sendMess = new SendingMessage(Gui.this, connector);
 
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
@@ -399,7 +400,7 @@ public class Gui extends Application {
 
     //makeOneIterationRectENEMY создает одну клетку(квадрат) поля для оппонента
     private void makeOneIterationRectENEMY(int i) {
-        rectENEMY[i] = new EnemyRectangle(10, 10, i);
+        rectENEMY[i] = new EnemyRectangle(this, 10, 10, i);
         rectENEMY[i].setFill(Color.GREEN);
 
         int numLine = (int) (10 - (10 - i * 0.1));
@@ -443,7 +444,9 @@ public class Gui extends Application {
                 int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
                 //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
                 workWithMyField(dX, dY);
+                System.out.println("Before new SendingResultOfFire(this, connector).sendResult(dX, dY)");
                 new SendingResultOfFire(this, connector).sendResult(dX, dY);
+                System.out.println("After new SendingResultOfFire(this, connector).sendResult(dX, dY)");
 
             }
             if (connector.getFirstCharOfLine() == '!') {
@@ -483,6 +486,10 @@ public class Gui extends Application {
                 + taskClSr.getMessage());
         commonChat.end();
     }
+    //Сеттеры
+    public void setTargetIndex(int i){
+        this.targetIndex=i;
+    }
 
     //Геттеры
     public clientServerConnector getConnector(){
@@ -493,6 +500,27 @@ public class Gui extends Application {
     }
     public MyRectangle getMyRect(int i){
         return rectMY[i];
+    }
+
+    public int getTargetIndex(){
+        return targetIndex;
+    }
+    public TextArea getSendingMessage(){
+        return sendingMessage;
+    }
+    public RadioButton getNo(){
+        return no;
+    }
+    public RadioButton getRanking(){ return ranking; }
+    public RadioButton getOne(){ return one; }
+    public RadioButton getTwo(){
+        return two;
+    }
+    public RadioButton getThree(){
+        return three;
+    }
+    public RadioButton getFour(){
+        return four;
     }
 
 

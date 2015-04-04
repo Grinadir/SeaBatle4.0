@@ -18,10 +18,12 @@ public class SendingTargetCoordinate extends Task {
     *запускаемый из GUI
     *нужен для того, чтобы передовать координаты атаки
     */
-    private clientServerConnector serverConnector;
+    private clientServerConnector connector;
+    private Gui gui;
 
-    public SendingTargetCoordinate(clientServerConnector serverConnector){
-        this.serverConnector=serverConnector;
+    public SendingTargetCoordinate(Gui gui, clientServerConnector connector){
+        this.connector=connector;
+        this.gui=gui;
     }
     //Gui.GtaskClSr
 
@@ -33,13 +35,13 @@ public class SendingTargetCoordinate extends Task {
 
     @Override
     protected Object call() throws Exception {
-        if (serverConnector.getSr().getSerS()!= null
-                && !serverConnector.getSr().getSerS().isClosed()) {
-            DataOutputStream outServer = new DataOutputStream(serverConnector.getSr().getOutS());
+        if (connector.getSr().getSerS()!= null
+                && !connector.getSr().getSerS().isClosed()) {
+            DataOutputStream outServer = new DataOutputStream(connector.getSr().getOutS());
 
             sendStrikeCoord(outServer, "server");
         } else {
-            DataOutputStream outClient = new DataOutputStream(serverConnector.getCl().getOutC());
+            DataOutputStream outClient = new DataOutputStream(connector.getCl().getOutC());
 
             sendStrikeCoord(outClient, "client");
         }
@@ -48,13 +50,16 @@ public class SendingTargetCoordinate extends Task {
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
     private void sendStrikeCoord(DataOutputStream out, String s) {
         try {
-            updateMessage("#attack of "+s+" (I AM)" + "(" + currentDate + ")"
+            int y = (int) (10 - (10 -gui.getTargetIndex()  * 0.1));
+            int x= gui.getTargetIndex() - y * 10;
+
+            updateMessage("#attack of " + s + " (I AM)" + "(" + currentDate + ")"
                     + " attacked coordinates: " + "("
-                    + "$" + EnemyRectangle.getTargetX() + "%" + EnemyRectangle.getTargetY()
+                    + "$" + x + "%" + y
                     + "*;");
             out.writeUTF("#attack of "+s+ " (" + currentDate + ")"
                     + " attacked coordinates: " + "("
-                    + "$" + EnemyRectangle.getTargetX() + "%" + EnemyRectangle.getTargetY()
+                    + "$" + x + "%" + y
                     + "*;");
 
             updateMessage("");
