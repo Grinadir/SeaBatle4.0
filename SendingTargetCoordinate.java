@@ -18,20 +18,15 @@ public class SendingTargetCoordinate extends Task {
     *запускаемый из GUI
     *нужен для того, чтобы передовать координаты атаки
     */
-    private clientServerConnector connector;
+    private ClientServerConnector connector;
     private Gui gui;
 
-    public SendingTargetCoordinate(Gui gui, clientServerConnector connector){
+    public SendingTargetCoordinate(Gui gui, ClientServerConnector connector){
         this.connector=connector;
         this.gui=gui;
     }
-    //Gui.GtaskClSr
 
-
-    String line;
-    Date currentDate = new Date();
-
-
+    private Date currentDate = new Date();
 
     @Override
     protected Object call() throws Exception {

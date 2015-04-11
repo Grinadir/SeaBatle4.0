@@ -27,12 +27,8 @@ public class Server {
         try {
             serS = new ServerSocket(port);
             serS.setSoTimeout(5000);
-
-            String line = "Статус: сервер, установдено время ожидание 5 сек \n"
-                    + "Значение сервера" + serS + "\n";
-
             s = serS.accept();
-            System.out.println("Пришел клиент!!");
+            System.out.println("Client connected");
 
             inS = s.getInputStream();
             outS = s.getOutputStream();
@@ -52,11 +48,8 @@ public class Server {
     public InputStream getInS(){
         return inS;
     }
-
     public OutputStream getOutS(){
         return outS;
     }
-
-
 
 }

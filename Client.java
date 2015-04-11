@@ -23,11 +23,11 @@ public class Client {
     private InetAddress ip;
     private Socket clS;
     private int port = 8080;
-    private clientServerConnector SCS;
+    private ClientServerConnector SCS;
 
     //static public OutputStream infoOutputC;
 
-    public Client(clientServerConnector SCS) throws IOException {
+    public Client(ClientServerConnector SCS) throws IOException {
 
         ip = InetAddress.getByName("192.168.100.5");
         this.SCS=SCS;
@@ -48,7 +48,7 @@ public class Client {
         } else {
 
             clS.close();
-            System.out.println("Выполнена команда close, cls.isClose: " + clS.isClosed());
+            System.out.println("executed command close, cls.isClose: " + clS.isClosed());
         }
     }
     //Геттеры

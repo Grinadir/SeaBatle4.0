@@ -27,7 +27,10 @@ public class Gui extends Application {
 
     private String line = " ";
     private MyRectangle[] rectMY = new MyRectangle[100];
-    public EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
+
+
+
+    private EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
     private int targetIndex;
 
     /*
@@ -39,9 +42,9 @@ public class Gui extends Application {
     private Object tt = new JFXPanel();
     private TextArea commonChat = new TextArea();
     private TextArea sendingMessage = new TextArea();
-    private Button bStart = new Button("Start");
+    private Button bStart = new Button("Connect");
     private Button bsendMessage = new Button("Send");
-    private Button fireButton = new Button("Огонь");
+    private Button fireButton = new Button("Fire");
     private ToggleGroup group = new ToggleGroup();
     private RadioButton ranking = new RadioButton("Ranking");
     private RadioButton no = new RadioButton("NO");
@@ -54,7 +57,7 @@ public class Gui extends Application {
     //boolean forCircle = false;
     // boolean followStep;
 
-    private clientServerConnector connector;
+    private ClientServerConnector connector;
 
     private GridPane mySeaField = new GridPane();
     private GridPane myPane = new GridPane();
@@ -77,6 +80,7 @@ public class Gui extends Application {
             System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (rectMY[x + (y * 10)].getPrivateShip().isValidShip()));
 
             if (rectMY[x + (y * 10)].getPrivateShip().isValidShip()) {
+                System.out.println(x+(y*10));
                 rectMY[x + (y * 10)].setFill(Color.ORANGE);
                 System.out.println("Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE); " + (x + (y * 10)));
 
@@ -229,10 +233,7 @@ public class Gui extends Application {
             public void handle(Event event) {
                 // Создание класса Task, существующий для работы с JavaFX
 
-                connector =new clientServerConnector();
-                System.out.println("After press Start connector " + connector.getValue());
-                // Делаем слушателя на текстовое свойство
-
+                connector =new ClientServerConnector(Gui.this);
                 connector.messageProperty().addListener(
                         new ChangeListener<String>() {
 
@@ -241,7 +242,9 @@ public class Gui extends Application {
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
 
-                                whatDoWhenMessageDiliverd(connector);
+                                //whatDoWhenMessageDiliverd(connector);
+                                new GuiWorkWithIncomMess(Gui.this,connector).main();
+                                System.out.println("TYK TYK");
                             }
                         });
 
@@ -263,9 +266,7 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                System.out.println("connector " + connector.getValue());
                 final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(Gui.this, connector);
-
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
 
@@ -273,10 +274,10 @@ public class Gui extends Application {
                             public void changed(
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
-                                commonChat.setText(commonChat.getText().toString()+"\n");
+                                commonChat.setText(commonChat.getText().toString() + "\n");
                                 commonChat.end();
                                 commonChat.setText(commonChat.getText().toString() + sendMess.getMessage().toString());
-                               // sendMess.getMessage().toString()
+                                // sendMess.getMessage().toString()
 
                             }
                         });
@@ -303,7 +304,6 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                System.out.println("connector " + connector.getValue());
                 final SendingMessage sendMess = new SendingMessage(Gui.this, connector);
 
                 sendMess.messageProperty().addListener(
@@ -313,7 +313,7 @@ public class Gui extends Application {
                             public void changed(
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
-                                commonChat.setText(commonChat.getText()+"\n");
+                                commonChat.setText(commonChat.getText() + "\n");
                                 commonChat.setText(commonChat.getText().toString() + sendMess.getMessage());
                                 //commonChat.positionCaret(commonChat.get);
                                 //setTextInCommonChat(getConnector());
@@ -425,63 +425,10 @@ public class Gui extends Application {
         mySeaField.add(rectMY[i], (i - numLine * 10), numLine);
     }
 
-    private void whatDoWhenMessageDiliverd(clientServerConnector taskClSr) {
-        System.out.println("taskClSr.messageProperty().toString().charAt(0) " + taskClSr.messageProperty().toString().charAt(0));
 
-        try {
-            System.out.println("StartClientServer.line.toString().charAt(0) " + connector.getFirstCharOfLine());
-            if (connector.getFirstCharOfLine() != '!' && connector.getFirstCharOfLine() != '#') {
-                setTextInCommonChat(taskClSr);
-
-            }
-            if (connector.getFirstCharOfLine() == '#') {
-                setTextInCommonChat(taskClSr);
-
-                System.out.println("Проверка");
-                int dX = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("$") + 1, taskClSr.getMessage().indexOf("%")));
-                int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
-                //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
-                workWithMyField(dX, dY);
-                System.out.println("Before new SendingResultOfFire(this, connector).sendResult(dX, dY)");
-                new SendingResultOfFire(this, connector).sendResult(dX, dY);
-                System.out.println("After new SendingResultOfFire(this, connector).sendResult(dX, dY)");
-
-            }
-            if (connector.getFirstCharOfLine() == '!') {
-
-                setTextInCommonChat(taskClSr);
-
-                int index1=400;
-                int index2=440;
-                int index3=440;
-                int index4=440;
-
-                String result;
-                int dX = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("$") + 1, taskClSr.getMessage().indexOf("%")));
-                int dY = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("%") + 1, taskClSr.getMessage().indexOf("*")));
-                result = taskClSr.getMessage().toString().substring(taskClSr.getMessage().indexOf("*") + 1, taskClSr.getMessage().indexOf(";"));
-                if(result.equals("DESTROY")) {
-                    index1 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf(";") + 1, taskClSr.getMessage().indexOf("&")));
-                    index2 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("&") + 1, taskClSr.getMessage().indexOf("@")));
-                    index3 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("@") + 1, taskClSr.getMessage().indexOf("#")));
-                    index4 = Integer.parseInt(taskClSr.getMessage().substring(taskClSr.getMessage().indexOf("#") + 1, taskClSr.getMessage().indexOf("~")));
-                }
-                System.out.println("--------------------result: " + result);
-
-                workWithEnemyField(dX, dY, result, index1, index2, index3, index4);
-
-            }
-        } catch (StringIndexOutOfBoundsException e) {
-
-
-        } catch (Exception e) {
-
-        }
-    }
-
-    private void setTextInCommonChat(clientServerConnector taskClSr) {
+    public void setTextInCommonChat(ClientServerConnector connector) {
         commonChat.setText(commonChat.getText() + "\n"
-                + taskClSr.getMessage());
+                + connector.getMessage());
         commonChat.end();
     }
     //Сеттеры
@@ -490,7 +437,7 @@ public class Gui extends Application {
     }
 
     //Геттеры
-    public clientServerConnector getConnector(){
+    public ClientServerConnector getConnector(){
         return connector;
     }
     public MyRectangle getMyRect(int x, int y){
@@ -499,6 +446,12 @@ public class Gui extends Application {
     public MyRectangle getMyRect(int i){
         return rectMY[i];
     }
+
+    public EnemyRectangle getRectENEMY(int i) {
+        return rectENEMY[i];
+    }
+
+
 
     public int getTargetIndex(){
         return targetIndex;

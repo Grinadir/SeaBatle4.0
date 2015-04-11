@@ -3,7 +3,6 @@ package sample;
 import javafx.scene.paint.Color;
 
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -21,18 +20,18 @@ public class SendingResultOfFire {
     private Date currentDate = new Date();
 
     private Gui gui;
-    private clientServerConnector connector;
+    private ClientServerConnector connector;
     private int x;
     private int y;
-    public SendingResultOfFire(Gui gui, clientServerConnector connector){
+    public SendingResultOfFire(Gui gui, ClientServerConnector connector){
         this.gui=gui;
         this.connector=connector;
-        System.out.println("Конструктор SendingResultOfFire");
+        System.out.println("Designer SendingResultOfFire");
 
     }
 
     public void sendResult(int x, int y) {
-        System.out.println("Вхождение в sendResult");
+        System.out.println("Entry in sendResult");
         this.x=x;
         this.y=y;
 
@@ -40,7 +39,7 @@ public class SendingResultOfFire {
                 && !connector.getSr().getSerS().isClosed()) {
 
             //workWithMyField(x, y);
-            System.out.println("Вхождение в sendResult if");
+            System.out.println("Entry in sendResult if");
 
             DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
             sendResultOne(out, "Server");
@@ -63,7 +62,7 @@ public class SendingResultOfFire {
 
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
     private void sendResultOne(DataOutputStream out, String s) {
-        System.out.println("Вхождение в SROF");
+        System.out.println("Entry in SROF");
         //try {
         System.out.println("gui.getMyRect(x, (y * 10) "+(x+y * 10));
         System.out.println("gui.getMyRect(x, (y * 10) "+gui.getMyRect(x+(y * 10)));
@@ -77,7 +76,7 @@ public class SendingResultOfFire {
                 try{
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("
-                        + "$" + connector.getDx() + "%" + connector.getDy()
+                        + "$" + x + "%" + y
                         + "*DAM;");
                 System.out.println("Результат атаки отправден");
                 }
@@ -103,9 +102,9 @@ public class SendingResultOfFire {
 
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("
-                        + "$" + connector.getDx() + "%" + connector.getDy()
+                        + "$" + x + "%" + y
                         + "*DESTROY;" + index1 + "&" + index2 + "@" + index3 + "#" + index4 + "~");
-                System.out.println("Результат атаки отправден");
+                System.out.println("Result of attack was send");
                 }
                 catch (Exception e){
                     System.out.println("Результат атаки не отправлен");
@@ -116,25 +115,13 @@ public class SendingResultOfFire {
                 try{
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("
-                        + "$" + connector.getDx() + "%" + connector.getDy()
+                        + "$" + x + "%" + y
                         + "*MISS;");
-                System.out.println("Результат атаки отправден");}
+                System.out.println("Result of attack was send");}
                 catch (Exception e){
-                    System.out.println("Результат атаки не отправлен");
+                    System.out.println("Result of fire don't delivered");
                     e.printStackTrace();
                 }
             }
-
-
-            //FIXME updateMessage("");
-        //} catch (IOException e1) {
-            // TODO Auto-generated catch block
-        //    e1.printStackTrace();
-       // }
-
-
     }
-
-
-
 }

@@ -8,26 +8,26 @@ public class Counters {
 
 
 
-    private Ship[] shipSingle = new Ship[5];//Эту статику не могу убрать, так как она должна быть по логике
-    private Ship[] shipDouble = new Ship[4];//Эту статику не могу убрать, так как она должна быть по логике
-    private Ship[] shipTriple = new Ship[3];//Эту статику не могу убрать, так как она должна быть по логике
-    private Ship shipQuadruple = new Ship(4);//Эту статику не могу убрать, так как она должна быть по логике
+    private Ship[] shipSingle = new Ship[5];
+    private Ship[] shipDouble = new Ship[4];
+    private Ship[] shipTriple = new Ship[3];
+    private Ship shipQuadruple = new Ship(4);
 
-    private int count2 = 0;//Эту статику не могу убрать, так как она должна быть по логике
-    private int count3 = 0;//Эту статику не могу убрать, так как она должна быть по логике
-    private int count4 = 0;//Эту статику не могу убрать, так как она должна быть по логике
+    private int count2 = 0;
+    private int count3 = 0;
+    private int count4 = 0;
 
-    private int oneAmount = 4;//Эту статику не могу убрать, так как она должна быть по логике
-    private int twoAmount = 3;//Эту статику не могу убрать, так как она должна быть по логике
-    private int threeAmount = 2;//Эту статику не могу убрать, так как она должна быть по логике
-    private int fourAmount = 1;//Эту статику не могу убрать, так как она должна быть по логике
+    private int oneAmount = 4;
+    private int twoAmount = 3;
+    private int threeAmount = 2;
+    private int fourAmount = 1;
 
-    private int saveX;//Эту статику не могу убрать, так как она должна быть по логике
-    private int saveY;//Эту статику не могу убрать, так как она должна быть по логике
-    private int saveX1;//Эту статику не могу убрать, так как она должна быть по логике
-    private int saveY1;//Эту статику не могу убрать, так как она должна быть по логике
-    private int saveX2;//Эту статику не могу убрать, так как она должна быть по логике
-    private int saveY2;//Эту статику не могу убрать, так как она должна быть по логике
+    private int saveX;
+    private int saveY;
+    private int saveX1;
+    private int saveY1;
+    private int saveX2;
+    private int saveY2;
 
     public Ship[] getShipSingle() {
         return shipSingle;

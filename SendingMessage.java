@@ -22,11 +22,11 @@ public class SendingMessage extends Task {
 
     private String line;
     private Date currentDate = new Date();
-    private clientServerConnector connector;
+    private ClientServerConnector connector;
     private Gui gui;
 
 
-    public SendingMessage(Gui gui, clientServerConnector connector){
+    public SendingMessage(Gui gui, ClientServerConnector connector){
         this.gui=gui;
         this.connector=connector;
     }
@@ -34,30 +34,19 @@ public class SendingMessage extends Task {
 
     @Override
     protected Void call() throws Exception {
-
-
         mainFunctionOutputMessage();
-
-
         return null;
     }
-
-
-
-
 
 
 //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
         if (connector.getSr().getSerS() != null && !connector.getSr().getSerS().isClosed()) {
-
-
             DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
             outputAndUpdateMess(out, "Server");
         } else {
             DataOutputStream out = new DataOutputStream(connector.getCl().getOutC());
-
-                outputAndUpdateMess(out, "Client");
+            outputAndUpdateMess(out, "Client");
 
         }
     }
