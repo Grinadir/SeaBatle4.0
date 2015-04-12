@@ -20,7 +20,6 @@ public class Server {
 
     public Server() throws IOException {
         ip = InetAddress.getLocalHost();
-
     }
 
     public void serverWorking() throws IOException {
@@ -29,7 +28,6 @@ public class Server {
             serS.setSoTimeout(5000);
             s = serS.accept();
             System.out.println("Client connected");
-
             inS = s.getInputStream();
             outS = s.getOutputStream();
         } catch (SocketTimeoutException e) {
@@ -38,7 +36,6 @@ public class Server {
         } catch (BindException e) {
 
         }
-
     }
 
     //Геттеры

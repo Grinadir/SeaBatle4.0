@@ -12,23 +12,16 @@ public class GuiWorkWithMyField {
         this.gui=gui;
     }
 
-
-
-
     public void main(int x, int y) {
         if (gui.getMyRect(x + (y * 10)).getFill() == Color.BLUE) {
             gui.getMyRect(x + (y * 10)).getPrivateShip().impairment();
             System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (gui.getMyRect(x + (y * 10)).getPrivateShip().isValidShip()));
-
             if (gui.getMyRect(x + (y * 10)).getPrivateShip().isValidShip()) {
                 System.out.println(x+(y*10));
                 gui.getMyRect(x + (y * 10)).setFill(Color.ORANGE);
                 System.out.println("Gui.gui.getMyRect(x + (y * 10))[x + (y * 10)].setFill(Color.ORANGE); " + (x + (y * 10)));
-
             } else if (!(gui.getMyRect(x + (y * 10)).getPrivateShip().isValidShip())) {
-
                 gui.getMyRect(x + (y * 10)).setFill(Color.BLACK);
-
                 int lX = gui.getMyRect(x + (y * 10)).getPrivateShip().getX1();
                 int lY = gui.getMyRect(x + (y * 10)).getPrivateShip().getY1();
                 if(lX+lY<=18) {

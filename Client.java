@@ -23,30 +23,23 @@ public class Client {
     private InetAddress ip;
     private Socket clS;
     private int port = 8080;
-    private ClientServerConnector SCS;
+    private ClientServerConnector connector;
 
-    //static public OutputStream infoOutputC;
-
-    public Client(ClientServerConnector SCS) throws IOException {
-
+    public Client(ClientServerConnector connector) throws IOException {
         ip = InetAddress.getByName("192.168.100.5");
-        this.SCS=SCS;
-
-
+        this.connector=connector;
     }
 
     public void clientWorking() throws IOException, InterruptedException {
         System.out.println("Attetion! clientWorking");
-        DataInputStream in = new DataInputStream(SCS.getSr().getInS());
+        DataInputStream in = new DataInputStream(connector.getSr().getInS());
         clS = new Socket(ip, port);
         inC = clS.getInputStream();
         outC = clS.getOutputStream();
         TimeUnit.SECONDS.sleep(5);
         if (clS.isConnected() == true) {
-
             System.out.println("cls.isConnected: " + clS.isConnected());
         } else {
-
             clS.close();
             System.out.println("executed command close, cls.isClose: " + clS.isClosed());
         }
@@ -55,11 +48,9 @@ public class Client {
     public InputStream getInC(){
         return inC;
     }
-
     public OutputStream getOutC(){
         return outC;
     }
-
     public Socket getClS(){
         return clS;
     }

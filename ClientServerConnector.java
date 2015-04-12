@@ -29,7 +29,6 @@ public class ClientServerConnector extends Task {
     private SystemOfIncomingMessage sysInMESSAGE;
     private Gui gui;
 
-
     public ClientServerConnector(Gui gui){
         this.gui=gui;
 
@@ -37,7 +36,6 @@ public class ClientServerConnector extends Task {
 
     @Override
     protected Void call() throws Exception {
-
         updateMessage("Start client-server");
         sr = new Server();
         cl = new Client(this);
@@ -55,14 +53,11 @@ public class ClientServerConnector extends Task {
 
     private void tryFuctionToConnection(String mess) throws IOException, InterruptedException {
         do {
-
             sr.serverWorking();
             //mess = "После первого выполнения sr.serSv=" + sr.serS + "\n";
             updateMessage(mess);
-            System.out.print("After first execute sr.serSv=" + sr.getSerS()
-                    + "\n");
+            System.out.print("After first execute sr.serSv=" + sr.getSerS() + "\n");
             try {
-
                 updateMessage(mess);
                 System.out
                         .print("After first execute sr.serSv.isClosed()="
@@ -78,27 +73,20 @@ public class ClientServerConnector extends Task {
                 } catch (SocketException e) {
                     System.out.println("Attempt to create client-server gain");
                     sr.serverWorking();
-
                 }
-
             }
 
             System.out.println("Cycle was made, Итоги:");
-
             System.out.println("sr.serSv: " + sr.getSerS());
 
             try {
-                System.out.println("sr.serS.isClosed()"
-                        + sr.getSerS().isClosed());
+                System.out.println("sr.serS.isClosed()" + sr.getSerS().isClosed());
             } catch (NullPointerException e) {
                 System.out.println("catch sr.serS=" + sr.getSerS() + "\n");
             }
             System.out.println("cl.clS: " + cl.getClS());
-
-
         } while (sr.getSerS() != null && sr.getSerS().isClosed() && cl.getClS() == null);
     }
-
 
     public  void updateMessageSCS(String s){
         this.updateMessage(s);
@@ -111,7 +99,6 @@ public class ClientServerConnector extends Task {
     public Server getSr(){
         return sr;
     }
-
     public Client getCl(){
         return cl;
     }

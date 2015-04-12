@@ -20,8 +20,6 @@ public class MyRectangle extends Rectangle {
     * Рефактринг сделаю позже
     */
 
-
-
     private int x;
     private int y;
     private int veto = 0;
@@ -38,32 +36,24 @@ public class MyRectangle extends Rectangle {
         setHeight(height);
         this.func=new FunctionsOfMarkedByDifferentColor(gui);
 
-
         this.setOnMouseClicked(new EventHandler<Event>() {
 
             @Override
             public void handle(Event event) {
 
                 if (gui.getNo().isSelected()) {
-
                     if (getFill() == Color.RED) {
-
                         setFill(Color.GREEN);
                     } else {
                         setFill(Color.RED);
                     }
-
-
                 }
 
                 if (gui.getRanking().isSelected()
                         && gui.getOne().isSelected()
                         && count.getOneAmount() == 0
                         && (getFill() != Color.YELLOW && getFill() != Color.GREEN)) {
-
-
                     if (getFill() == Color.BLUE) {
-
                         setFill(Color.GREEN);
                         count.setOneAmount(count.getOneAmount()+1);
                         func.marketGreen(x, y);
@@ -71,27 +61,20 @@ public class MyRectangle extends Rectangle {
 // -1-
 
                 } else if (isSelectedSingleShip()) {
-
-
                     switch (count.getOneAmount()) {
                         case 4:
                             makeSingleShip();
                             break;
-
                         case 3:
                             makeSingleShip();
                             break;
-
                         case 2:
                             makeSingleShip();
                             break;
-
                         case 1:
                             makeSingleShip();
                             break;
-
                     }
-
                 }
 
 // -2-
@@ -99,26 +82,20 @@ public class MyRectangle extends Rectangle {
                     makeDoubleShipForThree();
                 }
 // -3-
-
                 else if (isSelectedTripleShip()) {
                     makeTripleShipForBoth();
                 }
 
 // -4-
-
                 else if (isSelectedQuadrupleShip()) {
                     makeQuadrupleShip();
                 }
-
             }
-
         });
-
         // Слушатель на кнопку старт
-
     }
 
-    //
+
     //Extract функции выборов кораблей
     private boolean isSelectedSingleShip() {
         return gui.getRanking().isSelected() && gui.getOne().isSelected()
@@ -144,14 +121,11 @@ public class MyRectangle extends Rectangle {
                 && count.getFourAmount() != 0;
     }
 
-
     //Extract функций создания кораблей
     private void makeSingleShip() {
         count.getShipSingle()[count.getOneAmount()] = new Ship(1);
         getPrivateShip = count.getShipSingle()[count.getOneAmount()];
-
         if (getFill() == Color.GREEN) {
-
             count.getShipSingle()[count.getOneAmount()].setX1(x);
             count.getShipSingle()[count.getOneAmount()].setY1(y);
             setFill(Color.BLUE);
@@ -197,7 +171,6 @@ public class MyRectangle extends Rectangle {
             count.setTwoAmount(count.getTwoAmount()-1);
         }
     }
-
 
     private void makeTripleShipForBoth() {
         if (count.getCount3() == 0) {
@@ -250,7 +223,6 @@ public class MyRectangle extends Rectangle {
         }
     }
 
-
     private void makeQuadrupleShip() {
         getPrivateShip = count.getShipQuadruple();
         if (count.getCount4() == 0) {
@@ -281,7 +253,6 @@ public class MyRectangle extends Rectangle {
                 count.setSaveX2(x);
                 count.setSaveY2(y);
                 count.setCount4(count.getCount4() + 1);
-
             } else if (count.getSaveY() == y
                     && (count.getSaveX1() == x + 1 || count.getSaveX1() == x - 1)
                     && count.getFourAmount() != 0) {
@@ -292,7 +263,6 @@ public class MyRectangle extends Rectangle {
                 count.setSaveY2(y);
                 count.setCount4(count.getCount4()+1);
             }
-
         } else if ((count.getSaveX() == x || count.getSaveY() == y) && count.getCount4() == 3
                 && count.getFourAmount() != 0) {
             if (count.getSaveX2() == x

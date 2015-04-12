@@ -25,7 +25,6 @@ public class SendingMessage extends Task {
     private ClientServerConnector connector;
     private Gui gui;
 
-
     public SendingMessage(Gui gui, ClientServerConnector connector){
         this.gui=gui;
         this.connector=connector;
@@ -53,10 +52,8 @@ public class SendingMessage extends Task {
 
     private void outputAndUpdateMess(DataOutputStream out, String str) {
         try {
-
             updateMessage(str+" " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
             out.writeUTF(str+" " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
-
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();

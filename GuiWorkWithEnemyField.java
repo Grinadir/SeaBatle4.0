@@ -13,7 +13,6 @@ public class GuiWorkWithEnemyField {
         this.gui = gui;
     }
 
-
     public void main(int x, int y, String str, int ind1, int ind2, int ind3, int ind4) {
         if (str.equals("DAM")) {
             gui.getRectENEMY(x + (y * 10)).setFill(Color.ORANGE);

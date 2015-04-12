@@ -27,9 +27,6 @@ public class Gui extends Application {
 
     private String line = " ";
     private MyRectangle[] rectMY = new MyRectangle[100];
-
-
-
     private EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
     private int targetIndex;
 
@@ -54,8 +51,6 @@ public class Gui extends Application {
     private RadioButton two = new RadioButton("Two 3 pcs.");
     private RadioButton one = new RadioButton("One 4 pcs.");
     private Counters count=new Counters();
-    //boolean forCircle = false;
-    // boolean followStep;
 
     private ClientServerConnector connector;
 
@@ -64,95 +59,20 @@ public class Gui extends Application {
     private GridPane enemySeaField = new GridPane();
     private GridPane shipType = new GridPane();
     private int i = 0;
-    private int e = 0;
-    private int a = 0;
+
+    private Status status=new Status();
 
     public static void main(String[] args) throws Exception {
-
         launch(args);
-
-    }
-
-    //Функция по закраске подпитых квадратиков
-    public void workWithMyField(int x, int y) {
-        if (rectMY[x + (y * 10)].getFill() == Color.BLUE) {
-            rectMY[x + (y * 10)].getPrivateShip().impairment();
-            System.out.println("(Gui.rectMY[x + (y * 10)].privateShip.isValidShip())" + (rectMY[x + (y * 10)].getPrivateShip().isValidShip()));
-
-            if (rectMY[x + (y * 10)].getPrivateShip().isValidShip()) {
-                System.out.println(x+(y*10));
-                rectMY[x + (y * 10)].setFill(Color.ORANGE);
-                System.out.println("Gui.rectMY[x + (y * 10)].setFill(Color.ORANGE); " + (x + (y * 10)));
-
-            } else if (!(rectMY[x + (y * 10)].getPrivateShip().isValidShip())) {
-
-                rectMY[x + (y * 10)].setFill(Color.BLACK);
-
-                int lX = rectMY[x + (y * 10)].getPrivateShip().getX1();
-                int lY = rectMY[x + (y * 10)].getPrivateShip().getY1();
-                if(lX+lY<=18) {
-                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
-                }
-                lX = rectMY[x + (y * 10)].getPrivateShip().getX2();
-                lY = rectMY[x + (y * 10)].getPrivateShip().getY2();
-                if(lX+lY<=18) {
-                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
-                }
-                lX = rectMY[x + (y * 10)].getPrivateShip().getX3();
-                lY = rectMY[x + (y * 10)].getPrivateShip().getY3();
-                if(lX+lY<=18) {
-                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
-                }
-                lX = rectMY[x + (y * 10)].getPrivateShip().getX4();
-                lY = rectMY[x + (y * 10)].getPrivateShip().getY4();
-                if(lX+lY<=18) {
-                    rectMY[lX + (lY * 10)].setFill(Color.BLACK);
-                }
-
-
-
-            }
-        }
-
-
-    }
-
-    public void workWithEnemyField(int x, int y, String str, int ind1, int ind2, int ind3, int ind4) {
-        if (str.equals("DAM")) {
-            rectENEMY[x + (y * 10)].setFill(Color.ORANGE);
-        } else if (str.equals("DESTROY")) {
-            rectENEMY[x + (y * 10)].setFill(Color.BLACK);
-            if (ind1 != 4400) {
-                rectENEMY[ind1].setFill(Color.BLACK);
-            }
-            if (ind2 != 4400) {
-                rectENEMY[ind2].setFill(Color.BLACK);
-            }
-            if (ind3 != 4400) {
-                rectENEMY[ind3].setFill(Color.BLACK);
-            }
-            if (ind4 != 4400) {
-                rectENEMY[ind4].setFill(Color.BLACK);
-            }
-        } else if (str.equals("MISS")) {
-            rectENEMY[x + (y * 10)].setFill(Color.YELLOW);
-        }
-
-
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException,
-            InterruptedException {
-
-
+    public void start(Stage primaryStage) throws IOException, InterruptedException {
         commonChat.setEditable(false);
         commonChat.selectEndOfNextWord();
         commonChat.setPrefSize(200, 500);
         commonChat.setTooltip(new Tooltip("Чат Окно"));
         commonChat.setWrapText(true);
-
-
         try {
             commonChat.setText(commonChat.getText() + "\n" + line);
         } catch (NullPointerException e) {
@@ -163,31 +83,26 @@ public class Gui extends Application {
         ranking.setToggleGroup(group);
         no.setToggleGroup(group);
         ranking.setSelected(true);
-
         four.setToggleGroup(ships);
         three.setToggleGroup(ships);
         two.setToggleGroup(ships);
         one.setToggleGroup(ships);
         one.setSelected(true);
 
-
         myPane.setAlignment(Pos.CENTER_LEFT);
         myPane.setHgap(10);
         myPane.setVgap(10);
         myPane.setPadding(new Insets(25, 25, 25, 25));
-
 
         mySeaField.setAlignment(Pos.CENTER_LEFT);
         mySeaField.setHgap(10);
         mySeaField.setVgap(10);
         mySeaField.setPadding(new Insets(10, 10, 10, 10));
 
-
         enemySeaField.setAlignment(Pos.CENTER_RIGHT);
         enemySeaField.setVgap(10);
         enemySeaField.setHgap(10);
         enemySeaField.setPadding(new Insets(10, 10, 10, 10));
-
 
         shipType.setAlignment(Pos.CENTER_LEFT);
         shipType.setPadding(new Insets(0, 0, 0, 0));
@@ -232,7 +147,6 @@ public class Gui extends Application {
             @Override
             public void handle(Event event) {
                 // Создание класса Task, существующий для работы с JavaFX
-
                 connector =new ClientServerConnector(Gui.this);
                 connector.messageProperty().addListener(
                         new ChangeListener<String>() {
@@ -243,11 +157,10 @@ public class Gui extends Application {
                                     String oldValue, String newValue) {
 
                                 //whatDoWhenMessageDiliverd(connector);
-                                new GuiWorkWithIncomMess(Gui.this,connector).main();
+                                new GuiWorkWithIncomMess(Gui.this,connector,status).main();
                                 System.out.println("TYK TYK");
                             }
                         });
-
                 Service service = new Service<Void>() {
 
                     @Override
@@ -266,7 +179,7 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(Gui.this, connector);
+                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(Gui.this, connector, status);
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
 
@@ -277,8 +190,6 @@ public class Gui extends Application {
                                 commonChat.setText(commonChat.getText().toString() + "\n");
                                 commonChat.end();
                                 commonChat.setText(commonChat.getText().toString() + sendMess.getMessage().toString());
-                                // sendMess.getMessage().toString()
-
                             }
                         });
 
@@ -292,12 +203,8 @@ public class Gui extends Application {
                     }
 
                 };
-
                 service.start();
-
-
             }
-
         });
 
         bsendMessage.setOnMouseClicked(new EventHandler<Event>() {
@@ -315,10 +222,7 @@ public class Gui extends Application {
                                     String oldValue, String newValue) {
                                 commonChat.setText(commonChat.getText() + "\n");
                                 commonChat.setText(commonChat.getText().toString() + sendMess.getMessage());
-                                //commonChat.positionCaret(commonChat.get);
-                                //setTextInCommonChat(getConnector());
                                 commonChat.end();
-
                             }
                         });
 
@@ -344,7 +248,6 @@ public class Gui extends Application {
             }
 
         });
-
         two.setOnMouseClicked(new EventHandler<Event>() {
 
             @Override
@@ -354,7 +257,6 @@ public class Gui extends Application {
             }
 
         });
-
         three.setOnMouseClicked(new EventHandler<Event>() {
 
             @Override
@@ -364,7 +266,6 @@ public class Gui extends Application {
             }
 
         });
-
         four.setOnMouseClicked(new EventHandler<Event>() {
 
             @Override
@@ -374,7 +275,6 @@ public class Gui extends Application {
             }
 
         });
-
         makeEnemyAndMyField();
 
 
@@ -384,44 +284,36 @@ public class Gui extends Application {
                 getClass().getResource("application.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
+
+
+
 
     //ДАЛЕЕ НАХОДИТСЯ ЭКСПОРТИРУЕМЫЕ ФУНКЦИИ
     private void makeEnemyAndMyField() {
         for (i = 0; i <= 99; ++i) {
             makeOneIterationRectMY(i);
             makeOneIterationRectENEMY(i);
-
         }
     }
 
     //makeOneIterationRectENEMY создает одну клетку(квадрат) поля для оппонента
     private void makeOneIterationRectENEMY(int i) {
-        rectENEMY[i] = new EnemyRectangle(this, 10, 10, i);
+        rectENEMY[i] = new EnemyRectangle(this, 10, 10, count);
         rectENEMY[i].setFill(Color.GREEN);
-
         int numLine = (int) (10 - (10 - i * 0.1));
         rectENEMY[i].setXenemyRect(i - numLine * 10);
         rectENEMY[i].setYenemyRect(numLine);
-
-
         enemySeaField.add(rectENEMY[i], (i - numLine * 10), numLine);
     }
 
     //makeOneIterationRectMY создает одну клетку(квадрат) поля для игрока
     private void makeOneIterationRectMY(int i) {
-
         rectMY[i] = new MyRectangle(this, count, 10, 10, i);
         rectMY[i].setFill(Color.GREEN);
-
-
         int numLine = (int) (10 - (10 - i * 0.1));
-
-
         rectMY[i].setXinMyRect(i - numLine * 10);
         rectMY[i].setYinMyRect(numLine);
-
         mySeaField.add(rectMY[i], (i - numLine * 10), numLine);
     }
 
@@ -446,13 +338,9 @@ public class Gui extends Application {
     public MyRectangle getMyRect(int i){
         return rectMY[i];
     }
-
     public EnemyRectangle getRectENEMY(int i) {
         return rectENEMY[i];
     }
-
-
-
     public int getTargetIndex(){
         return targetIndex;
     }
@@ -473,7 +361,5 @@ public class Gui extends Application {
     public RadioButton getFour(){
         return four;
     }
-
-
 }
 

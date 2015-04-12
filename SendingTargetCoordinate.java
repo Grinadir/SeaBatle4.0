@@ -20,10 +20,14 @@ public class SendingTargetCoordinate extends Task {
     */
     private ClientServerConnector connector;
     private Gui gui;
+    private Status status;
 
-    public SendingTargetCoordinate(Gui gui, ClientServerConnector connector){
+    public SendingTargetCoordinate(Gui gui, ClientServerConnector connector, Status status){
         this.connector=connector;
         this.gui=gui;
+        this.status=status;
+        System.out.println("isFollowStep in Constr " + status.isFollowStep());
+        System.out.println("Constructor SendingTargetCoordinate");
     }
 
     private Date currentDate = new Date();
@@ -33,12 +37,16 @@ public class SendingTargetCoordinate extends Task {
         if (connector.getSr().getSerS()!= null
                 && !connector.getSr().getSerS().isClosed()) {
             DataOutputStream outServer = new DataOutputStream(connector.getSr().getOutS());
-
-            sendStrikeCoord(outServer, "server");
+            System.out.println("isFollowStep " + status.isFollowStep());
+            if(status.isFollowStep()) {
+                sendStrikeCoord(outServer, "server");
+            }
         } else {
             DataOutputStream outClient = new DataOutputStream(connector.getCl().getOutC());
-
-            sendStrikeCoord(outClient, "client");
+            System.out.println("isFollowStep "+status.isFollowStep());
+            if(status.isFollowStep()) {
+                sendStrikeCoord(outClient, "client");
+            }
         }
         return null;
     }
@@ -47,7 +55,6 @@ public class SendingTargetCoordinate extends Task {
         try {
             int y = (int) (10 - (10 -gui.getTargetIndex()  * 0.1));
             int x= gui.getTargetIndex() - y * 10;
-
             updateMessage("#attack of " + s + " (I AM)" + "(" + currentDate + ")"
                     + " attacked coordinates: " + "("
                     + "$" + x + "%" + y
@@ -56,7 +63,6 @@ public class SendingTargetCoordinate extends Task {
                     + " attacked coordinates: " + "("
                     + "$" + x + "%" + y
                     + "*;");
-
             updateMessage("");
         } catch (IOException e1) {
             // TODO Auto-generated catch block

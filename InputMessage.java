@@ -13,19 +13,17 @@ public class InputMessage {
     private ClientServerConnector connector;
     private  DataInputStream in;
     private String line;
+
     public  InputMessage(Gui gui, ClientServerConnector connector, DataInputStream in){
         System.out.println("Constructor InputMessage");
         this.gui=gui;
         this.connector=connector;
         this.in=in;
-
     }
 
     public void inputMessageHandler(String s) throws IOException {
-
         line = in.readUTF();
         connector.updateMessageSCS(line);
-
     }
 
     public String getLine(){
