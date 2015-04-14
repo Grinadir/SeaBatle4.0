@@ -53,6 +53,7 @@ public class Gui extends Application {
     private Counters count=new Counters();
 
     private ClientServerConnector connector;
+    private Status status=new Status(count);
 
     private GridPane mySeaField = new GridPane();
     private GridPane myPane = new GridPane();
@@ -60,7 +61,6 @@ public class Gui extends Application {
     private GridPane shipType = new GridPane();
     private int i = 0;
 
-    private Status status=new Status();
 
     public static void main(String[] args) throws Exception {
         launch(args);

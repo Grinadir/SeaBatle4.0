@@ -38,13 +38,13 @@ public class SendingTargetCoordinate extends Task {
                 && !connector.getSr().getSerS().isClosed()) {
             DataOutputStream outServer = new DataOutputStream(connector.getSr().getOutS());
             System.out.println("isFollowStep " + status.isFollowStep());
-            if(status.isFollowStep()) {
+            if(status.isFollowStep()&&status.checkAndInstallStart()) {
                 sendStrikeCoord(outServer, "server");
             }
         } else {
             DataOutputStream outClient = new DataOutputStream(connector.getCl().getOutC());
             System.out.println("isFollowStep "+status.isFollowStep());
-            if(status.isFollowStep()) {
+            if(status.isFollowStep()&&status.checkAndInstallStart()) {
                 sendStrikeCoord(outClient, "client");
             }
         }

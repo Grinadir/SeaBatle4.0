@@ -23,8 +23,6 @@ public class FunctionsOfMarkedByDifferentColor {
     public void setColorYellowRect(int i) {
         if (!(gui.getMyRect(i).getFill() == Color.BLUE) && !(gui.getMyRect(i).getFill() == Color.YELLOW)) {
             gui.getMyRect(i).setFill(Color.YELLOW);
-        } else {
-            ;
         }
     }
 

@@ -6,8 +6,6 @@ package sample;
 
 
 import javafx.concurrent.Task;
-
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -46,11 +44,7 @@ public class ClientServerConnector extends Task {
         return null;
     }
 
-
-
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
-
-
     private void tryFuctionToConnection(String mess) throws IOException, InterruptedException {
         do {
             sr.serverWorking();

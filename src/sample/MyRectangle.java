@@ -23,7 +23,7 @@ public class MyRectangle extends Rectangle {
     private int x;
     private int y;
     private int veto = 0;
-    private Ship getPrivateShip;
+    private Ship PrivateShip;
     private final Gui gui;
     private FunctionsOfMarkedByDifferentColor func;
     private Counters count;
@@ -124,29 +124,27 @@ public class MyRectangle extends Rectangle {
     //Extract функций создания кораблей
     private void makeSingleShip() {
         count.getShipSingle()[count.getOneAmount()] = new Ship(1);
-        getPrivateShip = count.getShipSingle()[count.getOneAmount()];
+        PrivateShip = count.getShipSingle()[count.getOneAmount()];
         if (getFill() == Color.GREEN) {
-            count.getShipSingle()[count.getOneAmount()].setX1(x);
-            count.getShipSingle()[count.getOneAmount()].setY1(y);
+            PrivateShip.setX1(x);
+            PrivateShip.setY1(y);
             setFill(Color.BLUE);
             func.marketYellow(x, y);
             count.setOneAmount(count.getOneAmount()-1);
         } else {
             func.marketGreen(x, y);
             setFill(Color.GREEN);
-            getPrivateShip = null;
-            count.getShipSingle()[count.getOneAmount()] = null;
+            PrivateShip = null;
             count.setOneAmount(count.getOneAmount()+1);
         }
-        ;
     }
 
     private void makeDoubleShipForThree() {
         if (count.getCount2() == 0) {
             count.getShipDouble()[count.getTwoAmount()] = new Ship(2);
-            getPrivateShip = count.getShipDouble()[count.getTwoAmount()];
-            count.getShipDouble()[count.getTwoAmount()].setX1(x);
-            count.getShipDouble()[count.getTwoAmount()].setY1(y);
+            PrivateShip = count.getShipDouble()[count.getTwoAmount()];
+            PrivateShip.setX1(x);
+            PrivateShip.setY1(y);
             count.setSaveX(x);
             count.setSaveY(y);
             setFill(Color.BLUE);
@@ -155,9 +153,9 @@ public class MyRectangle extends Rectangle {
                 && count.getCount2() != 0
                 && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
                 || count.getSaveX() == x - 1 || count.getSaveY() == y - 1)) {
-            getPrivateShip = count.getShipDouble()[count.getTwoAmount()];
-            count.getShipDouble()[count.getTwoAmount()].setX2(x);
-            count.getShipDouble()[count.getTwoAmount()].setY2(y);
+            PrivateShip = count.getShipDouble()[count.getTwoAmount()];
+            PrivateShip.setX2(x);
+            PrivateShip.setY2(y);
             setFill(Color.BLUE);
             func.marketYellow(x, y);
             if (count.getSaveX() == x) {
@@ -175,9 +173,9 @@ public class MyRectangle extends Rectangle {
     private void makeTripleShipForBoth() {
         if (count.getCount3() == 0) {
             count.getShipTriple()[count.getThreeAmount()] = new Ship(3);
-            getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
-            count.getShipTriple()[count.getThreeAmount()].setX1(x);
-            count.getShipTriple()[count.getThreeAmount()].setY1(y);
+            PrivateShip = count.getShipTriple()[count.getThreeAmount()];
+            PrivateShip.setX1(x);
+            PrivateShip.setY1(y);
             count.setSaveX(x);
             count.setSaveY(y);
             setFill(Color.BLUE);
@@ -187,9 +185,9 @@ public class MyRectangle extends Rectangle {
                 && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
                 || count.getSaveX() == x - 1 || count.getSaveY() == y - 1)
                 && count.getThreeAmount() != 0) {
-            getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
-            count.getShipTriple()[count.getThreeAmount()].setX2(x);
-            count.getShipTriple()[count.getThreeAmount()].setY2(y);
+            PrivateShip = count.getShipTriple()[count.getThreeAmount()];
+            PrivateShip.setX2(x);
+            PrivateShip.setY2(y);
             setFill(Color.BLUE);
             count.setSaveX1(x);
             count.setSaveY1(y);
@@ -198,10 +196,10 @@ public class MyRectangle extends Rectangle {
                 && count.getThreeAmount() != 0) {
             if (count.getSaveX1() == x
                     && (count.getSaveY1() == y + 1 || count.getSaveY1() == y - 1)) {
-                getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
+                PrivateShip = count.getShipTriple()[count.getThreeAmount()];
                 setFill(Color.BLUE);
-                count.getShipTriple()[count.getThreeAmount()].setX3(x);
-                count.getShipTriple()[count.getThreeAmount()].setY3(y);
+                PrivateShip.setX3(x);
+                PrivateShip.setY3(y);
                 func.marketYellow(count.getSaveX(), count.getSaveY());
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(x, y);
@@ -210,10 +208,10 @@ public class MyRectangle extends Rectangle {
             } else if (count.getSaveY() == y
                     && (count.getSaveX1() == x + 1 || count.getSaveX1() == x - 1)
                     && count.getThreeAmount() != 0) {
-                getPrivateShip = count.getShipTriple()[count.getThreeAmount()];
+                PrivateShip = count.getShipTriple()[count.getThreeAmount()];
                 setFill(Color.BLUE);
-                count.getShipTriple()[count.getThreeAmount()].setX3(x);
-                count.getShipTriple()[count.getThreeAmount()].setY3(y);
+                PrivateShip.setX3(x);
+                PrivateShip.setY3(y);
                 func.marketYellow(count.getSaveX(), count.getSaveY());
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(x, y);
@@ -224,10 +222,10 @@ public class MyRectangle extends Rectangle {
     }
 
     private void makeQuadrupleShip() {
-        getPrivateShip = count.getShipQuadruple();
+        PrivateShip = count.getShipQuadruple();
         if (count.getCount4() == 0) {
-            count.getShipQuadruple().setX1(x);
-            count.getShipQuadruple().setY1(y);
+            PrivateShip.setX1(x);
+            PrivateShip.setY1(y);
             count.setSaveX (x);
             count.setSaveY (y);
             setFill(Color.BLUE);
@@ -238,8 +236,8 @@ public class MyRectangle extends Rectangle {
                 || count.getSaveX() == x - 1 || count.getSaveY() == y - 1)
                 && count.getFourAmount() != 0) {
             setFill(Color.BLUE);
-            count.getShipQuadruple().setX2(x);
-            count.getShipQuadruple().setY2(y);
+            PrivateShip.setX2(x);
+            PrivateShip.setY2(y);
             count.setSaveX1(x);
             count.setSaveY1(y);
             count.setCount4(count.getCount4()+1);
@@ -248,8 +246,8 @@ public class MyRectangle extends Rectangle {
             if (count.getSaveX1() == x
                     && (count.getSaveY1() == y + 1 || count.getSaveY1() == y - 1)) {
                 setFill(Color.BLUE);
-                count.getShipQuadruple().setX3(x);
-                count.getShipQuadruple().setY3(y);
+                PrivateShip.setX3(x);
+                PrivateShip.setY3(y);
                 count.setSaveX2(x);
                 count.setSaveY2(y);
                 count.setCount4(count.getCount4() + 1);
@@ -257,8 +255,8 @@ public class MyRectangle extends Rectangle {
                     && (count.getSaveX1() == x + 1 || count.getSaveX1() == x - 1)
                     && count.getFourAmount() != 0) {
                 setFill(Color.BLUE);
-                count.getShipQuadruple().setX3(x);
-                count.getShipQuadruple().setY3(y);
+                PrivateShip.setX3(x);
+                PrivateShip.setY3(y);
                 count.setSaveX2(x);
                 count.setSaveY2(y);
                 count.setCount4(count.getCount4()+1);
@@ -268,8 +266,8 @@ public class MyRectangle extends Rectangle {
             if (count.getSaveX2() == x
                     && (count.getSaveY2() == y + 1 || count.getSaveY2() == y - 1)) {
                 setFill(Color.BLUE);
-                count.getShipQuadruple().setX4(x);
-                count.getShipQuadruple().setY4(y);
+                PrivateShip.setX4(x);
+                PrivateShip.setY4(y);
                 func.marketYellow(count.getSaveX(), count.getSaveY());
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(count.getSaveX2(), count.getSaveY2());
@@ -280,8 +278,8 @@ public class MyRectangle extends Rectangle {
                     && (count.getSaveX2() == x + 1 || count.getSaveX2() == x - 1)
                     && count.getThreeAmount() != 0) {
                 setFill(Color.BLUE);
-                count.getShipQuadruple().setX4(x);
-                count.getShipQuadruple().setY4(y);
+                PrivateShip.setX4(x);
+                PrivateShip.setY4(y);
                 func.marketYellow(count.getSaveX(), count.getSaveY());
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(count.getSaveX2(), count.getSaveY2());
@@ -294,7 +292,7 @@ public class MyRectangle extends Rectangle {
 
     //Геттеры и сеттеры
     public Ship getPrivateShip(){
-        return getPrivateShip;
+        return PrivateShip;
     }
     public void setXinMyRect(int x){
         this.x=x;

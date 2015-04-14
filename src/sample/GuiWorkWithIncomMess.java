@@ -22,8 +22,9 @@ public class GuiWorkWithIncomMess {
             }
             if (tempString.charAt(0) == '#') {
                 gui.setTextInCommonChat(connector);
-                int dX = Integer.parseInt(tempString.substring(tempString.indexOf("$") + 1, tempString.indexOf("%")));
-                int dY = Integer.parseInt(tempString.substring(tempString.indexOf("%") + 1, tempString.indexOf("*")));
+                int dX=parse(tempString, '$', '%');
+                int dY=parse(tempString, '%', '*');
+                System.out.println("dX "+dX+", dY "+dY);
                 //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
                 new GuiWorkWithMyField(gui).main(dX, dY);
                 System.out.println("Before new SendingResultOfFire(this, connector).sendResult("+dX+", "+dY+")");
@@ -37,8 +38,9 @@ public class GuiWorkWithIncomMess {
                 int index3=440;
                 int index4=440;
                 String result;
-                int dX = Integer.parseInt(tempString.substring(tempString.indexOf("$") + 1, tempString.indexOf("%")));
-                int dY = Integer.parseInt(tempString.substring(tempString.indexOf("%") + 1, tempString.indexOf("*")));
+                int dX=parse(tempString, '$', '%');
+                int dY=parse(tempString, '%', '*');
+                System.out.println("dX "+dX+", dY "+dY);
                 result = tempString.toString().substring(tempString.indexOf("*") + 1, tempString.indexOf(";"));
                 if(result.equals("MISS")){
                     status.setFollowStep(false);
@@ -54,4 +56,12 @@ public class GuiWorkWithIncomMess {
         } catch (StringIndexOutOfBoundsException e) {}
         catch (Exception e) {}
     }
+
+    //Extract function
+
+    private int parse(String temp, char n1, char n2){
+        return Integer.parseInt(temp.substring(temp.indexOf(n1) + 1, temp.indexOf(n2)));
+    }
+
+
 }
