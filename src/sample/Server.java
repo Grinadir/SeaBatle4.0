@@ -11,10 +11,10 @@ import java.io.OutputStream;
 import java.net.*;
 
 public class Server {
-    private InputStream inS;
-    private OutputStream outS;
+    private InputStream inputStreamFromServer;
+    private OutputStream outputStreamFromServer;
     private InetAddress ip;
-    private ServerSocket serS;
+    private ServerSocket sorcetFromServer;
     private Socket s;
     private int port = 8080;
 
@@ -24,14 +24,14 @@ public class Server {
 
     public void serverWorking() throws IOException {
         try {
-            serS = new ServerSocket(port);
-            serS.setSoTimeout(5000);
-            s = serS.accept();
+            sorcetFromServer = new ServerSocket(port);
+            sorcetFromServer.setSoTimeout(5000);
+            s = sorcetFromServer.accept();
             System.out.println("Client connected");
-            inS = s.getInputStream();
-            outS = s.getOutputStream();
+            inputStreamFromServer = s.getInputStream();
+            outputStreamFromServer = s.getOutputStream();
         } catch (SocketTimeoutException e) {
-            serS.close();
+            sorcetFromServer.close();
 
         } catch (BindException e) {
 
@@ -39,14 +39,14 @@ public class Server {
     }
 
     //Геттеры
-    public ServerSocket getSerS(){
-        return serS;
+    public ServerSocket getSorcetFromServer(){
+        return sorcetFromServer;
     }
-    public InputStream getInS(){
-        return inS;
+    public InputStream getInputStreamFromServer(){
+        return inputStreamFromServer;
     }
     public OutputStream getOutS(){
-        return outS;
+        return outputStreamFromServer;
     }
 
 }

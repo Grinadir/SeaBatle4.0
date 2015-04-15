@@ -34,20 +34,20 @@ public class SendingResultOfFire {
         System.out.println("Entry in sendResult");
         this.x=x;
         this.y=y;
-        if (connector.getSr().getSerS() != null
-                && !connector.getSr().getSerS().isClosed()) {
+        if (connector.getSr().getSorcetFromServer() != null
+                && !connector.getSr().getSorcetFromServer().isClosed()) {
             System.out.println("Entry in sendResult if");
             DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
             sendResultOne(out, "Server");
             System.out.println("connector.getSr().getOutS()"+connector.getSr().getOutS());
         } else {
             System.out.println("Entry in sendResult else");
-            DataOutputStream out = new DataOutputStream(connector.getCl().getOutC());
+            DataOutputStream out = new DataOutputStream(connector.getCl().getOutputStreamFromClient());
             sendResultOne(out, "Client");
-            System.out.println("connector.getSr().getOutS()" + connector.getCl().getOutC());
+            System.out.println("connector.getSr().getOutS()" + connector.getCl().getOutputStreamFromClient());
         }
         System.out.println("connector.getSr().getOutS() " + connector.getSr().getOutS());
-        System.out.println("connector.getCl().getOutC( )" + connector.getCl().getOutC());
+        System.out.println("connector.getCl().getOutC( )" + connector.getCl().getOutputStreamFromClient());
     }
 
 

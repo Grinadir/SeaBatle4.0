@@ -40,11 +40,11 @@ public class SendingMessage extends Task {
 
 //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
-        if (connector.getSr().getSerS() != null && !connector.getSr().getSerS().isClosed()) {
+        if (connector.getSr().getSorcetFromServer() != null && !connector.getSr().getSorcetFromServer().isClosed()) {
             DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
             outputAndUpdateMess(out, "Server");
         } else {
-            DataOutputStream out = new DataOutputStream(connector.getCl().getOutC());
+            DataOutputStream out = new DataOutputStream(connector.getCl().getOutputStreamFromClient());
             outputAndUpdateMess(out, "Client");
 
         }

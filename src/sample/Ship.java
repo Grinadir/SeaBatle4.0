@@ -4,6 +4,7 @@ package sample;
  * Created by User on 13.03.2015.
  */
 public class Ship {
+
     boolean afloat;
     private int x1=400;
     private int x2=400;

@@ -10,18 +10,18 @@ public class InputMessage {
 
     private Gui gui;
     private ClientServerConnector connector;
-    private  DataInputStream in;
+    private DataInputStream dataInputStreamFromInputMessage;
     private String line;
 
     public  InputMessage(Gui gui, ClientServerConnector connector, DataInputStream in){
         System.out.println("Constructor InputMessage");
         this.gui=gui;
         this.connector=connector;
-        this.in=in;
+        this.dataInputStreamFromInputMessage=in;
     }
 
     public void inputMessageHandler(String s) throws IOException {
-        line = in.readUTF();
+        line = dataInputStreamFromInputMessage.readUTF();
         connector.updateMessageSCS(line);
     }
 

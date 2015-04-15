@@ -16,14 +16,14 @@ public class SystemOfIncomingMessage {
     }
 
     public void mainFuncOfIncomMessage() throws IOException {
-        if(connector.getSr().getSerS() != null && !connector.getSr().getSerS().isClosed()){
-            DataInputStream inServer = new DataInputStream(connector.getSr().getInS());
+        if(connector.getSr().getSorcetFromServer() != null && !connector.getSr().getSorcetFromServer().isClosed()){
+            DataInputStream inServer = new DataInputStream(connector.getSr().getInputStreamFromServer());
             while (true) {
                 // ќжидаем пока клиент пришлет строку текста.
                 new InputMessage(gui, connector, inServer).inputMessageHandler("Server");
             }
         } else {
-            DataInputStream inClient = new DataInputStream(connector.getCl().getInC());
+            DataInputStream inClient = new DataInputStream(connector.getCl().getInputStreamFromClient());
             while (true) {
                 new InputMessage(gui, connector, inClient).inputMessageHandler("Client");
             }

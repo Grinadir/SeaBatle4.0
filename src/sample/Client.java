@@ -18,10 +18,10 @@ public class Client {
     * *Изначально создан в Eclipse
     */
 
-    private InputStream inC;
-    private OutputStream outC;
+    private InputStream inputStreamFromClient;
+    private OutputStream outputStreamFromClient;
     private InetAddress ip;
-    private Socket clS;
+    private Socket socketFromClient;
     private int port = 8080;
     private ClientServerConnector connector;
 
@@ -32,27 +32,27 @@ public class Client {
 
     public void clientWorking() throws IOException, InterruptedException {
         System.out.println("Attetion! clientWorking");
-        DataInputStream in = new DataInputStream(connector.getSr().getInS());
-        clS = new Socket(ip, port);
-        inC = clS.getInputStream();
-        outC = clS.getOutputStream();
+        DataInputStream in = new DataInputStream(connector.getSr().getInputStreamFromServer());
+        socketFromClient = new Socket(ip, port);
+        inputStreamFromClient = socketFromClient.getInputStream();
+        outputStreamFromClient = socketFromClient.getOutputStream();
         TimeUnit.SECONDS.sleep(5);
-        if (clS.isConnected() == true) {
-            System.out.println("cls.isConnected: " + clS.isConnected());
+        if (socketFromClient.isConnected() == true) {
+            System.out.println("socketFromClient.isConnected: " + socketFromClient.isConnected());
         } else {
-            clS.close();
-            System.out.println("executed command close, cls.isClose: " + clS.isClosed());
+            socketFromClient.close();
+            System.out.println("executed command close, socketFromClient.isClose: " + socketFromClient.isClosed());
         }
     }
     //Геттеры
-    public InputStream getInC(){
-        return inC;
+    public InputStream getInputStreamFromClient(){
+        return inputStreamFromClient;
     }
-    public OutputStream getOutC(){
-        return outC;
+    public OutputStream getOutputStreamFromClient(){
+        return outputStreamFromClient;
     }
-    public Socket getClS(){
-        return clS;
+    public Socket getSocketFromClientocketFromClient(){
+        return socketFromClient;
     }
 
 }

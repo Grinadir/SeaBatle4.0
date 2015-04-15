@@ -19,8 +19,8 @@ public class ClientServerConnector extends Task {
     *сообщений
     */
 
-    private Server sr;
-    private Client cl;
+    private Server server;
+    private Client client;
     private String line;
     private int dX;
     private int dY;
@@ -35,8 +35,8 @@ public class ClientServerConnector extends Task {
     @Override
     protected Void call() throws Exception {
         updateMessage("Start client-server");
-        sr = new Server();
-        cl = new Client(this);
+        server = new Server();
+        client = new Client(this);
         sysInMESSAGE=new SystemOfIncomingMessage(ClientServerConnector.this, gui);
         String mess = "";
         tryFuctionToConnection(mess);
@@ -47,39 +47,39 @@ public class ClientServerConnector extends Task {
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
     private void tryFuctionToConnection(String mess) throws IOException, InterruptedException {
         do {
-            sr.serverWorking();
+            server.serverWorking();
             //mess = "После первого выполнения sr.serSv=" + sr.serS + "\n";
             updateMessage(mess);
-            System.out.print("After first execute sr.serSv=" + sr.getSerS() + "\n");
+            System.out.print("After first execute sr.serSv=" + server.getSorcetFromServer() + "\n");
             try {
                 updateMessage(mess);
                 System.out
                         .print("After first execute sr.serSv.isClosed()="
-                                + sr.getSerS().isClosed() + "\n");
+                                + server.getSorcetFromServer().isClosed() + "\n");
             } catch (NullPointerException e) {
 
             }
 
-            if ((sr.getSerS() != null && sr.getSerS().isClosed()) || sr.getSerS() == null) {
+            if ((server.getSorcetFromServer() != null && server.getSorcetFromServer().isClosed()) || server.getSorcetFromServer() == null) {
                 try {
                     System.out.println("Attempt to create client-server");
-                    cl.clientWorking();
+                    client.clientWorking();
                 } catch (SocketException e) {
                     System.out.println("Attempt to create client-server gain");
-                    sr.serverWorking();
+                    server.serverWorking();
                 }
             }
 
             System.out.println("Cycle was made, Итоги:");
-            System.out.println("sr.serSv: " + sr.getSerS());
+            System.out.println("sr.serSv: " + server.getSorcetFromServer());
 
             try {
-                System.out.println("sr.serS.isClosed()" + sr.getSerS().isClosed());
+                System.out.println("sr.serS.isClosed()" + server.getSorcetFromServer().isClosed());
             } catch (NullPointerException e) {
-                System.out.println("catch sr.serS=" + sr.getSerS() + "\n");
+                System.out.println("catch sr.serS=" + server.getSorcetFromServer() + "\n");
             }
-            System.out.println("cl.clS: " + cl.getClS());
-        } while (sr.getSerS() != null && sr.getSerS().isClosed() && cl.getClS() == null);
+            System.out.println("cl.clS: " + client.getSocketFromClientocketFromClient());
+        } while (server.getSorcetFromServer() != null && server.getSorcetFromServer().isClosed() && client.getSocketFromClientocketFromClient() == null);
     }
 
     public  void updateMessageSCS(String s){
@@ -91,10 +91,10 @@ public class ClientServerConnector extends Task {
     //Геттеры
 
     public Server getSr(){
-        return sr;
+        return server;
     }
     public Client getCl(){
-        return cl;
+        return client;
     }
 
 }
