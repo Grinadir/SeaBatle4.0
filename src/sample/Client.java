@@ -27,7 +27,7 @@ public class Client {
 
     public Client(ClientServerConnector connector) throws IOException {
         ip = InetAddress.getByName("192.168.100.5");
-        this.connector=connector;
+        this.connector = connector;
     }
 
     public void clientWorking() throws IOException, InterruptedException {
@@ -44,14 +44,17 @@ public class Client {
             System.out.println("executed command close, socketFromClient.isClose: " + socketFromClient.isClosed());
         }
     }
+
     //Геттеры
-    public InputStream getInputStreamFromClient(){
+    public InputStream getInputStreamFromClient() {
         return inputStreamFromClient;
     }
-    public OutputStream getOutputStreamFromClient(){
+
+    public OutputStream getOutputStreamFromClient() {
         return outputStreamFromClient;
     }
-    public Socket getSocketFromClientocketFromClient(){
+
+    public Socket getSocketFromClientocketFromClient() {
         return socketFromClient;
     }
 

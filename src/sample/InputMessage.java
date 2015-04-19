@@ -13,11 +13,11 @@ public class InputMessage {
     private DataInputStream dataInputStreamFromInputMessage;
     private String line;
 
-    public  InputMessage(Gui gui, ClientServerConnector connector, DataInputStream in){
+    public InputMessage(Gui gui, ClientServerConnector connector, DataInputStream in) {
         System.out.println("Constructor InputMessage");
-        this.gui=gui;
-        this.connector=connector;
-        this.dataInputStreamFromInputMessage=in;
+        this.gui = gui;
+        this.connector = connector;
+        this.dataInputStreamFromInputMessage = in;
     }
 
     public void inputMessageHandler(String s) throws IOException {
@@ -25,7 +25,7 @@ public class InputMessage {
         connector.updateMessageSCS(line);
     }
 
-    public String getLine(){
+    public String getLine() {
         return this.line;
     }
 }

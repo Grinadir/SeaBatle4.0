@@ -39,13 +39,15 @@ public class Server {
     }
 
     //Геттеры
-    public ServerSocket getSorcetFromServer(){
+    public ServerSocket getSorcetFromServer() {
         return sorcetFromServer;
     }
-    public InputStream getInputStreamFromServer(){
+
+    public InputStream getInputStreamFromServer() {
         return inputStreamFromServer;
     }
-    public OutputStream getOutS(){
+
+    public OutputStream getOutS() {
         return outputStreamFromServer;
     }
 

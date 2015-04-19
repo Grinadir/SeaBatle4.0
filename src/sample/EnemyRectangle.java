@@ -15,8 +15,8 @@ public class EnemyRectangle extends Rectangle {
     private Counters count;
 
     public EnemyRectangle(final Gui gui, double width, double height, final Counters count) {
-        this.gui=gui;
-        this.count=count;
+        this.gui = gui;
+        this.count = count;
         setWidth(width);
         setHeight(height);
 
@@ -25,13 +25,13 @@ public class EnemyRectangle extends Rectangle {
             @Override
             public void handle(Event event) {
                 if (getFill() == javafx.scene.paint.Color.GREEN) {
-                    if((count.getTargetX()+count.getTargetY())!=880){
-                        new FunctionsOfMarkedByDifferentColor(gui).undoTarget(count.getTargetX(), count.getTargetY());
+                    if ((count.getTargetX() + count.getTargetY()) != 880) {
+                        new FunctionsOfMarkedByDifferentColor(gui.getRects()).undoTarget(count.getTargetX(), count.getTargetY());
                     }
                     setFill(javafx.scene.paint.Color.RED);
                     count.setTargetX(x);
                     count.setTargetY(y);
-                    gui.setTargetIndex(x+10*y);
+                    gui.setTargetIndex(x + 10 * y);
                 } else {
                     setFill(javafx.scene.paint.Color.GREEN);
                     gui.setTargetIndex(999);
@@ -44,11 +44,12 @@ public class EnemyRectangle extends Rectangle {
     }
     //Геттеры и сеттеры
 
-    public void setXenemyRect(int x){
-        this.x=x;
+    public void setXenemyRect(int x) {
+        this.x = x;
     }
-    public void setYenemyRect(int y){
-        this.y=y;
+
+    public void setYenemyRect(int y) {
+        this.y = y;
     }
 }
 

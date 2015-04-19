@@ -30,11 +30,11 @@ public class MyRectangle extends Rectangle {
 
 
     public MyRectangle(final Gui gui, final Counters count, double width, double height, int e) {
-        this.count=count;
-        this.gui=gui;
+        this.count = count;
+        this.gui = gui;
         setWidth(width);
         setHeight(height);
-        this.func=new FunctionsOfMarkedByDifferentColor(gui);
+        this.func = new FunctionsOfMarkedByDifferentColor(gui.getRects());
 
         this.setOnMouseClicked(new EventHandler<Event>() {
 
@@ -55,7 +55,7 @@ public class MyRectangle extends Rectangle {
                         && (getFill() != Color.YELLOW && getFill() != Color.GREEN)) {
                     if (getFill() == Color.BLUE) {
                         setFill(Color.GREEN);
-                        count.setOneAmount(count.getOneAmount()+1);
+                        count.setOneAmount(count.getOneAmount() + 1);
                         func.marketGreen(x, y);
                     }
 // -1-
@@ -130,12 +130,12 @@ public class MyRectangle extends Rectangle {
             privateShip.setY1(y);
             setFill(Color.BLUE);
             func.marketYellow(x, y);
-            count.setOneAmount(count.getOneAmount()-1);
+            count.setOneAmount(count.getOneAmount() - 1);
         } else {
             func.marketGreen(x, y);
             setFill(Color.GREEN);
             privateShip = null;
-            count.setOneAmount(count.getOneAmount()+1);
+            count.setOneAmount(count.getOneAmount() + 1);
         }
     }
 
@@ -148,7 +148,7 @@ public class MyRectangle extends Rectangle {
             count.setSaveX(x);
             count.setSaveY(y);
             setFill(Color.BLUE);
-            count.setCount2(count.getCount2()+1);
+            count.setCount2(count.getCount2() + 1);
         } else if ((count.getSaveX() == x || count.getSaveY() == y)
                 && count.getCount2() != 0
                 && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
@@ -166,7 +166,7 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(x + 1, y);
             }
             count.setCount2(0);
-            count.setTwoAmount(count.getTwoAmount()-1);
+            count.setTwoAmount(count.getTwoAmount() - 1);
         }
     }
 
@@ -179,7 +179,7 @@ public class MyRectangle extends Rectangle {
             count.setSaveX(x);
             count.setSaveY(y);
             setFill(Color.BLUE);
-            count.setCount3(count.getCount3()+1);
+            count.setCount3(count.getCount3() + 1);
         } else if ((count.getSaveX() == x || count.getSaveY() == y)
                 && count.getCount3() == 1
                 && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
@@ -204,7 +204,7 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(x, y);
                 count.setCount3(0);
-                count.setThreeAmount(count.getThreeAmount()-1);
+                count.setThreeAmount(count.getThreeAmount() - 1);
             } else if (count.getSaveY() == y
                     && (count.getSaveX1() == x + 1 || count.getSaveX1() == x - 1)
                     && count.getThreeAmount() != 0) {
@@ -216,7 +216,7 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(x, y);
                 count.setCount3(0);
-                count.setThreeAmount(count.getThreeAmount()-1);
+                count.setThreeAmount(count.getThreeAmount() - 1);
             }
         }
     }
@@ -226,10 +226,10 @@ public class MyRectangle extends Rectangle {
         if (count.getCount4() == 0) {
             privateShip.setX1(x);
             privateShip.setY1(y);
-            count.setSaveX (x);
-            count.setSaveY (y);
+            count.setSaveX(x);
+            count.setSaveY(y);
             setFill(Color.BLUE);
-            count.setCount4(count.getCount4()+1);
+            count.setCount4(count.getCount4() + 1);
         } else if ((count.getSaveX() == x || count.getSaveY() == y)
                 && count.getCount4() == 1
                 && (count.getSaveX() == x + 1 || count.getSaveY() == y + 1
@@ -240,7 +240,7 @@ public class MyRectangle extends Rectangle {
             privateShip.setY2(y);
             count.setSaveX1(x);
             count.setSaveY1(y);
-            count.setCount4(count.getCount4()+1);
+            count.setCount4(count.getCount4() + 1);
         } else if ((count.getSaveX() == x || count.getSaveY() == y) && count.getFourAmount() != 0
                 && count.getCount4() == 2) {
             if (count.getSaveX1() == x
@@ -259,7 +259,7 @@ public class MyRectangle extends Rectangle {
                 privateShip.setY3(y);
                 count.setSaveX2(x);
                 count.setSaveY2(y);
-                count.setCount4(count.getCount4()+1);
+                count.setCount4(count.getCount4() + 1);
             }
         } else if ((count.getSaveX() == x || count.getSaveY() == y) && count.getCount4() == 3
                 && count.getFourAmount() != 0) {
@@ -272,8 +272,8 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(count.getSaveX2(), count.getSaveY2());
                 func.marketYellow(x, y);
-                count.setCount4 (0);
-                count.setFourAmount(count.getFourAmount()-1);
+                count.setCount4(0);
+                count.setFourAmount(count.getFourAmount() - 1);
             } else if (count.getSaveY2() == y
                     && (count.getSaveX2() == x + 1 || count.getSaveX2() == x - 1)
                     && count.getThreeAmount() != 0) {
@@ -284,26 +284,30 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(count.getSaveX1(), count.getSaveY1());
                 func.marketYellow(count.getSaveX2(), count.getSaveY2());
                 func.marketYellow(x, y);
-                count.setCount4 (0);
-                count.setFourAmount(count.getFourAmount()-1);
+                count.setCount4(0);
+                count.setFourAmount(count.getFourAmount() - 1);
             }
         }
     }
 
     //Геттеры и сеттеры
-    public Ship getPrivateShip(){
+    public Ship getPrivateShip() {
         return privateShip;
     }
-    public void setXinMyRect(int x){
-        this.x=x;
+
+    public void setXinMyRect(int x) {
+        this.x = x;
     }
-    public void setYinMyRect(int y){
-        this.y=y;
+
+    public void setYinMyRect(int y) {
+        this.y = y;
     }
-    public int getVeto(){
+
+    public int getVeto() {
         return this.veto;
     }
-    public void setVeto(int veto){
-        this.veto=veto;
+
+    public void setVeto(int veto) {
+        this.veto = veto;
     }
 }

@@ -22,10 +22,10 @@ public class SendingTargetCoordinate extends Task {
     private Gui gui;
     private Status status;
 
-    public SendingTargetCoordinate(Gui gui, ClientServerConnector connector, Status status){
-        this.connector=connector;
-        this.gui=gui;
-        this.status=status;
+    public SendingTargetCoordinate(Gui gui, ClientServerConnector connector, Status status) {
+        this.connector = connector;
+        this.gui = gui;
+        this.status = status;
         System.out.println("isFollowStep in Constr " + status.isFollowStep());
         System.out.println("Constructor SendingTargetCoordinate");
     }
@@ -34,32 +34,33 @@ public class SendingTargetCoordinate extends Task {
 
     @Override
     protected Object call() throws Exception {
-        if (connector.getSr().getSorcetFromServer()!= null
+        if (connector.getSr().getSorcetFromServer() != null
                 && !connector.getSr().getSorcetFromServer().isClosed()) {
             DataOutputStream outServer = new DataOutputStream(connector.getSr().getOutS());
             System.out.println("isFollowStep " + status.isFollowStep());
-            if(status.isFollowStep()&&status.checkAndInstallStart()) {
+            if (status.isFollowStep() && status.checkAndInstallStart()) {
                 sendStrikeCoord(outServer, "server");
             }
         } else {
             DataOutputStream outClient = new DataOutputStream(connector.getCl().getOutputStreamFromClient());
-            System.out.println("isFollowStep "+status.isFollowStep());
-            if(status.isFollowStep()&&status.checkAndInstallStart()) {
+            System.out.println("isFollowStep " + status.isFollowStep());
+            if (status.isFollowStep() && status.checkAndInstallStart()) {
                 sendStrikeCoord(outClient, "client");
             }
         }
         return null;
     }
+
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
     private void sendStrikeCoord(DataOutputStream out, String s) {
         try {
-            int y = (int) (10 - (10 -gui.getTargetIndex()  * 0.1));
-            int x= gui.getTargetIndex() - y * 10;
+            int y = (int) (10 - (10 - gui.getTargetIndex() * 0.1));
+            int x = gui.getTargetIndex() - y * 10;
             updateMessage("#attack of " + s + " (I AM)" + "(" + currentDate + ")"
                     + " attacked coordinates: " + "("
                     + "$" + x + "%" + y
                     + "*;");
-            out.writeUTF("#attack of "+s+ " (" + currentDate + ")"
+            out.writeUTF("#attack of " + s + " (" + currentDate + ")"
                     + " attacked coordinates: " + "("
                     + "$" + x + "%" + y
                     + "*;");

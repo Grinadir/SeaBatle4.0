@@ -25,9 +25,9 @@ public class SendingMessage extends Task {
     private ClientServerConnector connector;
     private Gui gui;
 
-    public SendingMessage(Gui gui, ClientServerConnector connector){
-        this.gui=gui;
-        this.connector=connector;
+    public SendingMessage(Gui gui, ClientServerConnector connector) {
+        this.gui = gui;
+        this.connector = connector;
     }
 
 
@@ -38,7 +38,7 @@ public class SendingMessage extends Task {
     }
 
 
-//ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
+    //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
         if (connector.getSr().getSorcetFromServer() != null && !connector.getSr().getSorcetFromServer().isClosed()) {
             DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
@@ -52,8 +52,8 @@ public class SendingMessage extends Task {
 
     private void outputAndUpdateMess(DataOutputStream out, String str) {
         try {
-            updateMessage(str+" " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
-            out.writeUTF(str+" " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
+            updateMessage(str + " " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
+            out.writeUTF(str + " " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();

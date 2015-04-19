@@ -6,6 +6,7 @@ package sample;
 
 
 import javafx.concurrent.Task;
+
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -27,8 +28,8 @@ public class ClientServerConnector extends Task {
     private SystemOfIncomingMessage sysInMESSAGE;
     private Gui gui;
 
-    public ClientServerConnector(Gui gui){
-        this.gui=gui;
+    public ClientServerConnector(Gui gui) {
+        this.gui = gui;
 
     }
 
@@ -37,7 +38,7 @@ public class ClientServerConnector extends Task {
         updateMessage("Start client-server");
         server = new Server();
         client = new Client(this);
-        sysInMESSAGE=new SystemOfIncomingMessage(ClientServerConnector.this, gui);
+        sysInMESSAGE = new SystemOfIncomingMessage(ClientServerConnector.this, gui);
         String mess = "";
         tryFuctionToConnection(mess);
         sysInMESSAGE.mainFuncOfIncomMessage();
@@ -79,21 +80,24 @@ public class ClientServerConnector extends Task {
                 System.out.println("catch sr.serS=" + server.getSorcetFromServer() + "\n");
             }
             System.out.println("cl.clS: " + client.getSocketFromClientocketFromClient());
-        } while (server.getSorcetFromServer() != null && server.getSorcetFromServer().isClosed() && client.getSocketFromClientocketFromClient() == null);
+        }
+        while (server.getSorcetFromServer() != null && server.getSorcetFromServer().isClosed() && client.getSocketFromClientocketFromClient() == null);
     }
 
-    public  void updateMessageSCS(String s){
+    public void updateMessageSCS(String s) {
         this.updateMessage(s);
-        if(s.equals(null)){
-        this.line=s;}
+        if (s.equals(null)) {
+            this.line = s;
+        }
     }
 
     //Геттеры
 
-    public Server getSr(){
+    public Server getSr() {
         return server;
     }
-    public Client getCl(){
+
+    public Client getCl() {
         return client;
     }
 

@@ -10,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,16 +17,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class Gui extends Application {
 
-    private String line = " ";
-    private MyRectangle[] rectMY = new MyRectangle[100];
-    private EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
+
     private int targetIndex;
 
     /*
@@ -36,7 +32,6 @@ public class Gui extends Application {
     *Файл FXML не используется
     *Изначально создан в Eclipse
     */
-    private Object tt = new JFXPanel();
     private TextArea commonChat = new TextArea();
     private TextArea sendingMessage = new TextArea();
     private Button bStart = new Button("Connect");
@@ -50,10 +45,11 @@ public class Gui extends Application {
     private RadioButton three = new RadioButton("Three 2 pcs.");
     private RadioButton two = new RadioButton("Two 3 pcs.");
     private RadioButton one = new RadioButton("One 4 pcs.");
-    private Counters count=new Counters();
+    private Counters count = new Counters();
 
     private ClientServerConnector connector;
-    private Status status=new Status(count);
+    private Status status = new Status(count);
+    Rects rects = new Rects(this, count);
 
     private GridPane mySeaField = new GridPane();
     private GridPane myPane = new GridPane();
@@ -74,7 +70,7 @@ public class Gui extends Application {
         commonChat.setTooltip(new Tooltip("Чат Окно"));
         commonChat.setWrapText(true);
         try {
-            commonChat.setText(commonChat.getText() + "\n" + line);
+            commonChat.setText(commonChat.getText() + "\n");
         } catch (NullPointerException e) {
 
         }
@@ -147,7 +143,7 @@ public class Gui extends Application {
             @Override
             public void handle(Event event) {
                 // Создание класса Task, существующий для работы с JavaFX
-                connector =new ClientServerConnector(Gui.this);
+                connector = new ClientServerConnector(Gui.this);
                 connector.messageProperty().addListener(
                         new ChangeListener<String>() {
 
@@ -157,7 +153,7 @@ public class Gui extends Application {
                                     String oldValue, String newValue) {
 
                                 //whatDoWhenMessageDiliverd(connector);
-                                new GuiWorkWithIncomMess(Gui.this,connector,status).main();
+                                new GuiWorkWithIncomMess(Gui.this, connector, status).main();
                                 System.out.println("TYK TYK");
                             }
                         });
@@ -275,7 +271,7 @@ public class Gui extends Application {
             }
 
         });
-        makeEnemyAndMyField();
+        rects.makeEnemyAndMyField();
 
 
         Scene scene = new Scene(myPane, 700, 700);
@@ -287,34 +283,13 @@ public class Gui extends Application {
     }
 
 
-
-
     //ДАЛЕЕ НАХОДИТСЯ ЭКСПОРТИРУЕМЫЕ ФУНКЦИИ
-    private void makeEnemyAndMyField() {
-        for (i = 0; i <= 99; ++i) {
-            makeOneIterationRectMY(i);
-            makeOneIterationRectENEMY(i);
-        }
+    public void addMySeaField(MyRectangle rectangle, int i, int numline) {
+        mySeaField.add(rectangle, i, numline);
     }
 
-    //makeOneIterationRectENEMY создает одну клетку(квадрат) поля для оппонента
-    private void makeOneIterationRectENEMY(int i) {
-        rectENEMY[i] = new EnemyRectangle(this, 10, 10, count);
-        rectENEMY[i].setFill(Color.GREEN);
-        int numLine = (int) (10 - (10 - i * 0.1));
-        rectENEMY[i].setXenemyRect(i - numLine * 10);
-        rectENEMY[i].setYenemyRect(numLine);
-        enemySeaField.add(rectENEMY[i], (i - numLine * 10), numLine);
-    }
-
-    //makeOneIterationRectMY создает одну клетку(квадрат) поля для игрока
-    private void makeOneIterationRectMY(int i) {
-        rectMY[i] = new MyRectangle(this, count, 10, 10, i);
-        rectMY[i].setFill(Color.GREEN);
-        int numLine = (int) (10 - (10 - i * 0.1));
-        rectMY[i].setXinMyRect(i - numLine * 10);
-        rectMY[i].setYinMyRect(numLine);
-        mySeaField.add(rectMY[i], (i - numLine * 10), numLine);
+    public void addEnemySeaField(EnemyRectangle rectangle, int i, int numLine) {
+        enemySeaField.add(rectangle, i, numLine);
     }
 
 
@@ -323,42 +298,51 @@ public class Gui extends Application {
                 + connector.getMessage());
         commonChat.end();
     }
+
     //Сеттеры
-    public void setTargetIndex(int i){
-        this.targetIndex=i;
+    public void setTargetIndex(int i) {
+        this.targetIndex = i;
     }
 
     //Геттеры
-    public ClientServerConnector getConnector(){
+    public ClientServerConnector getConnector() {
         return connector;
     }
-    public MyRectangle getMyRect(int x, int y){
-        return rectMY[x+(10*y)];
+
+    public Rects getRects() {
+        return rects;
     }
-    public MyRectangle getMyRect(int i){
-        return rectMY[i];
-    }
-    public EnemyRectangle getRectENEMY(int i) {
-        return rectENEMY[i];
-    }
-    public int getTargetIndex(){
+
+
+    public int getTargetIndex() {
         return targetIndex;
     }
-    public TextArea getSendingMessage(){
+
+    public TextArea getSendingMessage() {
         return sendingMessage;
     }
-    public RadioButton getNo(){
+
+    public RadioButton getNo() {
         return no;
     }
-    public RadioButton getRanking(){ return ranking; }
-    public RadioButton getOne(){ return one; }
-    public RadioButton getTwo(){
+
+    public RadioButton getRanking() {
+        return ranking;
+    }
+
+    public RadioButton getOne() {
+        return one;
+    }
+
+    public RadioButton getTwo() {
         return two;
     }
-    public RadioButton getThree(){
+
+    public RadioButton getThree() {
         return three;
     }
-    public RadioButton getFour(){
+
+    public RadioButton getFour() {
         return four;
     }
 }

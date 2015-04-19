@@ -10,13 +10,14 @@ public class SystemOfIncomingMessage {
 
     private ClientServerConnector connector;
     private Gui gui;
-    SystemOfIncomingMessage(ClientServerConnector connector, Gui gui){
-        this.connector=connector;
-        this.gui=gui;
+
+    SystemOfIncomingMessage(ClientServerConnector connector, Gui gui) {
+        this.connector = connector;
+        this.gui = gui;
     }
 
     public void mainFuncOfIncomMessage() throws IOException {
-        if(connector.getSr().getSorcetFromServer() != null && !connector.getSr().getSorcetFromServer().isClosed()){
+        if (connector.getSr().getSorcetFromServer() != null && !connector.getSr().getSorcetFromServer().isClosed()) {
             DataInputStream inServer = new DataInputStream(connector.getSr().getInputStreamFromServer());
             while (true) {
                 // ќжидаем пока клиент пришлет строку текста.
