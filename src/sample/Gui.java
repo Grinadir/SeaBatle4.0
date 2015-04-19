@@ -153,7 +153,7 @@ public class Gui extends Application {
                                     String oldValue, String newValue) {
 
                                 //whatDoWhenMessageDiliverd(connector);
-                                new GuiWorkWithIncomMess(Gui.this, connector, status).main();
+                                new GuiWorkWithIncomingMessage(Gui.this, connector, status).main();
                                 System.out.println("TYK TYK");
                             }
                         });
@@ -293,20 +293,15 @@ public class Gui extends Application {
     }
 
 
-    public void setTextInCommonChat(ClientServerConnector connector) {
+    public void setTextInCommonChat(String message) {
         commonChat.setText(commonChat.getText() + "\n"
-                + connector.getMessage());
+                + message);
         commonChat.end();
     }
 
     //Сеттеры
     public void setTargetIndex(int i) {
         this.targetIndex = i;
-    }
-
-    //Геттеры
-    public ClientServerConnector getConnector() {
-        return connector;
     }
 
     public Rects getRects() {

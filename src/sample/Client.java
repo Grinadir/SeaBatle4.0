@@ -32,7 +32,7 @@ public class Client {
 
     public void clientWorking() throws IOException, InterruptedException {
         System.out.println("Attetion! clientWorking");
-        DataInputStream in = new DataInputStream(connector.getSr().getInputStreamFromServer());
+        DataInputStream in = new DataInputStream(connector.getServer().getInputServerStream());
         socketFromClient = new Socket(ip, port);
         inputStreamFromClient = socketFromClient.getInputStream();
         outputStreamFromClient = socketFromClient.getOutputStream();

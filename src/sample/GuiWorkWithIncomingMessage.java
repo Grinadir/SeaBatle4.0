@@ -3,13 +3,13 @@ package sample;
 /**
  * Created by User on 10.04.2015.
  */
-public class GuiWorkWithIncomMess {
+public class GuiWorkWithIncomingMessage {
 
     private ClientServerConnector connector;
     private Gui gui;
     private Status status;
 
-    public GuiWorkWithIncomMess(Gui gui, ClientServerConnector connector, Status status) {
+    public GuiWorkWithIncomingMessage(Gui gui, ClientServerConnector connector, Status status) {
         this.connector = connector;
         this.gui = gui;
         this.status = status;
@@ -19,10 +19,10 @@ public class GuiWorkWithIncomMess {
         String tempString = connector.getMessage();
         try {
             if (tempString.charAt(0) != '!' && tempString.charAt(0) != '#') {
-                gui.setTextInCommonChat(connector);
+                gui.setTextInCommonChat(connector.getMessage());
             }
             if (tempString.charAt(0) == '#') {
-                gui.setTextInCommonChat(connector);
+                gui.setTextInCommonChat(connector.getMessage());
                 int dX = parse(tempString, '$', '%');
                 int dY = parse(tempString, '%', '*');
                 System.out.println("dX " + dX + ", dY " + dY);
@@ -33,7 +33,7 @@ public class GuiWorkWithIncomMess {
                 System.out.println("After new SendingResultOfFire(this, connector).sendResult(" + dX + ", " + dY + ")");
             }
             if (tempString.charAt(0) == '!') {
-                gui.setTextInCommonChat(connector);
+                gui.setTextInCommonChat(connector.getMessage());
                 int index1 = 400;
                 int index2 = 440;
                 int index3 = 440;

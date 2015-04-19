@@ -19,8 +19,6 @@ public class SendingMessage extends Task {
     *запускаемого из GUI
     *Изначально создан в Eclipse
     */
-
-    private String line;
     private Date currentDate = new Date();
     private ClientServerConnector connector;
     private Gui gui;
@@ -40,11 +38,11 @@ public class SendingMessage extends Task {
 
     //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
-        if (connector.getSr().getSorcetFromServer() != null && !connector.getSr().getSorcetFromServer().isClosed()) {
-            DataOutputStream out = new DataOutputStream(connector.getSr().getOutS());
+        if (connector.getServer().getServerSocket() != null && !connector.getServer().getServerSocket().isClosed()) {
+            DataOutputStream out = new DataOutputStream(connector.getServer().getOutputServerStream());
             outputAndUpdateMess(out, "Server");
         } else {
-            DataOutputStream out = new DataOutputStream(connector.getCl().getOutputStreamFromClient());
+            DataOutputStream out = new DataOutputStream(connector.getClient().getOutputStreamFromClient());
             outputAndUpdateMess(out, "Client");
 
         }

@@ -11,44 +11,45 @@ import java.io.OutputStream;
 import java.net.*;
 
 public class Server {
-    private InputStream inputStreamFromServer;
-    private OutputStream outputStreamFromServer;
-    private InetAddress ip;
-    private ServerSocket sorcetFromServer;
-    private Socket s;
+    private InputStream inputServerStream;
+    private OutputStream outputServerStream;
+    private ServerSocket serverSocket;
+    private Socket socket;
     private int port = 8080;
-
-    public Server() throws IOException {
-        ip = InetAddress.getLocalHost();
-    }
 
     public void serverWorking() throws IOException {
         try {
-            sorcetFromServer = new ServerSocket(port);
-            sorcetFromServer.setSoTimeout(5000);
-            s = sorcetFromServer.accept();
+            serverSocket = new ServerSocket(port);
+            serverSocket.setSoTimeout(5000);
+            socket = serverSocket.accept();
             System.out.println("Client connected");
-            inputStreamFromServer = s.getInputStream();
-            outputStreamFromServer = s.getOutputStream();
+            inputServerStream = socket.getInputStream();
+            outputServerStream = socket.getOutputStream();
         } catch (SocketTimeoutException e) {
-            sorcetFromServer.close();
+            serverSocket.close();
 
         } catch (BindException e) {
 
         }
     }
 
-    //Геттеры
-    public ServerSocket getSorcetFromServer() {
-        return sorcetFromServer;
+    //boolean isClosed() {
+    //    return (socket != null && socket.isClosed());
+    //}
+
+
+    //Get-functions
+    public ServerSocket getServerSocket() {
+        return serverSocket;
     }
 
-    public InputStream getInputStreamFromServer() {
-        return inputStreamFromServer;
+    public InputStream getInputServerStream() {
+        return inputServerStream;
     }
 
-    public OutputStream getOutS() {
-        return outputStreamFromServer;
+    public OutputStream getOutputServerStream() {
+        return outputServerStream;
     }
+
 
 }

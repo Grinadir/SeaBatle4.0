@@ -34,15 +34,15 @@ public class SendingTargetCoordinate extends Task {
 
     @Override
     protected Object call() throws Exception {
-        if (connector.getSr().getSorcetFromServer() != null
-                && !connector.getSr().getSorcetFromServer().isClosed()) {
-            DataOutputStream outServer = new DataOutputStream(connector.getSr().getOutS());
+        if (connector.getServer().getServerSocket() != null
+                && !connector.getServer().getServerSocket().isClosed()) {
+            DataOutputStream outServer = new DataOutputStream(connector.getServer().getOutputServerStream());
             System.out.println("isFollowStep " + status.isFollowStep());
             if (status.isFollowStep() && status.checkAndInstallStart()) {
                 sendStrikeCoord(outServer, "server");
             }
         } else {
-            DataOutputStream outClient = new DataOutputStream(connector.getCl().getOutputStreamFromClient());
+            DataOutputStream outClient = new DataOutputStream(connector.getClient().getOutputStreamFromClient());
             System.out.println("isFollowStep " + status.isFollowStep());
             if (status.isFollowStep() && status.checkAndInstallStart()) {
                 sendStrikeCoord(outClient, "client");
