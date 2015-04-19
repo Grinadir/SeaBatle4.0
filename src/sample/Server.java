@@ -8,7 +8,10 @@ package sample;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.*;
+import java.net.BindException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class Server {
     private InputStream inputServerStream;
@@ -33,9 +36,9 @@ public class Server {
         }
     }
 
-    //boolean isClosed() {
-    //    return (socket != null && socket.isClosed());
-    //}
+    public boolean isClosed() {
+        return (serverSocket == null || serverSocket.isClosed());
+    }
 
 
     //Get-functions

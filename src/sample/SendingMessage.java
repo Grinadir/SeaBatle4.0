@@ -38,13 +38,12 @@ public class SendingMessage extends Task {
 
     //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
-        if (connector.getServer().getServerSocket() != null && !connector.getServer().getServerSocket().isClosed()) {
-            DataOutputStream out = new DataOutputStream(connector.getServer().getOutputServerStream());
-            outputAndUpdateMess(out, "Server");
-        } else {
+        if (connector.getServer().isClosed()) {
             DataOutputStream out = new DataOutputStream(connector.getClient().getOutputStreamFromClient());
             outputAndUpdateMess(out, "Client");
-
+        } else {
+            DataOutputStream out = new DataOutputStream(connector.getServer().getOutputServerStream());
+            outputAndUpdateMess(out, "Server");
         }
     }
 

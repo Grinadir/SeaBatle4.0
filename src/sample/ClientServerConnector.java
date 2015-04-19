@@ -23,8 +23,6 @@ public class ClientServerConnector extends Task {
     private Server server;
     private Client client;
     private String line;
-    private int dX;
-    private int dY;
     private SystemOfIncomingMessage sysInMESSAGE;
     private Gui gui;
 
@@ -60,7 +58,7 @@ public class ClientServerConnector extends Task {
 
             }
 
-            if ((server.getServerSocket() != null && server.getServerSocket().isClosed()) || server.getServerSocket() == null) {
+            if (server.isClosed()) {
                 try {
                     System.out.println("Attempt to create client-server");
                     client.clientWorking();

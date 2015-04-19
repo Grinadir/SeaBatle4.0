@@ -5,7 +5,6 @@ package sample;
  */
 public class Counters {
     private Ship[] shipSingle = new Ship[5];
-
     private Ship[] shipDouble = new Ship[4];
     private Ship[] shipTriple = new Ship[3];
     private Ship shipQuadruple = new Ship(4);
