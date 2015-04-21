@@ -10,15 +10,12 @@ import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class MyRectangle extends Rectangle {
+/*
+ * Необходим для создания единичного квадратика
+ * со своими параметрами
+ */
 
-    /*
-    *Класс MyRectangle
-    *Необходим для создания единичного квадратика
-    *своими параметрами
-    *Изначально создан в Eclipse
-    * Рефактринг сделаю позже
-    */
+public class MyRectangle extends Rectangle {
 
     private int x;
     private int y;
@@ -27,7 +24,6 @@ public class MyRectangle extends Rectangle {
     private final Gui gui;
     private FunctionsOfMarkedByDifferentColor func;
     private Counters count;
-
 
     public MyRectangle(final Gui gui, final Counters count, double width, double height, int e) {
         this.count = count;

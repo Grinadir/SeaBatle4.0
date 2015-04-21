@@ -11,51 +11,44 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
-
 public class Client {
-    /*
-    *Класс Clent
-    * *Изначально создан в Eclipse
-    */
 
-    private InputStream inputStreamFromClient;
-    private OutputStream outputStreamFromClient;
+    private InputStream inputClientStream;
+    private OutputStream outputClientStream;
     private InetAddress ip;
-    private Socket socketFromClient;
+    private Socket clientSocket;
     private int port = 8080;
-    private ClientServerConnector connector;
 
-    public Client(ClientServerConnector connector) throws IOException {
+    public Client() throws IOException {
         ip = InetAddress.getByName("192.168.100.5");
-        this.connector = connector;
+
     }
 
     public void clientWorking() throws IOException, InterruptedException {
         System.out.println("Attetion! clientWorking");
-        DataInputStream in = new DataInputStream(connector.getServer().getInputServerStream());
-        socketFromClient = new Socket(ip, port);
-        inputStreamFromClient = socketFromClient.getInputStream();
-        outputStreamFromClient = socketFromClient.getOutputStream();
+        clientSocket = new Socket(ip, port);
+        inputClientStream = clientSocket.getInputStream();
+        outputClientStream = clientSocket.getOutputStream();
         TimeUnit.SECONDS.sleep(5);
-        if (socketFromClient.isConnected() == true) {
-            System.out.println("socketFromClient.isConnected: " + socketFromClient.isConnected());
+        if (clientSocket.isConnected() == true) {
+            System.out.println("clientSocket.isConnected: " + clientSocket.isConnected());
         } else {
-            socketFromClient.close();
-            System.out.println("executed command close, socketFromClient.isClose: " + socketFromClient.isClosed());
+            clientSocket.close();
+            System.out.println("executed command close, clientSocket.isClose: " + clientSocket.isClosed());
         }
     }
 
     //Геттеры
-    public InputStream getInputStreamFromClient() {
-        return inputStreamFromClient;
+    public InputStream getInputClientStream() {
+        return inputClientStream;
     }
 
-    public OutputStream getOutputStreamFromClient() {
-        return outputStreamFromClient;
+    public OutputStream getOutputClientStream() {
+        return outputClientStream;
     }
 
-    public Socket getSocketFromClientocketFromClient() {
-        return socketFromClient;
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 
 }

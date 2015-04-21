@@ -9,12 +9,6 @@ import java.util.Date;
  * Created by Selkov Alexsandr on 23.02.2015.
  */
 public class SendingResultOfFire {
-    /*
-    *Класс SendingResultOfFire
-    *Класс служащий всего навсего для
-    * того, чтобы отдельно лежала функция
-    * sendResult()
-    */
 
     private Date currentDate = new Date();
     private Gui gui;
@@ -36,9 +30,9 @@ public class SendingResultOfFire {
         this.y = y;
         if (connector.getServer().isClosed()) {
             System.out.println("Entry in sendResult else");
-            DataOutputStream out = new DataOutputStream(connector.getClient().getOutputStreamFromClient());
+            DataOutputStream out = new DataOutputStream(connector.getClient().getOutputClientStream());
             sendResultOne(out, "Client");
-            System.out.println("connector.getSr().getOutS()" + connector.getClient().getOutputStreamFromClient());
+            System.out.println("connector.getSr().getOutS()" + connector.getClient().getOutputClientStream());
         } else {
             System.out.println("Entry in sendResult if");
             DataOutputStream out = new DataOutputStream(connector.getServer().getOutputServerStream());
@@ -46,7 +40,7 @@ public class SendingResultOfFire {
             System.out.println("connector.getSr().getOutS()" + connector.getServer().getOutputServerStream());
         }
         System.out.println("connector.getSr().getOutS() " + connector.getServer().getOutputServerStream());
-        System.out.println("connector.getCl().getOutC( )" + connector.getClient().getOutputStreamFromClient());
+        System.out.println("connector.getCl().getOutC( )" + connector.getClient().getOutputClientStream());
     }
 
 

@@ -23,15 +23,7 @@ import java.io.IOException;
 
 public class Gui extends Application {
 
-
     private int targetIndex;
-
-    /*
-    *Класс GUI
-    *Все постраение описывается в JAVA коде.
-    *Файл FXML не используется
-    *Изначально создан в Eclipse
-    */
     private TextArea commonChat = new TextArea();
     private TextArea sendingMessage = new TextArea();
     private Button bStart = new Button("Connect");
@@ -143,7 +135,7 @@ public class Gui extends Application {
             @Override
             public void handle(Event event) {
                 // Создание класса Task, существующий для работы с JavaFX
-                connector = new ClientServerConnector(Gui.this);
+                connector = new ClientServerConnector();
                 connector.messageProperty().addListener(
                         new ChangeListener<String>() {
 

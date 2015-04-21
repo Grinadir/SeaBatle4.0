@@ -13,6 +13,7 @@ public class Counters {
     private int count3 = 0;
     private int count4 = 0;
 
+
     private int oneAmount = 4;
     private int twoAmount = 3;
     private int threeAmount = 2;

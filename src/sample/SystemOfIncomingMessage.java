@@ -2,6 +2,7 @@ package sample;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by User on 09.04.2015.
@@ -9,25 +10,23 @@ import java.io.IOException;
 public class SystemOfIncomingMessage {
 
     private ClientServerConnector connector;
-    private Gui gui;
 
-    SystemOfIncomingMessage(ClientServerConnector connector, Gui gui) {
+    SystemOfIncomingMessage(ClientServerConnector connector) {
         this.connector = connector;
-        this.gui = gui;
     }
 
-    public void mainFuncOfIncomMessage() throws IOException {
-        if (connector.getServer().getServerSocket() != null && !connector.getServer().getServerSocket().isClosed()) {
-            DataInputStream inServer = new DataInputStream(connector.getServer().getInputServerStream());
-            while (true) {
-                // ќжидаем пока клиент пришлет строку текста.
-                new InputMessage(gui, connector, inServer).inputMessageHandler("Server");
-            }
+    public void mainFunctionOfIncomingMessage() throws IOException {
+        if (connector.getServer().isClosed()) {
+            waitingForIncomingMessage(connector.getClient().getInputClientStream());
         } else {
-            DataInputStream inClient = new DataInputStream(connector.getClient().getInputStreamFromClient());
-            while (true) {
-                new InputMessage(gui, connector, inClient).inputMessageHandler("Client");
-            }
+            waitingForIncomingMessage(connector.getServer().getInputServerStream());
+        }
+    }
+
+    private void waitingForIncomingMessage(InputStream inputStream) throws IOException {
+        DataInputStream stream = new DataInputStream(inputStream);
+        while (true) {
+            new InputMessage(connector, stream).inputMessageHandler();
         }
     }
 }

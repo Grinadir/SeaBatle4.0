@@ -9,7 +9,6 @@ public class Rects {
 
     private Gui gui;
     private Counters counters;
-    private String line = " ";
     private MyRectangle[] rectMY = new MyRectangle[100];
     private EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
 
@@ -25,7 +24,6 @@ public class Rects {
         rectMY[i].setXinMyRect(i - numLine * 10);
         rectMY[i].setYinMyRect(numLine);
         gui.addMySeaField(rectMY[i], (i - numLine * 10), numLine);
-        //mySeaField.add();
     }
 
     private void makeOneIterationRectENEMY(int i) {
@@ -35,7 +33,6 @@ public class Rects {
         rectENEMY[i].setXenemyRect(i - numLine * 10);
         rectENEMY[i].setYenemyRect(numLine);
         gui.addEnemySeaField(rectENEMY[i], (i - numLine * 10), numLine);
-        //enemySeaField.add();
     }
 
     public void makeEnemyAndMyField() {
@@ -43,10 +40,6 @@ public class Rects {
             makeOneIterationRectMY(i);
             makeOneIterationRectENEMY(i);
         }
-    }
-
-    public MyRectangle getMyRect(int x, int y) {
-        return rectMY[x + (10 * y)];
     }
 
     public MyRectangle getMyRect(int i) {

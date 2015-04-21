@@ -13,12 +13,7 @@ import java.util.Date;
 
 public class SendingMessage extends Task {
 
-    /*
-    *Класс SendingMessage наследует класс Task
-    *Применяется для создания отдельного потока
-    *запускаемого из GUI
-    *Изначально создан в Eclipse
-    */
+
     private Date currentDate = new Date();
     private ClientServerConnector connector;
     private Gui gui;
@@ -39,7 +34,7 @@ public class SendingMessage extends Task {
     //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
         if (connector.getServer().isClosed()) {
-            DataOutputStream out = new DataOutputStream(connector.getClient().getOutputStreamFromClient());
+            DataOutputStream out = new DataOutputStream(connector.getClient().getOutputClientStream());
             outputAndUpdateMess(out, "Client");
         } else {
             DataOutputStream out = new DataOutputStream(connector.getServer().getOutputServerStream());

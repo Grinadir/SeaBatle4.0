@@ -55,4 +55,15 @@ public class Server {
     }
 
 
+    public boolean isServerSocketClosed() {
+        return serverSocket.isClosed();
+    }
+
+    public String getStatusServerSocket() {
+        if (serverSocket != null) {
+            return String.format("server socket '" + serverSocket + "' is " + (serverSocket.isClosed() ? "closed" : "opened"));
+        } else {
+            return String.format("server socket '" + serverSocket);
+        }
+    }
 }

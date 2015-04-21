@@ -9,15 +9,15 @@ import javafx.concurrent.Task;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 
+/*
+ * нужен для того, чтобы передовать координаты атаки
+ */
+
 public class SendingTargetCoordinate extends Task {
-    /*
-    *Класс SendingTargetCoordinate
-    *наследующий класс Task, который выполняется в отдельном потоке
-    *запускаемый из GUI
-    *нужен для того, чтобы передовать координаты атаки
-    */
+
     private ClientServerConnector connector;
     private Gui gui;
     private Status status;
@@ -35,23 +35,23 @@ public class SendingTargetCoordinate extends Task {
     @Override
     protected Object call() throws Exception {
         if (connector.getServer().isClosed()) {
-            DataOutputStream outClient = new DataOutputStream(connector.getClient().getOutputStreamFromClient());
-            System.out.println("isFollowStep " + status.isFollowStep());
-            if (status.isFollowStep() && status.checkAndInstallStart()) {
-                sendStrikeCoord(outClient, "client");
-            }
+            sendStrikeCoordinateTo("client", connector.getClient().getOutputClientStream());
         } else {
-            DataOutputStream outServer = new DataOutputStream(connector.getServer().getOutputServerStream());
-            System.out.println("isFollowStep " + status.isFollowStep());
-            if (status.isFollowStep() && status.checkAndInstallStart()) {
-                sendStrikeCoord(outServer, "server");
-            }
+            sendStrikeCoordinateTo("server", connector.getServer().getOutputServerStream());
         }
         return null;
     }
 
+    private void sendStrikeCoordinateTo(String who, OutputStream outputStream) {
+        DataOutputStream outClient = new DataOutputStream(outputStream);
+        System.out.println("isFollowStep " + status.isFollowStep());
+        if (status.isFollowStep() && status.checkAndInstallStart()) {
+            sendStrikeCoordinate(outClient, who);
+        }
+    }
+
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
-    private void sendStrikeCoord(DataOutputStream out, String s) {
+    private void sendStrikeCoordinate(DataOutputStream out, String s) {
         try {
             int y = (int) (10 - (10 - gui.getTargetIndex() * 0.1));
             int x = gui.getTargetIndex() - y * 10;
@@ -65,7 +65,6 @@ public class SendingTargetCoordinate extends Task {
                     + "*;");
             updateMessage("");
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }

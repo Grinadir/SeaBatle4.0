@@ -5,7 +5,6 @@ package sample;
  */
 public class Ship {
 
-    boolean afloat;
     private int x1 = 400;
     private int x2 = 400;
     private int x3 = 400;

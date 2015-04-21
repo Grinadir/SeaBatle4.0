@@ -10,24 +10,15 @@ import javafx.concurrent.Task;
 import java.io.IOException;
 import java.net.SocketException;
 
-public class ClientServerConnector extends Task {
 
-     /*
-    *Класс StartClientServer
-    *наследующий класс Task, который выполняется в отдельном потоке
-    *запускаемый из GUI
-    *нужен для того, создать соединение и открыт поток для передачи
-    *сообщений
-    */
+
+public class ClientServerConnector extends Task {
 
     private Server server;
     private Client client;
-    private String line;
     private SystemOfIncomingMessage sysInMESSAGE;
-    private Gui gui;
 
-    public ClientServerConnector(Gui gui) {
-        this.gui = gui;
+    public ClientServerConnector() {
 
     }
 
@@ -35,20 +26,20 @@ public class ClientServerConnector extends Task {
     protected Void call() throws Exception {
         updateMessage("Start client-server");
         server = new Server();
-        client = new Client(this);
-        sysInMESSAGE = new SystemOfIncomingMessage(ClientServerConnector.this, gui);
+        client = new Client();
+        sysInMESSAGE = new SystemOfIncomingMessage(ClientServerConnector.this);
         String mess = "";
-        tryFuctionToConnection(mess);
-        sysInMESSAGE.mainFuncOfIncomMessage();
+        tryFunctionToConnection(mess);
+        sysInMESSAGE.mainFunctionOfIncomingMessage();
         return null;
     }
 
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
-    private void tryFuctionToConnection(String mess) throws IOException, InterruptedException {
+    private void tryFunctionToConnection(String mess) throws IOException, InterruptedException {
         do {
             server.serverWorking();
             updateMessage(mess);
-            System.out.print("After first execute server socket is " + server.getServerSocket() + "\n");
+            System.out.println("After first execute " + server.getStatusServerSocket());
             try {
                 updateMessage(mess);
                 System.out.println("After first execute server socket closed status is "
@@ -69,23 +60,14 @@ public class ClientServerConnector extends Task {
             }
 
             System.out.println("Cycle was made, result: ");
-            System.out.println("sr.serSv: " + server.getServerSocket());
-
-            try {
-                System.out.println("sr.serS.isClosed()" + server.getServerSocket().isClosed());
-            } catch (NullPointerException e) {
-                System.out.println("catch sr.serS=" + server.getServerSocket() + "\n");
-            }
-            System.out.println("cl.clS: " + client.getSocketFromClientocketFromClient());
+            System.out.println(server.getStatusServerSocket());
+            System.out.println("client socket is : " + client.getClientSocket());
         }
-        while (server.getServerSocket() != null && server.getServerSocket().isClosed() && client.getSocketFromClientocketFromClient() == null);
+        while (server.isClosed() && client.getClientSocket() == null);
     }
 
     public void updateMessageSCS(String s) {
         this.updateMessage(s);
-        if (s.equals(null)) {
-            this.line = s;
-        }
     }
 
     //Геттеры

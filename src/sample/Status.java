@@ -20,14 +20,6 @@ public class Status {
         return startGame;
     }
 
-    public void setStartGame(boolean startGame) {
-        this.startGame = startGame;
-    }
-
-    public boolean isStartGame() {
-        return startGame;
-    }
-
     public boolean isFollowStep() {
         return followStep;
     }

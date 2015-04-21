@@ -6,14 +6,12 @@ package sample;
 
 
 import javafx.scene.paint.Color;
-
+/*
+ * Xранить функции для раскрашивания в разные цвета
+ * квадратов
+ */
 public class FunctionsOfMarkedByDifferentColor {
-    /*
-* Класс Function
-* нужен для того, чтобы хранить функции для раскрашивания в разные цвета
-* квадратов
-*
-*/
+
     Rects rects;
 
     public FunctionsOfMarkedByDifferentColor(Rects rects) {
