@@ -44,11 +44,11 @@ public class EnemyRectangle extends Rectangle {
     }
     //Геттеры и сеттеры
 
-    public void setXenemyRect(int x) {
+    public void setXEnemyRect(int x) {
         this.x = x;
     }
 
-    public void setYenemyRect(int y) {
+    public void setYEnemyRect(int y) {
         this.y = y;
     }
 }

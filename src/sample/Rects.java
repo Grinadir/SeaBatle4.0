@@ -30,8 +30,8 @@ public class Rects {
         rectENEMY[i] = new EnemyRectangle(gui, 10, 10, counters);
         rectENEMY[i].setFill(Color.GREEN);
         int numLine = (int) (10 - (10 - i * 0.1));
-        rectENEMY[i].setXenemyRect(i - numLine * 10);
-        rectENEMY[i].setYenemyRect(numLine);
+        rectENEMY[i].setXEnemyRect(i - numLine * 10);
+        rectENEMY[i].setYEnemyRect(numLine);
         gui.addEnemySeaField(rectENEMY[i], (i - numLine * 10), numLine);
     }
 
@@ -42,8 +42,12 @@ public class Rects {
         }
     }
 
-    public MyRectangle getMyRect(int i) {
-        return rectMY[i];
+    //public MyRectangle getMyRect(int i) {
+    //    return rectMY[i];
+    //}
+
+    public MyRectangle getMyRect(int x, int y) {
+        return rectMY[y*10+x];
     }
 
     public EnemyRectangle getRectENEMY(int i) {

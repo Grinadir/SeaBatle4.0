@@ -21,36 +21,25 @@ public class SendingResultOfFire {
         this.gui = gui;
         this.connector = connector;
         this.status = status;
-        System.out.println("Designer SendingResultOfFire");
     }
 
     public void sendResult(int x, int y) {
-        System.out.println("Entry in sendResult");
+
         this.x = x;
         this.y = y;
         if (connector.getServer().isClosed()) {
-            System.out.println("Entry in sendResult else");
             DataOutputStream out = new DataOutputStream(connector.getClient().getOutputClientStream());
             sendResultOne(out, "Client");
-            System.out.println("connector.getSr().getOutS()" + connector.getClient().getOutputClientStream());
+
         } else {
-            System.out.println("Entry in sendResult if");
             DataOutputStream out = new DataOutputStream(connector.getServer().getOutputServerStream());
             sendResultOne(out, "Server");
-            System.out.println("connector.getSr().getOutS()" + connector.getServer().getOutputServerStream());
         }
-        System.out.println("connector.getSr().getOutS() " + connector.getServer().getOutputServerStream());
-        System.out.println("connector.getCl().getOutC( )" + connector.getClient().getOutputClientStream());
+
     }
 
-
-    //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
     private void sendResultOne(DataOutputStream out, String s) {
-        System.out.println("Entry in SROF");
-        System.out.println("gui.getMyRect(x, (y * 10) " + (x + y * 10));
-        System.out.println("gui.getMyRect(x, (y * 10) " + gui.getRects().getMyRect(x + (y * 10)));
-        MyRectangle rectangle = gui.getRects().getMyRect(x + (y * 10));
-        System.out.println("regtangle " + rectangle);
+        MyRectangle rectangle = gui.getRects().getMyRect(x, y);
         if (rectangle.getFill() == Color.ORANGE) {
             try {
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
