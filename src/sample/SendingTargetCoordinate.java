@@ -22,10 +22,8 @@ public class SendingTargetCoordinate extends Task {
     private Engine engine;
 
     public SendingTargetCoordinate(Engine engine, ClientServerConnector connector) {
-        this.engine=engine;
+        this.engine = engine;
         this.connector = connector;
-        System.out.println("isFollowStep in Constr " + engine.getStatus().isFollowStep());
-        System.out.println("Constructor SendingTargetCoordinate");
     }
 
     private Date currentDate = new Date();
@@ -48,19 +46,14 @@ public class SendingTargetCoordinate extends Task {
         }
     }
 
-    //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
     private void sendStrikeCoordinate(DataOutputStream out, String s) {
         try {
             int y = (int) (10 - (10 - engine.getTargetIndex() * 0.1));
             int x = engine.getTargetIndex() - y * 10;
-            updateMessage("#attack of " + s + " (I AM)" + "(" + currentDate + ")"
-                    + " attacked coordinates: " + "("
-                    + "$" + x + "%" + y
-                    + "*;");
-            out.writeUTF("#attack of " + s + " (" + currentDate + ")"
-                    + " attacked coordinates: " + "("
-                    + "$" + x + "%" + y
-                    + "*;");
+            String reportResultOfAttack = String.format("#attack of  %s (I AM) (%s) attacked coordinates: $%d%%%d*;",
+                    s, currentDate, x, y);
+            updateMessage(reportResultOfAttack);
+            out.writeUTF(reportResultOfAttack);
             updateMessage("");
         } catch (IOException e1) {
             e1.printStackTrace();

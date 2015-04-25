@@ -30,20 +30,13 @@ public class Server {
             outputServerStream = socket.getOutputStream();
         } catch (SocketTimeoutException e) {
             serverSocket.close();
-
         } catch (BindException e) {
-
+            e.printStackTrace();
         }
     }
 
     public boolean isClosed() {
         return (serverSocket == null || serverSocket.isClosed());
-    }
-
-
-    //Get-functions
-    public ServerSocket getServerSocket() {
-        return serverSocket;
     }
 
     public InputStream getInputServerStream() {
@@ -53,12 +46,7 @@ public class Server {
     public OutputStream getOutputServerStream() {
         return outputServerStream;
     }
-
-
-    public boolean isServerSocketClosed() {
-        return serverSocket.isClosed();
-    }
-
+    //It,s remain while
     public String getStatusServerSocket() {
         if (serverSocket != null) {
             return String.format("server socket '" + serverSocket + "' is " + (serverSocket.isClosed() ? "closed" : "opened"));

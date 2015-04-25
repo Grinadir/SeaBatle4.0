@@ -22,22 +22,22 @@ public class GuiWorkWithMyField {
                 int lX = rects.getMyRect(x, y).getPrivateShip().getX1();
                 int lY = rects.getMyRect(x, y).getPrivateShip().getY1();
                 if (lX + lY <= 18) {
-                    rects.getMyRect(lX, lY ).setFill(Color.BLACK);
+                    rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }
                 lX = rects.getMyRect(x, y).getPrivateShip().getX2();
                 lY = rects.getMyRect(x, y).getPrivateShip().getY2();
                 if (lX + lY <= 18) {
-                    rects.getMyRect(lX,  lY ).setFill(Color.BLACK);
+                    rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }
                 lX = rects.getMyRect(x, y).getPrivateShip().getX3();
                 lY = rects.getMyRect(x, y).getPrivateShip().getY3();
                 if (lX + lY <= 18) {
-                    rects.getMyRect(lX,  lY ).setFill(Color.BLACK);
+                    rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }
                 lX = rects.getMyRect(x, y).getPrivateShip().getX4();
                 lY = rects.getMyRect(x, y).getPrivateShip().getY4();
                 if (lX + lY <= 18) {
-                    rects.getMyRect(lX,  lY ).setFill(Color.BLACK);
+                    rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }
             }
         }

@@ -2,9 +2,6 @@ package sample;
 
 import javafx.scene.paint.Color;
 
-/**
- * Created by User on 11.04.2015.
- */
 public class GuiWorkWithEnemyField {
 
     private Rects rects;

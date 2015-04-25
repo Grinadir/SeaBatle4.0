@@ -4,9 +4,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by User on 09.04.2015.
- */
 public class SystemOfIncomingMessage {
 
     private ClientServerConnector connector;

@@ -3,9 +3,6 @@ package sample;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-/**
- * Created by SAS on 21.03.2015.
- */
 public class InputMessage {
 
 

@@ -30,8 +30,6 @@ public class SendingMessage extends Task {
         return null;
     }
 
-
-    //ДАЛЕЕ ИДУТ ЭКСТРАКТНЫЕ ФУНКЦИИ
     private void mainFunctionOutputMessage() {
         if (connector.getServer().isClosed()) {
             DataOutputStream out = new DataOutputStream(connector.getClient().getOutputClientStream());
@@ -42,10 +40,11 @@ public class SendingMessage extends Task {
         }
     }
 
-    private void outputAndUpdateMess(DataOutputStream out, String str) {
+    private void outputAndUpdateMess(DataOutputStream out, String whoClientOrServer) {
         try {
-            updateMessage(str + " " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
-            out.writeUTF(str + " " + "(" + currentDate + ")" + ":" + gui.getSendingMessage().getText());
+            String message = String.format("%s (%s):%s", whoClientOrServer, currentDate, gui.getSendingMessage().getText());
+            updateMessage(message);
+            out.writeUTF(message);
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();

@@ -1,8 +1,5 @@
 package sample;
 
-/**
- * Created by User on 13.03.2015.
- */
 public class Ship {
 
     private int x1 = 400;
@@ -95,6 +92,4 @@ public class Ship {
             return false;
         }
     }
-
-
 }

@@ -35,10 +35,10 @@ public class Engine {
 
     private int targetIndex;
 
-    public Engine (Gui gui){
-        this.gui=gui;
-        rects=new Rects(this, gui);
-        status=new Status(this);
+    public Engine(Gui gui) {
+        this.gui = gui;
+        rects = new Rects(this, gui);
+        status = new Status(this);
     }
 
     public Ship[] getShipSingle() {
@@ -117,7 +117,6 @@ public class Engine {
         return targetY;
     }
 
-
     public void setCount2(int count2) {
         this.count2 = count2;
     }
@@ -128,22 +127,6 @@ public class Engine {
 
     public void setCount4(int count4) {
         this.count4 = count4;
-    }
-
-    public void setOneAmount(int oneAmount) {
-        this.oneAmount = oneAmount;
-    }
-
-    public void setTwoAmount(int twoAmount) {
-        this.twoAmount = twoAmount;
-    }
-
-    public void setThreeAmount(int threeAmount) {
-        this.threeAmount = threeAmount;
-    }
-
-    public void setFourAmount(int fourAmount) {
-        this.fourAmount = fourAmount;
     }
 
     public void setSaveX(int saveX) {
@@ -170,6 +153,40 @@ public class Engine {
         this.saveY2 = saveY2;
     }
 
+    public void increaseAmountByOne(String type) {
+        switch (type) {
+            case "one":
+                oneAmount++;
+                break;
+            case "two":
+                twoAmount++;
+                break;
+            case "three":
+                threeAmount++;
+                break;
+            case "four":
+                fourAmount++;
+                break;
+        }
+    }
+
+    public void decreaseAmountByOne(String type) {
+        switch (type) {
+            case "one":
+                oneAmount--;
+                break;
+            case "two":
+                twoAmount--;
+                break;
+            case "three":
+                threeAmount--;
+                break;
+            case "four":
+                fourAmount--;
+                break;
+        }
+    }
+
     public void setTargetX(int x) {
         this.targetX = x;
     }
@@ -186,7 +203,7 @@ public class Engine {
         return a && b && c && d;
     }
 
-    public Rects getRects(){
+    public Rects getRects() {
         return rects;
     }
 

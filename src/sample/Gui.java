@@ -23,7 +23,6 @@ import java.io.IOException;
 
 public class Gui extends Application {
 
-
     private TextArea commonChat = new TextArea();
     private TextArea sendingMessage = new TextArea();
     private Button bStart = new Button("Connect");
@@ -38,16 +37,14 @@ public class Gui extends Application {
     private RadioButton two = new RadioButton("Two 3 pcs.");
     private RadioButton one = new RadioButton("One 4 pcs.");
 
-    private Engine engine=new Engine(this);
+    private Engine engine = new Engine(this);
     private ClientServerConnector connector;
-
 
     private GridPane mySeaField = new GridPane();
     private GridPane myPane = new GridPane();
     private GridPane enemySeaField = new GridPane();
     private GridPane shipType = new GridPane();
     private int i = 0;
-
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -142,12 +139,14 @@ public class Gui extends Application {
                             public void changed(
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
-                                String tempString=connector.getMessage();
-                                Gui.this.setTextInCommonChat(connector.getMessage());
 
-                                //whatDoWhenMessageDiliverd(connector);
-                                new GuiWorkWithIncomingMessage(engine, connector).main(tempString);
-                                System.out.println("TYK TYK");
+                                String tempString = connector.getMessage();
+                                System.out.println(tempString);
+                                if (tempString != null) {
+                                    Gui.this.setTextInCommonChat(connector.getMessage());
+                                    new GuiWorkWithIncomingMessage(engine, connector).main(tempString);
+                                    System.out.println("TYK TYK");
+                                }
                             }
                         });
                 Service service = new Service<Void>() {
@@ -275,8 +274,6 @@ public class Gui extends Application {
         primaryStage.show();
     }
 
-
-    //ДАЛЕЕ НАХОДИТСЯ ЭКСПОРТИРУЕМЫЕ ФУНКЦИИ
     public void addMySeaField(MyRectangle rectangle, int i, int numline) {
         mySeaField.add(rectangle, i, numline);
     }
@@ -292,38 +289,11 @@ public class Gui extends Application {
         commonChat.end();
     }
 
-    //Сеттеры
-
-
     public TextArea getSendingMessage() {
         return sendingMessage;
     }
 
-    public RadioButton getNo() {
-        return no;
-    }
-
-    public RadioButton getRanking() {
-        return ranking;
-    }
-
-    public RadioButton getOne() {
-        return one;
-    }
-
-    public RadioButton getTwo() {
-        return two;
-    }
-
-    public RadioButton getThree() {
-        return three;
-    }
-
-    public RadioButton getFour() {
-        return four;
-    }
-
-    public Settings getSettings(){
+    public Settings getSettings() {
         return new Settings() {
             @Override
             public boolean isRanking() {
@@ -356,8 +326,6 @@ public class Gui extends Application {
             }
         };
     }
-
-
 
 
 }

@@ -2,9 +2,6 @@ package sample;
 
 import javafx.scene.paint.Color;
 
-/**
- * Created by User on 19.04.2015.
- */
 public class Rects {
 
     private Gui gui;
@@ -14,8 +11,7 @@ public class Rects {
 
     public Rects(Engine engine, Gui gui) {
         this.gui = gui;
-        this.engine=engine;
-
+        this.engine = engine;
     }
 
     private void makeOneIterationRectMY(int i) {
@@ -45,7 +41,7 @@ public class Rects {
     }
 
     public MyRectangle getMyRect(int x, int y) {
-        return rectMY[y*10+x];
+        return rectMY[y * 10 + x];
     }
 
     public EnemyRectangle getRectENEMY(int i) {

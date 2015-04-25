@@ -7,6 +7,4 @@ public interface Settings {
     boolean isTwo();
     boolean isThree();
     boolean isFour();
-
-
 }

@@ -26,7 +26,7 @@ public class MyRectangle extends Rectangle {
     private FunctionsOfMarkedByDifferentColor func;
 
     public MyRectangle(Settings settings, final Engine engine, double width, double height, int e) {
-        this.settings=settings;
+        this.settings = settings;
         this.engine = engine;
         setWidth(width);
         setHeight(height);
@@ -51,14 +51,14 @@ public class MyRectangle extends Rectangle {
                         && (getFill() != Color.YELLOW && getFill() != Color.GREEN)) {
                     if (getFill() == Color.BLUE) {
                         setFill(Color.GREEN);
-                        engine.setOneAmount(engine.getOneAmount() + 1);
+                        engine.increaseAmountByOne("one");
                         func.marketGreen(x, y);
                     }
 // -1-
 
                 } else if (isSelectedSingleShip()) {
-                    if (engine.getOneAmount()<=4&&engine.getOneAmount()>=1) {
-                            makeSingleShip();
+                    if (engine.getOneAmount() <= 4 && engine.getOneAmount() >= 1) {
+                        makeSingleShip();
                     }
                 }
 
@@ -115,12 +115,12 @@ public class MyRectangle extends Rectangle {
             privateShip.setY1(y);
             setFill(Color.BLUE);
             func.marketYellow(x, y);
-            engine.setOneAmount(engine.getOneAmount() - 1);
+            engine.decreaseAmountByOne("one");
         } else {
             func.marketGreen(x, y);
             setFill(Color.GREEN);
             privateShip = null;
-            engine.setOneAmount(engine.getOneAmount() + 1);
+            engine.increaseAmountByOne("one");
         }
     }
 
@@ -151,7 +151,7 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(x + 1, y);
             }
             engine.setCount2(0);
-            engine.setTwoAmount(engine.getTwoAmount() - 1);
+            engine.decreaseAmountByOne("two");
         }
     }
 
@@ -189,7 +189,7 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
                 func.marketYellow(x, y);
                 engine.setCount3(0);
-                engine.setThreeAmount(engine.getThreeAmount() - 1);
+                engine.decreaseAmountByOne("three");
             } else if (engine.getSaveY() == y
                     && (engine.getSaveX1() == x + 1 || engine.getSaveX1() == x - 1)
                     && engine.getThreeAmount() != 0) {
@@ -201,7 +201,7 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
                 func.marketYellow(x, y);
                 engine.setCount3(0);
-                engine.setThreeAmount(engine.getThreeAmount() - 1);
+                engine.decreaseAmountByOne("three");
             }
         }
     }
@@ -258,7 +258,7 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(engine.getSaveX2(), engine.getSaveY2());
                 func.marketYellow(x, y);
                 engine.setCount4(0);
-                engine.setFourAmount(engine.getFourAmount() - 1);
+                engine.decreaseAmountByOne("four");
             } else if (engine.getSaveY2() == y
                     && (engine.getSaveX2() == x + 1 || engine.getSaveX2() == x - 1)
                     && engine.getThreeAmount() != 0) {
@@ -270,12 +270,11 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(engine.getSaveX2(), engine.getSaveY2());
                 func.marketYellow(x, y);
                 engine.setCount4(0);
-                engine.setFourAmount(engine.getFourAmount() - 1);
+                engine.decreaseAmountByOne("four");
             }
         }
     }
 
-    //Геттеры и сеттеры
     public Ship getPrivateShip() {
         return privateShip;
     }

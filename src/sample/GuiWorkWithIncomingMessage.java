@@ -23,11 +23,9 @@ public class GuiWorkWithIncomingMessage {
                 int dX = parse(tempString, '$', '%');
                 int dY = parse(tempString, '%', '*');
                 System.out.println("dX " + dX + ", dY " + dY);
-                //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
+                //At the beginning must be workWithMyField, after SendingResultOfFire()
                 new GuiWorkWithMyField(engine.getRects()).main(dX, dY);
-                System.out.println("Before new SendingResultOfFire(this, connector).sendResult(" + dX + ", " + dY + ")");
                 new SendingResultOfFire(engine, connector).sendResult(dX, dY);
-                System.out.println("After new SendingResultOfFire(this, connector).sendResult(" + dX + ", " + dY + ")");
             }
             if (tempString.charAt(0) == '!') {
 
@@ -38,7 +36,6 @@ public class GuiWorkWithIncomingMessage {
                 String result;
                 int dX = parse(tempString, '$', '%');
                 int dY = parse(tempString, '%', '*');
-                System.out.println("dX " + dX + ", dY " + dY);
                 result = tempString.toString().substring(tempString.indexOf("*") + 1, tempString.indexOf(";"));
                 if (result.equals("MISS")) {
                     engine.getStatus().setFollowStep(false);
@@ -52,11 +49,11 @@ public class GuiWorkWithIncomingMessage {
                 new GuiWorkWithEnemyField(engine.getRects()).main(dX, dY, result, index1, index2, index3, index4);
             }
         } catch (StringIndexOutOfBoundsException e) {
+            e.printStackTrace();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-    //Extract function
 
     private int parse(String temp, char n1, char n2) {
         return Integer.parseInt(temp.substring(temp.indexOf(n1) + 1, temp.indexOf(n2)));

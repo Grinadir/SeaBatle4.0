@@ -5,9 +5,6 @@ import javafx.scene.paint.Color;
 import java.io.DataOutputStream;
 import java.util.Date;
 
-/**
- * Created by Selkov Alexsandr on 23.02.2015.
- */
 public class SendingResultOfFire {
 
     private Date currentDate = new Date();
@@ -22,7 +19,6 @@ public class SendingResultOfFire {
     }
 
     public void sendResult(int x, int y) {
-
         this.x = x;
         this.y = y;
         if (connector.getServer().isClosed()) {
@@ -33,22 +29,19 @@ public class SendingResultOfFire {
             DataOutputStream out = new DataOutputStream(connector.getServer().getOutputServerStream());
             sendResultOne(out, "Server");
         }
-
     }
 
-    private void sendResultOne(DataOutputStream out, String s) {
+    private void sendResultOne(DataOutputStream out, String whoClientOrServer) {
         MyRectangle rectangle = engine.getRects().getMyRect(x, y);
         if (rectangle.getFill() == Color.ORANGE) {
             try {
-                out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
-                        + " attacked coordinates: " + "("
-                        + "$" + x + "%" + y
-                        + "*DAM;");
+                String reportResultOfAttack = String.format("!result attacked %s field (%s) attacked coordinates: ($%d%%%d*DAM;",
+                        whoClientOrServer, currentDate, x, y);
+                out.writeUTF(reportResultOfAttack);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (rectangle.getFill() == Color.BLACK) {
-            System.out.println("_____________Заход");
             int index1 = rectangle.getPrivateShip().getX1() +
                     (10 * rectangle.getPrivateShip().getY1());
             int index2 = rectangle.getPrivateShip().getX2() +
@@ -58,25 +51,20 @@ public class SendingResultOfFire {
             int index4 = rectangle.getPrivateShip().getX4() +
                     (10 * rectangle.getPrivateShip().getY4());
             try {
-                out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
-                        + " attacked coordinates: " + "("
-                        + "$" + x + "%" + y
-                        + "*DESTROY;" + index1 + "&" + index2 + "@" + index3 + "#" + index4 + "~");
-                System.out.println("Result of attack was send");
+                String reportResultOfAttack = String.format("!result attacked %s field (%s) attacked coordinates: "
+                                + "($%d%%%d*DESTROY;%d&%d@%d#%d~",
+                        whoClientOrServer, currentDate, x, y, index1, index2, index3, index4);
+                out.writeUTF(reportResultOfAttack);
             } catch (Exception e) {
-                System.out.println("Result of attack was NOT send");
                 e.printStackTrace();
             }
         } else if ((rectangle.getFill() == Color.YELLOW) || (rectangle.getFill() == Color.GREEN)) {
             try {
-                out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
-                        + " attacked coordinates: " + "("
-                        + "$" + x + "%" + y
-                        + "*MISS;");
+                String reportResultOfAttack = String.format("!result attacked %s field (%s) attacked coordinates: ($%d%%%d*MISS;",
+                        whoClientOrServer, currentDate, x, y);
+                out.writeUTF(reportResultOfAttack);
                 engine.getStatus().setFollowStep(true);
-                System.out.println("Result of attack was send");
             } catch (Exception e) {
-                System.out.println("Result of fire don't delivered");
                 e.printStackTrace();
             }
         }
