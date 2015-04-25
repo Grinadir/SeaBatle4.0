@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class Gui extends Application {
 
-    private int targetIndex;
+
     private TextArea commonChat = new TextArea();
     private TextArea sendingMessage = new TextArea();
     private Button bStart = new Button("Connect");
@@ -37,11 +37,10 @@ public class Gui extends Application {
     private RadioButton three = new RadioButton("Three 2 pcs.");
     private RadioButton two = new RadioButton("Two 3 pcs.");
     private RadioButton one = new RadioButton("One 4 pcs.");
-    private Counters count = new Counters();
 
+    private Engine engine=new Engine(this);
     private ClientServerConnector connector;
-    private Status status = new Status(count);
-    Rects rects = new Rects(this, count);
+
 
     private GridPane mySeaField = new GridPane();
     private GridPane myPane = new GridPane();
@@ -143,9 +142,11 @@ public class Gui extends Application {
                             public void changed(
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
+                                String tempString=connector.getMessage();
+                                Gui.this.setTextInCommonChat(connector.getMessage());
 
                                 //whatDoWhenMessageDiliverd(connector);
-                                new GuiWorkWithIncomingMessage(Gui.this, connector, status).main();
+                                new GuiWorkWithIncomingMessage(engine, connector).main(tempString);
                                 System.out.println("TYK TYK");
                             }
                         });
@@ -167,7 +168,7 @@ public class Gui extends Application {
 
             @Override
             public void handle(Event event) {
-                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(Gui.this, connector, status);
+                final SendingTargetCoordinate sendMess = new SendingTargetCoordinate(engine, connector);
                 sendMess.messageProperty().addListener(
                         new ChangeListener<String>() {
 
@@ -263,7 +264,7 @@ public class Gui extends Application {
             }
 
         });
-        rects.makeEnemyAndMyField();
+        engine.getRects().makeEnemyAndMyField();
 
 
         Scene scene = new Scene(myPane, 700, 700);
@@ -292,18 +293,7 @@ public class Gui extends Application {
     }
 
     //Сеттеры
-    public void setTargetIndex(int i) {
-        this.targetIndex = i;
-    }
 
-    public Rects getRects() {
-        return rects;
-    }
-
-
-    public int getTargetIndex() {
-        return targetIndex;
-    }
 
     public TextArea getSendingMessage() {
         return sendingMessage;
@@ -332,5 +322,43 @@ public class Gui extends Application {
     public RadioButton getFour() {
         return four;
     }
+
+    public Settings getSettings(){
+        return new Settings() {
+            @Override
+            public boolean isRanking() {
+                return ranking.isSelected();
+            }
+
+            @Override
+            public boolean isNo() {
+                return no.isSelected();
+            }
+
+            @Override
+            public boolean isOne() {
+                return one.isSelected();
+            }
+
+            @Override
+            public boolean isTwo() {
+                return two.isSelected();
+            }
+
+            @Override
+            public boolean isThree() {
+                return three.isSelected();
+            }
+
+            @Override
+            public boolean isFour() {
+                return four.isSelected();
+            }
+        };
+    }
+
+
+
+
 }
 

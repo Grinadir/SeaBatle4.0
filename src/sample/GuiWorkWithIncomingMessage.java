@@ -6,34 +6,31 @@ package sample;
 public class GuiWorkWithIncomingMessage {
 
     private ClientServerConnector connector;
-    private Gui gui;
-    private Status status;
+    private Engine engine;
 
-    public GuiWorkWithIncomingMessage(Gui gui, ClientServerConnector connector, Status status) {
+    public GuiWorkWithIncomingMessage(Engine engine, final ClientServerConnector connector) {
         this.connector = connector;
-        this.gui = gui;
-        this.status = status;
+        this.engine = engine;
     }
 
-    public void main() {
-        String tempString = connector.getMessage();
+    public void main(String tempString) {
         try {
             if (tempString.charAt(0) != '!' && tempString.charAt(0) != '#') {
-                gui.setTextInCommonChat(connector.getMessage());
+
             }
             if (tempString.charAt(0) == '#') {
-                gui.setTextInCommonChat(connector.getMessage());
+
                 int dX = parse(tempString, '$', '%');
                 int dY = parse(tempString, '%', '*');
                 System.out.println("dX " + dX + ", dY " + dY);
                 //Сначала должна идти функция workWithMyField, затем SendingResultOfFire()
-                new GuiWorkWithMyField(gui.getRects()).main(dX, dY);
+                new GuiWorkWithMyField(engine.getRects()).main(dX, dY);
                 System.out.println("Before new SendingResultOfFire(this, connector).sendResult(" + dX + ", " + dY + ")");
-                new SendingResultOfFire(gui, connector, status).sendResult(dX, dY);
+                new SendingResultOfFire(engine, connector).sendResult(dX, dY);
                 System.out.println("After new SendingResultOfFire(this, connector).sendResult(" + dX + ", " + dY + ")");
             }
             if (tempString.charAt(0) == '!') {
-                gui.setTextInCommonChat(connector.getMessage());
+
                 int index1 = 400;
                 int index2 = 440;
                 int index3 = 440;
@@ -44,7 +41,7 @@ public class GuiWorkWithIncomingMessage {
                 System.out.println("dX " + dX + ", dY " + dY);
                 result = tempString.toString().substring(tempString.indexOf("*") + 1, tempString.indexOf(";"));
                 if (result.equals("MISS")) {
-                    status.setFollowStep(false);
+                    engine.getStatus().setFollowStep(false);
                 }
                 if (result.equals("DESTROY")) {
                     index1 = Integer.parseInt(tempString.substring(tempString.indexOf(";") + 1, tempString.indexOf("&")));
@@ -52,7 +49,7 @@ public class GuiWorkWithIncomingMessage {
                     index3 = Integer.parseInt(tempString.substring(tempString.indexOf("@") + 1, tempString.indexOf("#")));
                     index4 = Integer.parseInt(tempString.substring(tempString.indexOf("#") + 1, tempString.indexOf("~")));
                 }
-                new GuiWorkWithEnemyField(gui.getRects()).main(dX, dY, result, index1, index2, index3, index4);
+                new GuiWorkWithEnemyField(engine.getRects()).main(dX, dY, result, index1, index2, index3, index4);
             }
         } catch (StringIndexOutOfBoundsException e) {
         } catch (Exception e) {

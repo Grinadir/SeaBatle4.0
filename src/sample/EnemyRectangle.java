@@ -11,12 +11,11 @@ import javafx.scene.shape.Rectangle;
 public class EnemyRectangle extends Rectangle {
     private int x;
     private int y;
-    private Gui gui;
-    private Counters count;
+    private Engine engine;
 
-    public EnemyRectangle(final Gui gui, double width, double height, final Counters count) {
-        this.gui = gui;
-        this.count = count;
+    public EnemyRectangle(final Engine engine, double width, double height) {
+        this.engine = engine;
+
         setWidth(width);
         setHeight(height);
 
@@ -25,16 +24,16 @@ public class EnemyRectangle extends Rectangle {
             @Override
             public void handle(Event event) {
                 if (getFill() == javafx.scene.paint.Color.GREEN) {
-                    if ((count.getTargetX() + count.getTargetY()) != 880) {
-                        new FunctionsOfMarkedByDifferentColor(gui.getRects()).undoTarget(count.getTargetX(), count.getTargetY());
+                    if ((engine.getTargetX() + engine.getTargetY()) != 880) {
+                        new FunctionsOfMarkedByDifferentColor(engine.getRects()).undoTarget(engine.getTargetX(), engine.getTargetY());
                     }
                     setFill(javafx.scene.paint.Color.RED);
-                    count.setTargetX(x);
-                    count.setTargetY(y);
-                    gui.setTargetIndex(x + 10 * y);
+                    engine.setTargetX(x);
+                    engine.setTargetY(y);
+                    engine.setTargetIndex(x + 10 * y);
                 } else {
                     setFill(javafx.scene.paint.Color.GREEN);
-                    gui.setTargetIndex(999);
+                    engine.setTargetIndex(999);
 
                 }
             }

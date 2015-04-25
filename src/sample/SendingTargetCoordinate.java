@@ -19,14 +19,12 @@ import java.util.Date;
 public class SendingTargetCoordinate extends Task {
 
     private ClientServerConnector connector;
-    private Gui gui;
-    private Status status;
+    private Engine engine;
 
-    public SendingTargetCoordinate(Gui gui, ClientServerConnector connector, Status status) {
+    public SendingTargetCoordinate(Engine engine, ClientServerConnector connector) {
+        this.engine=engine;
         this.connector = connector;
-        this.gui = gui;
-        this.status = status;
-        System.out.println("isFollowStep in Constr " + status.isFollowStep());
+        System.out.println("isFollowStep in Constr " + engine.getStatus().isFollowStep());
         System.out.println("Constructor SendingTargetCoordinate");
     }
 
@@ -44,8 +42,8 @@ public class SendingTargetCoordinate extends Task {
 
     private void sendStrikeCoordinateTo(String who, OutputStream outputStream) {
         DataOutputStream outClient = new DataOutputStream(outputStream);
-        System.out.println("isFollowStep " + status.isFollowStep());
-        if (status.isFollowStep() && status.checkAndInstallStart()) {
+        System.out.println("isFollowStep " + engine.getStatus().isFollowStep());
+        if (engine.getStatus().isFollowStep() && engine.getStatus().checkAndInstallStart()) {
             sendStrikeCoordinate(outClient, who);
         }
     }
@@ -53,8 +51,8 @@ public class SendingTargetCoordinate extends Task {
     //ДАЛЕЕ ИДУТ EXTRACT ФУНКЦИИ
     private void sendStrikeCoordinate(DataOutputStream out, String s) {
         try {
-            int y = (int) (10 - (10 - gui.getTargetIndex() * 0.1));
-            int x = gui.getTargetIndex() - y * 10;
+            int y = (int) (10 - (10 - engine.getTargetIndex() * 0.1));
+            int x = engine.getTargetIndex() - y * 10;
             updateMessage("#attack of " + s + " (I AM)" + "(" + currentDate + ")"
                     + " attacked coordinates: " + "("
                     + "$" + x + "%" + y

@@ -11,16 +11,14 @@ import java.util.Date;
 public class SendingResultOfFire {
 
     private Date currentDate = new Date();
-    private Gui gui;
+    private Engine engine;
     private ClientServerConnector connector;
     private int x;
     private int y;
-    private Status status;
 
-    public SendingResultOfFire(Gui gui, ClientServerConnector connector, Status status) {
-        this.gui = gui;
+    public SendingResultOfFire(Engine engine, ClientServerConnector connector) {
+        this.engine = engine;
         this.connector = connector;
-        this.status = status;
     }
 
     public void sendResult(int x, int y) {
@@ -39,16 +37,14 @@ public class SendingResultOfFire {
     }
 
     private void sendResultOne(DataOutputStream out, String s) {
-        MyRectangle rectangle = gui.getRects().getMyRect(x, y);
+        MyRectangle rectangle = engine.getRects().getMyRect(x, y);
         if (rectangle.getFill() == Color.ORANGE) {
             try {
                 out.writeUTF("!result attacked " + s + " field " + "(" + currentDate + ")"
                         + " attacked coordinates: " + "("
                         + "$" + x + "%" + y
                         + "*DAM;");
-                System.out.println("Result of attak was send");
             } catch (Exception e) {
-                System.out.println("Рesult of attack was NOT send");
                 e.printStackTrace();
             }
         } else if (rectangle.getFill() == Color.BLACK) {
@@ -77,7 +73,7 @@ public class SendingResultOfFire {
                         + " attacked coordinates: " + "("
                         + "$" + x + "%" + y
                         + "*MISS;");
-                status.setFollowStep(true);
+                engine.getStatus().setFollowStep(true);
                 System.out.println("Result of attack was send");
             } catch (Exception e) {
                 System.out.println("Result of fire don't delivered");

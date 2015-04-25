@@ -8,17 +8,19 @@ import javafx.scene.paint.Color;
 public class Rects {
 
     private Gui gui;
-    private Counters counters;
+    private Engine engine;
     private MyRectangle[] rectMY = new MyRectangle[100];
     private EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
 
-    public Rects(Gui gui, Counters counters) {
+    public Rects(Engine engine, Gui gui) {
         this.gui = gui;
-        this.counters = counters;
+        this.engine=engine;
+
     }
 
     private void makeOneIterationRectMY(int i) {
-        rectMY[i] = new MyRectangle(gui, counters, 10, 10, i);
+        rectMY[i] = new MyRectangle(gui.getSettings(),
+                engine, 10, 10, i);
         rectMY[i].setFill(Color.GREEN);
         int numLine = (int) (10 - (10 - i * 0.1));
         rectMY[i].setXinMyRect(i - numLine * 10);
@@ -27,7 +29,7 @@ public class Rects {
     }
 
     private void makeOneIterationRectENEMY(int i) {
-        rectENEMY[i] = new EnemyRectangle(gui, 10, 10, counters);
+        rectENEMY[i] = new EnemyRectangle(engine, 10, 10);
         rectENEMY[i].setFill(Color.GREEN);
         int numLine = (int) (10 - (10 - i * 0.1));
         rectENEMY[i].setXEnemyRect(i - numLine * 10);
@@ -41,10 +43,6 @@ public class Rects {
             makeOneIterationRectENEMY(i);
         }
     }
-
-    //public MyRectangle getMyRect(int i) {
-    //    return rectMY[i];
-    //}
 
     public MyRectangle getMyRect(int x, int y) {
         return rectMY[y*10+x];

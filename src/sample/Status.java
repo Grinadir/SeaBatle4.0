@@ -7,14 +7,14 @@ public class Status {
 
     private boolean followStep = true;
     private boolean startGame = false;
-    private Counters count;
+    private Engine engine;
 
-    public Status(Counters count) {
-        this.count = count;
+    public Status(Engine engine) {
+        this.engine = engine;
     }
 
     public boolean checkAndInstallStart() {
-        if (count.isAllShipInstall()) {
+        if (engine.isAllShipInstall()) {
             startGame = true;
         }
         return startGame;
