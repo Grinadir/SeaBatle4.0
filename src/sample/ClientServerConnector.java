@@ -14,35 +14,22 @@ public class ClientServerConnector extends Task {
 
     private Server server;
     private Client client;
-    private SystemOfIncomingMessage sysInMESSAGE;
-
-    public ClientServerConnector() {
-
-    }
+    private SystemOfIncomingMessage systemOfIncomingMessage;
 
     @Override
     protected Void call() throws Exception {
         updateMessage("Start client-server");
         server = new Server();
         client = new Client();
-        sysInMESSAGE = new SystemOfIncomingMessage(ClientServerConnector.this);
-        String mess = "";
-        tryFunctionToConnection(mess);
-        sysInMESSAGE.mainFunctionOfIncomingMessage();
+        systemOfIncomingMessage = new SystemOfIncomingMessage(ClientServerConnector.this);
+        tryFunctionToConnection();
+        systemOfIncomingMessage.mainFunctionOfIncomingMessage();
         return null;
     }
 
-    private void tryFunctionToConnection(String mess) throws IOException, InterruptedException {
+    private void tryFunctionToConnection() throws IOException, InterruptedException {
         do {
             server.serverWorking();
-            updateMessage(mess);
-            try {
-                updateMessage(mess);
-            } catch (NullPointerException e) {
-                e.getStackTrace();
-
-            }
-
             if (server.isClosed()) {
                 try {
                     client.clientWorking();

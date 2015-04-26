@@ -37,6 +37,7 @@ public class SendingResultOfFire {
             try {
                 String reportResultOfAttack = String.format("!result attacked %s field (%s) attacked coordinates: ($%d%%%d*DAM;",
                         whoClientOrServer, currentDate, x, y);
+                engine.getStatus().setFollowStep(false);
                 out.writeUTF(reportResultOfAttack);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -54,6 +55,7 @@ public class SendingResultOfFire {
                 String reportResultOfAttack = String.format("!result attacked %s field (%s) attacked coordinates: "
                                 + "($%d%%%d*DESTROY;%d&%d@%d#%d~",
                         whoClientOrServer, currentDate, x, y, index1, index2, index3, index4);
+                engine.getStatus().setFollowStep(false);
                 out.writeUTF(reportResultOfAttack);
             } catch (Exception e) {
                 e.printStackTrace();

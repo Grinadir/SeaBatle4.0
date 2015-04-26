@@ -16,7 +16,7 @@ public class Rects {
 
     private void makeOneIterationRectMY(int i) {
         rectMY[i] = new MyRectangle(gui.getSettings(),
-                engine, 10, 10, i);
+                engine, 15, 15, i);
         rectMY[i].setFill(Color.GREEN);
         int numLine = (int) (10 - (10 - i * 0.1));
         rectMY[i].setXinMyRect(i - numLine * 10);
@@ -25,7 +25,7 @@ public class Rects {
     }
 
     private void makeOneIterationRectENEMY(int i) {
-        rectENEMY[i] = new EnemyRectangle(engine, 10, 10);
+        rectENEMY[i] = new EnemyRectangle(engine, 15, 15);
         rectENEMY[i].setFill(Color.GREEN);
         int numLine = (int) (10 - (10 - i * 0.1));
         rectENEMY[i].setXEnemyRect(i - numLine * 10);

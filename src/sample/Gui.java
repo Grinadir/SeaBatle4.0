@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class Gui extends Application {
     private Button bStart = new Button("Connect");
     private Button bsendMessage = new Button("Send");
     private Button fireButton = new Button("Fire");
+    private Button ready=new Button("Ready!");
     private ToggleGroup group = new ToggleGroup();
     private RadioButton ranking = new RadioButton("Ranking");
     private RadioButton no = new RadioButton("NO");
@@ -36,6 +38,7 @@ public class Gui extends Application {
     private RadioButton three = new RadioButton("Three 2 pcs.");
     private RadioButton two = new RadioButton("Two 3 pcs.");
     private RadioButton one = new RadioButton("One 4 pcs.");
+    private Label whomStep = new Label();
 
     private Engine engine = new Engine(this);
     private ClientServerConnector connector;
@@ -44,7 +47,6 @@ public class Gui extends Application {
     private GridPane myPane = new GridPane();
     private GridPane enemySeaField = new GridPane();
     private GridPane shipType = new GridPane();
-    private int i = 0;
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -53,17 +55,11 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException, InterruptedException {
         commonChat.setEditable(false);
-        commonChat.selectEndOfNextWord();
         commonChat.setPrefSize(200, 500);
         commonChat.setTooltip(new Tooltip("Чат Окно"));
         commonChat.setWrapText(true);
-        try {
-            commonChat.setText(commonChat.getText() + "\n");
-        } catch (NullPointerException e) {
+        commonChat.clear();
 
-        }
-
-        GridPane chatPain = new GridPane();
         ranking.setToggleGroup(group);
         no.setToggleGroup(group);
         ranking.setSelected(true);
@@ -79,14 +75,14 @@ public class Gui extends Application {
         myPane.setPadding(new Insets(25, 25, 25, 25));
 
         mySeaField.setAlignment(Pos.CENTER_LEFT);
-        mySeaField.setHgap(10);
-        mySeaField.setVgap(10);
-        mySeaField.setPadding(new Insets(10, 10, 10, 10));
+        mySeaField.setHgap(1);
+        mySeaField.setVgap(1);
+        mySeaField.setPadding(new Insets(5, 5, 5, 5));
 
         enemySeaField.setAlignment(Pos.CENTER_RIGHT);
-        enemySeaField.setVgap(10);
-        enemySeaField.setHgap(10);
-        enemySeaField.setPadding(new Insets(10, 10, 10, 10));
+        enemySeaField.setVgap(1);
+        enemySeaField.setHgap(1);
+        enemySeaField.setPadding(new Insets(5, 5, 5, 5));
 
         shipType.setAlignment(Pos.CENTER_LEFT);
         shipType.setPadding(new Insets(0, 0, 0, 0));
@@ -102,6 +98,7 @@ public class Gui extends Application {
         myPane.add(no, 1, 1, 1, 1);
         myPane.add(shipType, 0, 2, 2, 1);
         myPane.add(fireButton, 0, 3, 1, 1);
+        myPane.add(whomStep, 1, 3, 1, 1);
         myPane.add(commonChat, 0, 11, 2, 1);
         myPane.add(sendingMessage, 0, 12, 2, 1);
         myPane.add(bsendMessage, 0, 13, 1, 1);
@@ -131,7 +128,9 @@ public class Gui extends Application {
             @Override
             public void handle(Event event) {
                 // Создание класса Task, существующий для работы с JavaFX
+                commonChat.setText("Begin connection");
                 connector = new ClientServerConnector();
+
                 connector.messageProperty().addListener(
                         new ChangeListener<String>() {
 
@@ -141,19 +140,16 @@ public class Gui extends Application {
                                     String oldValue, String newValue) {
 
                                 String tempString = connector.getMessage();
-                                System.out.println(tempString);
-                                if (tempString != null) {
-                                    Gui.this.setTextInCommonChat(connector.getMessage());
-                                    new GuiWorkWithIncomingMessage(engine, connector).main(tempString);
-                                    System.out.println("TYK TYK");
-                                }
+                                Gui.this.setTextInCommonChat(connector.getMessage());
+                                new GuiWorkWithIncomingMessage(engine, connector).main(tempString);
+                                statusLabelOfStep();
+
                             }
                         });
                 Service service = new Service<Void>() {
 
                     @Override
                     protected Task<Void> createTask() {
-                        // TODO Auto-generated method stub
                         return connector;
                     }
 
@@ -176,8 +172,8 @@ public class Gui extends Application {
                                     ObservableValue<? extends String> observable,
                                     String oldValue, String newValue) {
                                 commonChat.setText(commonChat.getText().toString() + "\n");
-                                commonChat.end();
                                 commonChat.setText(commonChat.getText().toString() + sendMess.getMessage().toString());
+                                commonChat.end();
                             }
                         });
 
@@ -266,12 +262,23 @@ public class Gui extends Application {
         engine.getRects().makeEnemyAndMyField();
 
 
-        Scene scene = new Scene(myPane, 700, 700);
+        Scene scene = new Scene(myPane, 500, 600);
 
         scene.getStylesheets().add(
                 getClass().getResource("application.css").toExternalForm());
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    private void statusLabelOfStep() {
+        if(engine.getStatus().isFollowStep()){
+            whomStep.setText("You step!");
+            whomStep.setTextFill(Color.GREEN);
+        }else{
+            whomStep.setText("Enemy step!");
+            whomStep.setTextFill(Color.RED);
+        }
     }
 
     public void addMySeaField(MyRectangle rectangle, int i, int numline) {
@@ -284,6 +291,7 @@ public class Gui extends Application {
 
 
     public void setTextInCommonChat(String message) {
+
         commonChat.setText(commonChat.getText() + "\n"
                 + message);
         commonChat.end();

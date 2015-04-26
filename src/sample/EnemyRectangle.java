@@ -1,9 +1,5 @@
 package sample;
 
-/**
- * Created by Selkov Alexsandr on 22.02.2015.
- */
-
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.shape.Rectangle;

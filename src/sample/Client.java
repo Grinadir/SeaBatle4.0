@@ -1,7 +1,4 @@
 package sample;
-/**
- * Created by Selkov Alexsandr on 22.02.2015.
- */
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +17,6 @@ public class Client {
 
     public Client() throws IOException {
         ip = InetAddress.getByName("192.168.100.5");
-
     }
 
     public void clientWorking() throws IOException, InterruptedException {
@@ -37,7 +33,6 @@ public class Client {
         }
     }
 
-    //Геттеры
     public InputStream getInputClientStream() {
         return inputClientStream;
     }

@@ -1,15 +1,9 @@
 package sample;
 
-/**
- * Created by User on 22.02.2015.
- */
-
-
 import javafx.scene.paint.Color;
 
 /*
- * Xранить функции для раскрашивания в разные цвета
- * квадратов
+ * Contains functions painting over squares by different colors
  */
 public class FunctionsOfMarkedByDifferentColor {
 
