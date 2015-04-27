@@ -36,9 +36,9 @@ public class Engine {
     private int targetIndex;
 
     public Engine(Gui gui) {
-        this.gui = gui;
-        rects = new Rects(this, gui);
-        status = new Status(this);
+        this.gui=gui;
+        rects = new Rects(this);
+        status = new Status();
     }
 
     public Ship[] getShipSingle() {
@@ -217,5 +217,9 @@ public class Engine {
 
     public Status getStatus() {
         return status;
+    }
+
+    public Gui getGui(){
+        return gui;
     }
 }

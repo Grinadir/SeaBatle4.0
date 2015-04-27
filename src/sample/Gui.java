@@ -29,7 +29,7 @@ public class Gui extends Application {
     private Button bStart = new Button("Connect");
     private Button bsendMessage = new Button("Send");
     private Button fireButton = new Button("Fire");
-    private Button ready=new Button("Ready!");
+    private Button readyButton = new Button("Ready?");
     private ToggleGroup group = new ToggleGroup();
     private RadioButton ranking = new RadioButton("Ranking");
     private RadioButton no = new RadioButton("NO");
@@ -86,7 +86,7 @@ public class Gui extends Application {
 
         shipType.setAlignment(Pos.CENTER_LEFT);
         shipType.setPadding(new Insets(0, 0, 0, 0));
-        shipType.setHgap(50);
+        shipType.setHgap(20);
         shipType.add(four, 0, 0, 1, 1);
         shipType.add(three, 1, 0, 1, 1);
         shipType.add(two, 2, 0, 1, 1);
@@ -97,8 +97,9 @@ public class Gui extends Application {
         myPane.add(ranking, 0, 1, 1, 1);
         myPane.add(no, 1, 1, 1, 1);
         myPane.add(shipType, 0, 2, 2, 1);
-        myPane.add(fireButton, 0, 3, 1, 1);
-        myPane.add(whomStep, 1, 3, 1, 1);
+        myPane.add(readyButton, 0, 3, 1, 1);
+        myPane.add(fireButton, 1, 3, 1, 1);
+        myPane.add(whomStep, 2, 3, 1, 1);
         myPane.add(commonChat, 0, 11, 2, 1);
         myPane.add(sendingMessage, 0, 12, 2, 1);
         myPane.add(bsendMessage, 0, 13, 1, 1);
@@ -223,6 +224,17 @@ public class Gui extends Application {
             }
         });
 
+        readyButton.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if(engine.isAllShipInstall()){
+                    engine.getStatus().setReady(true);
+                    readyButton.setDisable(true);
+                    readyButton.setText("READY!");
+                }
+            }
+        });
+
         one.setOnMouseClicked(new EventHandler<Event>() {
 
             @Override
@@ -272,10 +284,10 @@ public class Gui extends Application {
     }
 
     private void statusLabelOfStep() {
-        if(engine.getStatus().isFollowStep()){
+        if (engine.getStatus().isFollowStep()) {
             whomStep.setText("You step!");
             whomStep.setTextFill(Color.GREEN);
-        }else{
+        } else {
             whomStep.setText("Enemy step!");
             whomStep.setTextFill(Color.RED);
         }

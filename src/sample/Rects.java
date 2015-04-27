@@ -4,24 +4,22 @@ import javafx.scene.paint.Color;
 
 public class Rects {
 
-    private Gui gui;
     private Engine engine;
     private MyRectangle[] rectMY = new MyRectangle[100];
     private EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
 
-    public Rects(Engine engine, Gui gui) {
-        this.gui = gui;
+    public Rects(Engine engine) {
         this.engine = engine;
     }
 
     private void makeOneIterationRectMY(int i) {
-        rectMY[i] = new MyRectangle(gui.getSettings(),
+        rectMY[i] = new MyRectangle(engine.getGui().getSettings(),
                 engine, 15, 15, i);
         rectMY[i].setFill(Color.GREEN);
         int numLine = (int) (10 - (10 - i * 0.1));
         rectMY[i].setXinMyRect(i - numLine * 10);
         rectMY[i].setYinMyRect(numLine);
-        gui.addMySeaField(rectMY[i], (i - numLine * 10), numLine);
+        engine.getGui().addMySeaField(rectMY[i], (i - numLine * 10), numLine);
     }
 
     private void makeOneIterationRectENEMY(int i) {
@@ -30,7 +28,7 @@ public class Rects {
         int numLine = (int) (10 - (10 - i * 0.1));
         rectENEMY[i].setXEnemyRect(i - numLine * 10);
         rectENEMY[i].setYEnemyRect(numLine);
-        gui.addEnemySeaField(rectENEMY[i], (i - numLine * 10), numLine);
+        engine.getGui().addEnemySeaField(rectENEMY[i], (i - numLine * 10), numLine);
     }
 
     public void makeEnemyAndMyField() {

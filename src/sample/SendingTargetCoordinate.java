@@ -41,7 +41,7 @@ public class SendingTargetCoordinate extends Task {
     private void sendStrikeCoordinateTo(String who, OutputStream outputStream) {
         DataOutputStream outClient = new DataOutputStream(outputStream);
         System.out.println("isFollowStep " + engine.getStatus().isFollowStep());
-        if (engine.getStatus().isFollowStep() && engine.getStatus().checkAndInstallStart()) {
+        if (engine.getStatus().isFollowStep() && engine.getStatus().isReady()) {
             sendStrikeCoordinate(outClient, who);
         }
     }

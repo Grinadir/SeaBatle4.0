@@ -3,19 +3,7 @@ package sample;
 public class Status {
 
     private boolean followStep = true;
-    private boolean startGame = false;
-    private Engine engine;
-
-    public Status(Engine engine) {
-        this.engine = engine;
-    }
-
-    public boolean checkAndInstallStart() {
-        if (engine.isAllShipInstall()) {
-            startGame = true;
-        }
-        return startGame;
-    }
+    private boolean ready = false;
 
     public boolean isFollowStep() {
         return followStep;
@@ -25,5 +13,12 @@ public class Status {
         this.followStep = followStep;
     }
 
+    public boolean isReady(){
+        return ready;
+    }
+
+    public void setReady(boolean ready){
+        this.ready=ready;
+    }
 
 }
