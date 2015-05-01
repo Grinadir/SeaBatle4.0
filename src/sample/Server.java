@@ -46,6 +46,7 @@ public class Server {
     public OutputStream getOutputServerStream() {
         return outputServerStream;
     }
+
     //It,s remain while
     public String getStatusServerSocket() {
         if (serverSocket != null) {

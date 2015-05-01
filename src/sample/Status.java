@@ -1,7 +1,6 @@
 package sample;
 
 public class Status {
-
     private boolean followStep = true;
     private boolean ready = false;
 
@@ -13,12 +12,12 @@ public class Status {
         this.followStep = followStep;
     }
 
-    public boolean isReady(){
+    public boolean isReady() {
         return ready;
     }
 
-    public void setReady(boolean ready){
-        this.ready=ready;
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
 }

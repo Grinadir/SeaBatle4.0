@@ -43,14 +43,14 @@ public class SendingResultOfFire {
                 e.printStackTrace();
             }
         } else if (rectangle.getFill() == Color.BLACK) {
-            int index1 = rectangle.getPrivateShip().getX1() +
-                    (10 * rectangle.getPrivateShip().getY1());
-            int index2 = rectangle.getPrivateShip().getX2() +
-                    (10 * rectangle.getPrivateShip().getY2());
-            int index3 = rectangle.getPrivateShip().getX3() +
-                    (10 * rectangle.getPrivateShip().getY3());
-            int index4 = rectangle.getPrivateShip().getX4() +
-                    (10 * rectangle.getPrivateShip().getY4());
+            int index1 = rectangle.getShip().getX1() +
+                    (10 * rectangle.getShip().getY1());
+            int index2 = rectangle.getShip().getX2() +
+                    (10 * rectangle.getShip().getY2());
+            int index3 = rectangle.getShip().getX3() +
+                    (10 * rectangle.getShip().getY3());
+            int index4 = rectangle.getShip().getX4() +
+                    (10 * rectangle.getShip().getY4());
             try {
                 String reportResultOfAttack = String.format("!result attacked %s field (%s) attacked coordinates: "
                                 + "($%d%%%d*DESTROY;%d&%d@%d#%d~",

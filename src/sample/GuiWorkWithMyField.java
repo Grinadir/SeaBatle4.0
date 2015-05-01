@@ -14,28 +14,28 @@ public class GuiWorkWithMyField {
 
     public void main(int x, int y) {
         if (rects.getMyRect(x, y).getFill() == Color.BLUE) {
-            rects.getMyRect(x, y).getPrivateShip().impairment();
-            if (rects.getMyRect(x, y).getPrivateShip().isValidShip()) {
+            rects.getMyRect(x, y).getShip().impairment();
+            if (rects.getMyRect(x, y).getShip().isValidShip()) {
                 rects.getMyRect(x, y).setFill(Color.ORANGE);
-            } else if (!(rects.getMyRect(x, y).getPrivateShip().isValidShip())) {
+            } else if (!(rects.getMyRect(x, y).getShip().isValidShip())) {
                 rects.getMyRect(x, y).setFill(Color.BLACK);
-                int lX = rects.getMyRect(x, y).getPrivateShip().getX1();
-                int lY = rects.getMyRect(x, y).getPrivateShip().getY1();
+                int lX = rects.getMyRect(x, y).getShip().getX1();
+                int lY = rects.getMyRect(x, y).getShip().getY1();
                 if (lX + lY <= 18) {
                     rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }
-                lX = rects.getMyRect(x, y).getPrivateShip().getX2();
-                lY = rects.getMyRect(x, y).getPrivateShip().getY2();
+                lX = rects.getMyRect(x, y).getShip().getX2();
+                lY = rects.getMyRect(x, y).getShip().getY2();
                 if (lX + lY <= 18) {
                     rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }
-                lX = rects.getMyRect(x, y).getPrivateShip().getX3();
-                lY = rects.getMyRect(x, y).getPrivateShip().getY3();
+                lX = rects.getMyRect(x, y).getShip().getX3();
+                lY = rects.getMyRect(x, y).getShip().getY3();
                 if (lX + lY <= 18) {
                     rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }
-                lX = rects.getMyRect(x, y).getPrivateShip().getX4();
-                lY = rects.getMyRect(x, y).getPrivateShip().getY4();
+                lX = rects.getMyRect(x, y).getShip().getX4();
+                lY = rects.getMyRect(x, y).getShip().getY4();
                 if (lX + lY <= 18) {
                     rects.getMyRect(lX, lY).setFill(Color.BLACK);
                 }

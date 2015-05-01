@@ -31,8 +31,6 @@ public class Gui extends Application {
     private Button fireButton = new Button("Fire");
     private Button readyButton = new Button("Ready?");
     private ToggleGroup group = new ToggleGroup();
-    private RadioButton ranking = new RadioButton("Ranking");
-    private RadioButton no = new RadioButton("NO");
     private ToggleGroup ships = new ToggleGroup();
     private RadioButton four = new RadioButton("Four 1 pcs.");
     private RadioButton three = new RadioButton("Three 2 pcs.");
@@ -60,9 +58,6 @@ public class Gui extends Application {
         commonChat.setWrapText(true);
         commonChat.clear();
 
-        ranking.setToggleGroup(group);
-        no.setToggleGroup(group);
-        ranking.setSelected(true);
         four.setToggleGroup(ships);
         three.setToggleGroup(ships);
         two.setToggleGroup(ships);
@@ -94,8 +89,6 @@ public class Gui extends Application {
 
         myPane.add(mySeaField, 0, 0, 1, 1);
         myPane.add(enemySeaField, 1, 0, 1, 1);
-        myPane.add(ranking, 0, 1, 1, 1);
-        myPane.add(no, 1, 1, 1, 1);
         myPane.add(shipType, 0, 2, 2, 1);
         myPane.add(readyButton, 0, 3, 1, 1);
         myPane.add(fireButton, 1, 3, 1, 1);
@@ -104,25 +97,6 @@ public class Gui extends Application {
         myPane.add(sendingMessage, 0, 12, 2, 1);
         myPane.add(bsendMessage, 0, 13, 1, 1);
         myPane.add(bStart, 0, 14, 5, 1);
-
-        ranking.setOnMouseClicked(new EventHandler<Event>() {
-
-            @Override
-            public void handle(Event event) {
-                if (ranking.isSelected()) {
-                    four.setDisable(false);
-                    three.setDisable(false);
-                    two.setDisable(false);
-                    one.setDisable(false);
-                } else if (!ranking.isSelected()) {
-                    four.setDisable(true);
-                    three.setDisable(true);
-                    two.setDisable(true);
-                    one.setDisable(true);
-                }
-
-            }
-        });
 
         bStart.setOnMouseClicked(new EventHandler<Event>() {
 
@@ -227,7 +201,7 @@ public class Gui extends Application {
         readyButton.setOnMouseClicked(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                if(engine.isAllShipInstall()){
+                if (engine.isAllShipInstall()) {
                     engine.getStatus().setReady(true);
                     readyButton.setDisable(true);
                     readyButton.setText("READY!");
@@ -315,15 +289,6 @@ public class Gui extends Application {
 
     public Settings getSettings() {
         return new Settings() {
-            @Override
-            public boolean isRanking() {
-                return ranking.isSelected();
-            }
-
-            @Override
-            public boolean isNo() {
-                return no.isSelected();
-            }
 
             @Override
             public boolean isOne() {

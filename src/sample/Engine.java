@@ -9,10 +9,10 @@ public class Engine {
     private Rects rects;
     private Gui gui;
 
-    private Ship[] shipSingle = new Ship[5];
-    private Ship[] shipDouble = new Ship[4];
-    private Ship[] shipTriple = new Ship[3];
-    private Ship shipQuadruple = new Ship(4);
+    private InterfaceShip[] shipSingle = new ShipSingle[5];
+    private InterfaceShip[] shipDouble = new ShipDouble[4];
+    private InterfaceShip[] shipTriple = new ShipTriple[3];
+    private InterfaceShip shipQuadruple = new ShipQuadruple(this);
 
     private int count2 = 0;
     private int count3 = 0;
@@ -36,24 +36,24 @@ public class Engine {
     private int targetIndex;
 
     public Engine(Gui gui) {
-        this.gui=gui;
+        this.gui = gui;
         rects = new Rects(this);
         status = new Status();
     }
 
-    public Ship[] getShipSingle() {
+    public InterfaceShip[] getShipSingle() {
         return shipSingle;
     }
 
-    public Ship[] getShipDouble() {
+    public InterfaceShip[] getShipDouble() {
         return shipDouble;
     }
 
-    public Ship[] getShipTriple() {
+    public InterfaceShip[] getShipTriple() {
         return shipTriple;
     }
 
-    public Ship getShipQuadruple() {
+    public InterfaceShip getShipQuadruple() {
         return shipQuadruple;
     }
 
@@ -219,7 +219,7 @@ public class Engine {
         return status;
     }
 
-    public Gui getGui(){
+    public Gui getGui() {
         return gui;
     }
 }

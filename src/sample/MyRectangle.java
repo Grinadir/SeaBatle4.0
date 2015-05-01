@@ -11,8 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /*
- * Необходим для создания единичного квадратика
- * со своими параметрами
+ * Need to create single rectangle
+ * with its own parameters
  */
 
 public class MyRectangle extends Rectangle {
@@ -20,7 +20,7 @@ public class MyRectangle extends Rectangle {
     private int x;
     private int y;
     private int veto = 0;
-    private Ship privateShip;
+    private InterfaceShip ship;
     private Engine engine;
     private final Settings settings;
     private FunctionsOfMarkedByDifferentColor func;
@@ -36,17 +36,7 @@ public class MyRectangle extends Rectangle {
 
             @Override
             public void handle(Event event) {
-
-                if (settings.isNo()) {
-                    if (getFill() == Color.RED) {
-                        setFill(Color.GREEN);
-                    } else {
-                        setFill(Color.RED);
-                    }
-                }
-
-                if (settings.isRanking()
-                        && settings.isOne()
+                if (settings.isOne()
                         && engine.getOneAmount() == 0
                         && (getFill() != Color.YELLOW && getFill() != Color.GREEN)) {
                     if (getFill() == Color.BLUE) {
@@ -54,93 +44,71 @@ public class MyRectangle extends Rectangle {
                         engine.increaseAmountByOne("one");
                         func.marketGreen(x, y);
                     }
-// -1-
-
                 } else if (isSelectedSingleShip()) {
                     if (engine.getOneAmount() <= 4 && engine.getOneAmount() >= 1) {
                         makeSingleShip();
                     }
-                }
-
-// -2-
-                else if (isSelectedDoubleShip()) {
+                } else if (isSelectedDoubleShip()) {
                     makeDoubleShipForThree();
-                }
-// -3-
-                else if (isSelectedTripleShip()) {
+                } else if (isSelectedTripleShip()) {
                     makeTripleShipForBoth();
-                }
-
-// -4-
-                else if (isSelectedQuadrupleShip()) {
+                } else if (isSelectedQuadrupleShip()) {
                     makeQuadrupleShip();
                 }
             }
         });
-        // Слушатель на кнопку старт
     }
 
 
-    //Extract функции выборов кораблей
+    //Extract-function to choose a type of ship
     private boolean isSelectedSingleShip() {
-        return settings.isRanking() && settings.isOne()
+        return settings.isOne()
                 && engine.getOneAmount() != 0
                 && (getFill() != Color.YELLOW);
     }
 
     private boolean isSelectedDoubleShip() {
-        return settings.isRanking() && settings.isTwo()
+        return settings.isTwo()
                 && (getFill() != Color.YELLOW)
                 && engine.getTwoAmount() != 0;
     }
 
     private boolean isSelectedTripleShip() {
-        return settings.isRanking() && settings.isThree()
+        return settings.isThree()
                 && (getFill() != Color.YELLOW)
                 && engine.getThreeAmount() != 0;
     }
 
     private boolean isSelectedQuadrupleShip() {
-        return settings.isRanking() && settings.isFour()
+        return settings.isFour()
                 && (getFill() != Color.YELLOW)
                 && engine.getFourAmount() != 0;
     }
 
-    //Extract функций создания кораблей
+    //Extract-function for foundation ship
     private void makeSingleShip() {
-        engine.getShipSingle()[engine.getOneAmount()] = new Ship(1);
-        privateShip = engine.getShipSingle()[engine.getOneAmount()];
-        if (getFill() == Color.GREEN) {
-            privateShip.setX1(x);
-            privateShip.setY1(y);
+        engine.getShipSingle()[engine.getOneAmount()] = new ShipSingle(engine);
+        ship = engine.getShipSingle()[engine.getOneAmount()];
+
+        if (getFill() == Color.GREEN && engine.getShipSingle()[engine.getOneAmount()].make(x, y)) {
             setFill(Color.BLUE);
             func.marketYellow(x, y);
-            engine.decreaseAmountByOne("one");
         } else {
+            engine.getShipSingle()[engine.getOneAmount()].clean();
             func.marketGreen(x, y);
             setFill(Color.GREEN);
-            privateShip = null;
-            engine.increaseAmountByOne("one");
+            ship = null;
         }
     }
 
     private void makeDoubleShipForThree() {
         if (engine.getCount2() == 0) {
-            engine.getShipDouble()[engine.getTwoAmount()] = new Ship(2);
-            privateShip = engine.getShipDouble()[engine.getTwoAmount()];
-            privateShip.setX1(x);
-            privateShip.setY1(y);
-            engine.setSaveX(x);
-            engine.setSaveY(y);
-            setFill(Color.BLUE);
-            engine.setCount2(engine.getCount2() + 1);
-        } else if ((engine.getSaveX() == x || engine.getSaveY() == y)
-                && engine.getCount2() != 0
-                && (engine.getSaveX() == x + 1 || engine.getSaveY() == y + 1
-                || engine.getSaveX() == x - 1 || engine.getSaveY() == y - 1)) {
-            privateShip = engine.getShipDouble()[engine.getTwoAmount()];
-            privateShip.setX2(x);
-            privateShip.setY2(y);
+            engine.getShipDouble()[engine.getTwoAmount()] = new ShipDouble(engine);
+            ship = engine.getShipDouble()[engine.getTwoAmount()];
+            if (engine.getShipDouble()[engine.getTwoAmount()].make(x, y)) {
+                setFill(Color.BLUE);
+            }
+        } else if (engine.getCount2() == 1 && engine.getShipDouble()[engine.getTwoAmount()].make(x, y)) {
             setFill(Color.BLUE);
             func.marketYellow(x, y);
             if (engine.getSaveX() == x) {
@@ -150,133 +118,50 @@ public class MyRectangle extends Rectangle {
                 func.marketYellow(x - 1, y);
                 func.marketYellow(x + 1, y);
             }
-            engine.setCount2(0);
-            engine.decreaseAmountByOne("two");
         }
     }
 
     private void makeTripleShipForBoth() {
-        if (engine.getCount3() == 0) {
-            engine.getShipTriple()[engine.getThreeAmount()] = new Ship(3);
-            privateShip = engine.getShipTriple()[engine.getThreeAmount()];
-            privateShip.setX1(x);
-            privateShip.setY1(y);
-            engine.setSaveX(x);
-            engine.setSaveY(y);
-            setFill(Color.BLUE);
-            engine.setCount3(engine.getCount3() + 1);
-        } else if ((engine.getSaveX() == x || engine.getSaveY() == y)
-                && engine.getCount3() == 1
-                && (engine.getSaveX() == x + 1 || engine.getSaveY() == y + 1
-                || engine.getSaveX() == x - 1 || engine.getSaveY() == y - 1)
-                && engine.getThreeAmount() != 0) {
-            privateShip = engine.getShipTriple()[engine.getThreeAmount()];
-            privateShip.setX2(x);
-            privateShip.setY2(y);
-            setFill(Color.BLUE);
-            engine.setSaveX1(x);
-            engine.setSaveY1(y);
-            engine.setCount3(engine.getCount3() + 1);
-        } else if ((engine.getSaveX() == x || engine.getSaveY() == y) && engine.getCount3() == 2
-                && engine.getThreeAmount() != 0) {
-            if (engine.getSaveX1() == x
-                    && (engine.getSaveY1() == y + 1 || engine.getSaveY1() == y - 1)) {
-                privateShip = engine.getShipTriple()[engine.getThreeAmount()];
+
+        if (engine.getCount3() == 0 && engine.getThreeAmount() != -1) {
+            engine.getShipTriple()[engine.getThreeAmount()] = new ShipTriple(engine);
+            ship = engine.getShipTriple()[engine.getThreeAmount()];
+            if (ship.make(x, y)) {
                 setFill(Color.BLUE);
-                privateShip.setX3(x);
-                privateShip.setY3(y);
+            }
+        } else if (engine.getCount3() == 1 && engine.getThreeAmount() != -1) {
+            if (engine.getShipTriple()[engine.getThreeAmount()].make(x, y)) {
+                setFill(Color.BLUE);
+            }
+        } else if (engine.getCount3() == 2 && engine.getThreeAmount() != -1) {
+            if (engine.getShipTriple()[engine.getThreeAmount()].make(x, y)) {
+                setFill(Color.BLUE);
                 func.marketYellow(engine.getSaveX(), engine.getSaveY());
                 func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
                 func.marketYellow(x, y);
-                engine.setCount3(0);
-                engine.decreaseAmountByOne("three");
-            } else if (engine.getSaveY() == y
-                    && (engine.getSaveX1() == x + 1 || engine.getSaveX1() == x - 1)
-                    && engine.getThreeAmount() != 0) {
-                privateShip = engine.getShipTriple()[engine.getThreeAmount()];
-                setFill(Color.BLUE);
-                privateShip.setX3(x);
-                privateShip.setY3(y);
-                func.marketYellow(engine.getSaveX(), engine.getSaveY());
-                func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
-                func.marketYellow(x, y);
-                engine.setCount3(0);
-                engine.decreaseAmountByOne("three");
             }
         }
     }
 
     private void makeQuadrupleShip() {
-        privateShip = engine.getShipQuadruple();
-        if (engine.getCount4() == 0) {
-            privateShip.setX1(x);
-            privateShip.setY1(y);
-            engine.setSaveX(x);
-            engine.setSaveY(y);
+        ship = engine.getShipQuadruple();
+        if (engine.getCount4() == 0 && ship.make(x, y)) {
             setFill(Color.BLUE);
-            engine.setCount4(engine.getCount4() + 1);
-        } else if ((engine.getSaveX() == x || engine.getSaveY() == y)
-                && engine.getCount4() == 1
-                && (engine.getSaveX() == x + 1 || engine.getSaveY() == y + 1
-                || engine.getSaveX() == x - 1 || engine.getSaveY() == y - 1)
-                && engine.getFourAmount() != 0) {
+        } else if (engine.getCount4() == 1 && ship.make(x, y)) {
             setFill(Color.BLUE);
-            privateShip.setX2(x);
-            privateShip.setY2(y);
-            engine.setSaveX1(x);
-            engine.setSaveY1(y);
-            engine.setCount4(engine.getCount4() + 1);
-        } else if ((engine.getSaveX() == x || engine.getSaveY() == y) && engine.getFourAmount() != 0
-                && engine.getCount4() == 2) {
-            if (engine.getSaveX1() == x
-                    && (engine.getSaveY1() == y + 1 || engine.getSaveY1() == y - 1)) {
-                setFill(Color.BLUE);
-                privateShip.setX3(x);
-                privateShip.setY3(y);
-                engine.setSaveX2(x);
-                engine.setSaveY2(y);
-                engine.setCount4(engine.getCount4() + 1);
-            } else if (engine.getSaveY() == y
-                    && (engine.getSaveX1() == x + 1 || engine.getSaveX1() == x - 1)
-                    && engine.getFourAmount() != 0) {
-                setFill(Color.BLUE);
-                privateShip.setX3(x);
-                privateShip.setY3(y);
-                engine.setSaveX2(x);
-                engine.setSaveY2(y);
-                engine.setCount4(engine.getCount4() + 1);
-            }
-        } else if ((engine.getSaveX() == x || engine.getSaveY() == y) && engine.getCount4() == 3
-                && engine.getFourAmount() != 0) {
-            if (engine.getSaveX2() == x
-                    && (engine.getSaveY2() == y + 1 || engine.getSaveY2() == y - 1)) {
-                setFill(Color.BLUE);
-                privateShip.setX4(x);
-                privateShip.setY4(y);
-                func.marketYellow(engine.getSaveX(), engine.getSaveY());
-                func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
-                func.marketYellow(engine.getSaveX2(), engine.getSaveY2());
-                func.marketYellow(x, y);
-                engine.setCount4(0);
-                engine.decreaseAmountByOne("four");
-            } else if (engine.getSaveY2() == y
-                    && (engine.getSaveX2() == x + 1 || engine.getSaveX2() == x - 1)
-                    && engine.getThreeAmount() != 0) {
-                setFill(Color.BLUE);
-                privateShip.setX4(x);
-                privateShip.setY4(y);
-                func.marketYellow(engine.getSaveX(), engine.getSaveY());
-                func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
-                func.marketYellow(engine.getSaveX2(), engine.getSaveY2());
-                func.marketYellow(x, y);
-                engine.setCount4(0);
-                engine.decreaseAmountByOne("four");
-            }
+        } else if (engine.getCount4() == 2 && ship.make(x, y)) {
+            setFill(Color.BLUE);
+        } else if (engine.getCount4() == 3 && ship.make(x, y)) {
+            setFill(Color.BLUE);
+            func.marketYellow(engine.getSaveX(), engine.getSaveY());
+            func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
+            func.marketYellow(engine.getSaveX2(), engine.getSaveY2());
+            func.marketYellow(x, y);
         }
     }
 
-    public Ship getPrivateShip() {
-        return privateShip;
+    public InterfaceShip getShip() {
+        return ship;
     }
 
     public void setXinMyRect(int x) {
