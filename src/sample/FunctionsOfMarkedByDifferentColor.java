@@ -32,13 +32,17 @@ public class FunctionsOfMarkedByDifferentColor {
     public void marketYellow(int x, int y) {
         if (!(rects.getMyRect(x, y).getFill() == Color.YELLOW)) {
             for (int xCircle = x - 1; xCircle <= x + 1; xCircle++) {
-                if (0 <= xCircle && xCircle <= 9) {
-                    for (int yC = y - 1; yC <= y + 1; yC++) {
-                        if (0 <= yC && yC <= 9) {
-                            setColorYellowRect(xCircle, yC);
-                            rects.getMyRect(xCircle, yC).setVeto(rects.getMyRect(xCircle, yC).getVeto() + 1);
-                        }
-                    }
+                innerCircleForMarkYellow(y, xCircle);
+            }
+        }
+    }
+
+    private void innerCircleForMarkYellow(int y, int xCircle) {
+        if (0 <= xCircle && xCircle <= 9) {
+            for (int yC = y - 1; yC <= y + 1; yC++) {
+                if (0 <= yC && yC <= 9) {
+                    setColorYellowRect(xCircle, yC);
+                    rects.getMyRect(xCircle, yC).setVeto(rects.getMyRect(xCircle, yC).getVeto() + 1);
                 }
             }
         }
@@ -46,11 +50,15 @@ public class FunctionsOfMarkedByDifferentColor {
 
     public void marketGreen(int x, int y) {
         for (int xCircle = x - 1; xCircle <= x + 1; xCircle++) {
-            if (0 <= xCircle && xCircle <= 9) {
-                for (int yCircle = y - 1; yCircle <= y + 1; yCircle++) {
-                    if (0 <= yCircle && yCircle <= 9) {
-                        setVeto(xCircle, yCircle);
-                    }
+            innerCircleForVeto(y, xCircle);
+        }
+    }
+
+    private void innerCircleForVeto(int y, int xCircle) {
+        if (0 <= xCircle && xCircle <= 9) {
+            for (int yCircle = y - 1; yCircle <= y + 1; yCircle++) {
+                if (0 <= yCircle && yCircle <= 9) {
+                    setVeto(xCircle, yCircle);
                 }
             }
         }

@@ -4,7 +4,6 @@ package sample;
  * Created by User on 22.02.2015.
  */
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,15 +37,12 @@ public class Server {
     public boolean isClosed() {
         return (serverSocket == null || serverSocket.isClosed());
     }
-
     public InputStream getInputServerStream() {
         return inputServerStream;
     }
-
     public OutputStream getOutputServerStream() {
         return outputServerStream;
     }
-
     //It,s remain while
     public String getStatusServerSocket() {
         if (serverSocket != null) {
