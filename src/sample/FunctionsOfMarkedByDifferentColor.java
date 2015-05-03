@@ -30,164 +30,29 @@ public class FunctionsOfMarkedByDifferentColor {
     }
 
     public void marketYellow(int x, int y) {
-        int i = y * 10 + x;
         if (!(rects.getMyRect(x, y).getFill() == Color.YELLOW)) {
-
-            try {
-                if (x == 0 && y == 0) {
-                    setColorYellowRect(x + 1, y);
-                    setColorYellowRect(x, y + 1);
-                    setColorYellowRect(x + 1, y + 1);
-                    rects.getMyRect(x + 1, y).setVeto(rects.getMyRect(x + 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y + 1).setVeto(rects.getMyRect(x, y + 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y + 1).setVeto(rects.getMyRect(x + 1, y + 1).getVeto() + 11);
-                } else if (x == 0 && y == 9) {
-                    setColorYellowRect(x + 1, y);
-                    setColorYellowRect(x, y - 1);
-                    setColorYellowRect(x + 1, y - 1);
-                    rects.getMyRect(x + 1, y).setVeto(rects.getMyRect(x + 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y - 1).setVeto(rects.getMyRect(x, y - 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y - 1).setVeto(rects.getMyRect(x + 1, y - 1).getVeto() + 1);
-                } else if (x == 9 && y == 9) {
-                    setColorYellowRect(x - 1, y);
-                    setColorYellowRect(x, y - 1);
-                    setColorYellowRect(x - 1, y - 1);
-                    rects.getMyRect(x - 1, y).setVeto(rects.getMyRect(x - 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y - 1).setVeto(rects.getMyRect(x, y - 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y - 1).setVeto(rects.getMyRect(x - 1, y - 1).getVeto() + 1);
-                } else if (x == 9 && y == 0) {
-                    setColorYellowRect(x - 1, y);
-                    setColorYellowRect(x, y + 1);
-                    setColorYellowRect(x - 1, y + 1);
-                    rects.getMyRect(x - 1, y).setVeto(rects.getMyRect(x - 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y + 1).setVeto(rects.getMyRect(x, y + 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y + 1).setVeto(rects.getMyRect(x - 1, y + 1).getVeto() + 1);
-                } else if (x == 0) {
-                    setColorYellowRect(x + 1, y);
-                    setColorYellowRect(x, y + 1);
-                    setColorYellowRect(x, y - 1);
-                    setColorYellowRect(x + 1, y - 1);
-                    setColorYellowRect(x + 1, y + 1);
-                    rects.getMyRect(x + 1, y).setVeto(rects.getMyRect(x + 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y + 1).setVeto(rects.getMyRect(x, y + 1).getVeto() + 1);
-                    rects.getMyRect(x, y - 1).setVeto(rects.getMyRect(x, y - 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y - 1).setVeto(rects.getMyRect(x + 1, y - 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y + 1).setVeto(rects.getMyRect(x + 1, y + 1).getVeto() + 1);
-                } else if (x == 9) {
-                    setColorYellowRect(x - 1, y);
-                    setColorYellowRect(x, y + 1);
-                    setColorYellowRect(x, y - 1);
-                    setColorYellowRect(x - 1, y + 1);
-                    setColorYellowRect(x - 1, y - 1);
-                    rects.getMyRect(x - 1, y).setVeto(rects.getMyRect(x - 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y + 1).setVeto(rects.getMyRect(x, y + 1).getVeto() + 1);
-                    rects.getMyRect(x, y - 1).setVeto(rects.getMyRect(x, y - 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y + 1).setVeto(rects.getMyRect(x - 1, y + 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y - 1).setVeto(rects.getMyRect(x - 1, y - 1).getVeto() + 1);
-                } else if (y == 0) {
-                    setColorYellowRect(x - 1, y);
-                    setColorYellowRect(x + 1, y);
-                    setColorYellowRect(x, y + 1);
-                    setColorYellowRect(x - 1, y + 1);
-                    setColorYellowRect(x + 1, y + 1);
-                    rects.getMyRect(x - 1, y).setVeto(rects.getMyRect(x - 1, y).getVeto() + 1);
-                    rects.getMyRect(x + 1, y).setVeto(rects.getMyRect(x + 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y + 1).setVeto(rects.getMyRect(x, y + 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y + 1).setVeto(rects.getMyRect(x - 1, y + 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y + 1).setVeto(rects.getMyRect(x + 1, y + 1).getVeto() + 1);
-                } else if (y == 9) {
-                    setColorYellowRect(x - 1, y);
-                    setColorYellowRect(x + 1, y);
-                    setColorYellowRect(x, y - 1);
-                    setColorYellowRect(x + 1, y - 1);
-                    setColorYellowRect(x - 1, y - 1);
-                    rects.getMyRect(x - 1, y).setVeto(rects.getMyRect(x - 1, y).getVeto() + 1);
-                    rects.getMyRect(x + 1, y).setVeto(rects.getMyRect(x + 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y - 1).setVeto(rects.getMyRect(x, y - 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y - 1).setVeto(rects.getMyRect(x + 1, y - 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y - 1).setVeto(rects.getMyRect(x - 1, y - 1).getVeto() + 1);
-                } else {
-                    setColorYellowRect(x + 1, y);
-                    setColorYellowRect(x - 1, y);
-                    setColorYellowRect(x, y + 1);
-                    setColorYellowRect(x, y - 1);
-                    setColorYellowRect(x + 1, y + 1);
-                    setColorYellowRect(x - 1, y - 1);
-                    setColorYellowRect(x - 1, y + 1);
-                    setColorYellowRect(x + 1, y - 1);
-                    rects.getMyRect(x + 1, y).setVeto(rects.getMyRect(x + 1, y).getVeto() + 1);
-                    rects.getMyRect(x - 1, y).setVeto(rects.getMyRect(x - 1, y).getVeto() + 1);
-                    rects.getMyRect(x, y + 1).setVeto(rects.getMyRect(x, y + 1).getVeto() + 1);
-                    rects.getMyRect(x, y - 1).setVeto(rects.getMyRect(x, y - 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y + 1).setVeto(rects.getMyRect(x + 1, y + 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y - 1).setVeto(rects.getMyRect(x - 1, y - 1).getVeto() + 1);
-                    rects.getMyRect(x - 1, y + 1).setVeto(rects.getMyRect(x - 1, y + 1).getVeto() + 1);
-                    rects.getMyRect(x + 1, y - 1).setVeto(rects.getMyRect(x + 1, y - 1).getVeto() + 1);
+            for (int xCircle = x - 1; xCircle <= x + 1; xCircle++) {
+                if (0 <= xCircle && xCircle <= 9) {
+                    for (int yC = y - 1; yC <= y + 1; yC++) {
+                        if (0 <= yC && yC <= 9) {
+                            setColorYellowRect(xCircle, yC);
+                            rects.getMyRect(xCircle, yC).setVeto(rects.getMyRect(xCircle, yC).getVeto() + 1);
+                        }
+                    }
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                e.printStackTrace();
-
             }
         }
     }
 
-
     public void marketGreen(int x, int y) {
-        int i = y * 10 + x;
-        try {
-            if (x == 0 && y == 0) {
-                setVeto(x + 1, y);
-                setVeto(x, y + 1);
-                setVeto(x + 1, y + 1);
-            } else if (x == 0 && y == 9) {
-                setVeto(x + 1, y);
-                setVeto(x, y - 1);
-                setVeto(x - 1, y + 1);
-            } else if (x == 9 && y == 9) {
-                setVeto(x - 1, y);
-                setVeto(x, y - 1);
-                setVeto(x - 1, y - 1);
-            } else if (x == 9 && y == 0) {
-                setVeto(x - 1, y);
-                setVeto(x, y + 1);
-                setVeto(x - 1, y + 1);
-            } else if (x == 0) {
-                setVeto(x + 1, y);
-                setVeto(x, y + 1);
-                setVeto(x, y - 1);
-                setVeto(x + 1, y - 1);
-                setVeto(x + 1, y + 1);
-            } else if (x == 9) {
-                setVeto(x - 1, y);
-                setVeto(x, y + 1);
-                setVeto(x, y - 1);
-                setVeto(x - 1, y + 1);
-                setVeto(x - 1, y - 1);
-            } else if (y == 0) {
-                setVeto(x - 1, y);
-                setVeto(x + 1, y);
-                setVeto(x, y + 1);
-                setVeto(x - 1, y + 1);
-                setVeto(x + 1, y + 1);
-            } else if (y == 9) {
-                setVeto(x - 1, y);
-                setVeto(x + 1, y);
-                setVeto(x, y - 1);
-                setVeto(x + 1, y - 1);
-                setVeto(x - 1, y - 1);
-            } else {
-                setVeto(x + 1, y);
-                setVeto(x - 1, y);
-                setVeto(x, y + 1);
-                setVeto(x, y - 1);
-                setVeto(x + 1, y + 1);
-                setVeto(x - 1, y - 1);
-                setVeto(x - 1, y + 1);
-                setVeto(x + 1, y - 1);
+        for (int xCircle = x - 1; xCircle <= x + 1; xCircle++) {
+            if (0 <= xCircle && xCircle <= 9) {
+                for (int yCircle = y - 1; yCircle <= y + 1; yCircle++) {
+                    if (0 <= yCircle && yCircle <= 9) {
+                        setVeto(xCircle, yCircle);
+                    }
+                }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-
         }
     }
 

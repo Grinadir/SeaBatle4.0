@@ -7,6 +7,7 @@ public class GuiWorkWithIncomingMessage {
 
     private ClientServerConnector connector;
     private Engine engine;
+    private final int NON_INDEX=440;
 
     public GuiWorkWithIncomingMessage(Engine engine, final ClientServerConnector connector) {
         this.connector = connector;
@@ -29,10 +30,10 @@ public class GuiWorkWithIncomingMessage {
             }
             if (tempString.charAt(0) == '!') {
 
-                int index1 = 400;
-                int index2 = 440;
-                int index3 = 440;
-                int index4 = 440;
+                int index1 = NON_INDEX;
+                int index2 = NON_INDEX;
+                int index3 = NON_INDEX;
+                int index4 = NON_INDEX;
                 String result;
                 int dX = parse(tempString, '$', '%');
                 int dY = parse(tempString, '%', '*');
