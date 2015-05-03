@@ -105,18 +105,21 @@ public class MyRectangle extends Rectangle {
         if (engine.getCount2() == 0) {
             engine.getShipDouble()[engine.getTwoAmount()] = new ShipDouble(engine);
             ship = engine.getShipDouble()[engine.getTwoAmount()];
-            if (engine.getShipDouble()[engine.getTwoAmount()].make(x, y)) {
+            if (ship.make(x, y)) {
                 setFill(Color.BLUE);
             }
-        } else if (engine.getCount2() == 1 && engine.getShipDouble()[engine.getTwoAmount()].make(x, y)) {
-            setFill(Color.BLUE);
-            func.marketYellow(x, y);
-            if (engine.getSaveX() == x) {
-                func.marketYellow(x, y - 1);
-                func.marketYellow(x, y + 1);
-            } else if (engine.getSaveY() == y) {
-                func.marketYellow(x - 1, y);
-                func.marketYellow(x + 1, y);
+        } else if (engine.getCount2() == 1 && engine.getTwoAmount() != -1) {
+            ship = engine.getShipDouble()[engine.getTwoAmount()];
+            if (ship.make(x, y)) {
+                setFill(Color.BLUE);
+                func.marketYellow(x, y);
+                if (engine.getSaveX() == x) {
+                    func.marketYellow(x, y - 1);
+                    func.marketYellow(x, y + 1);
+                } else if (engine.getSaveY() == y) {
+                    func.marketYellow(x - 1, y);
+                    func.marketYellow(x + 1, y);
+                }
             }
         }
     }
@@ -130,11 +133,13 @@ public class MyRectangle extends Rectangle {
                 setFill(Color.BLUE);
             }
         } else if (engine.getCount3() == 1 && engine.getThreeAmount() != -1) {
-            if (engine.getShipTriple()[engine.getThreeAmount()].make(x, y)) {
+            ship = engine.getShipTriple()[engine.getThreeAmount()];
+            if (ship.make(x, y)) {
                 setFill(Color.BLUE);
             }
         } else if (engine.getCount3() == 2 && engine.getThreeAmount() != -1) {
-            if (engine.getShipTriple()[engine.getThreeAmount()].make(x, y)) {
+            ship = engine.getShipTriple()[engine.getThreeAmount()];
+            if (ship.make(x, y)) {
                 setFill(Color.BLUE);
                 func.marketYellow(engine.getSaveX(), engine.getSaveY());
                 func.marketYellow(engine.getSaveX1(), engine.getSaveY1());
