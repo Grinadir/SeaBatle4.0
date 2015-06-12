@@ -46,6 +46,8 @@ public class Gui extends Application {
     private GridPane enemySeaField = new GridPane();
     private GridPane shipType = new GridPane();
 
+
+
     public static void main(String[] args) throws Exception {
         launch(args);
     }
@@ -97,6 +99,8 @@ public class Gui extends Application {
         myPane.add(sendingMessage, 0, 12, 2, 1);
         myPane.add(bsendMessage, 0, 13, 1, 1);
         myPane.add(bStart, 0, 14, 5, 1);
+
+
 
         bStart.setOnMouseClicked(new EventHandler<Event>() {
 
@@ -311,6 +315,8 @@ public class Gui extends Application {
             }
         };
     }
+
+
 
 
 }

@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
 public class Client {
-
     private InputStream inputClientStream;
     private OutputStream outputClientStream;
     private InetAddress ip;

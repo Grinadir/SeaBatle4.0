@@ -8,6 +8,8 @@ public class Engine {
     private Status status;
     private Rects rects;
     private Gui gui;
+    private Map map;
+    private LogicMarked logicMarked;
 
     private InterfaceShip[] shipSingle = new ShipSingle[5];
     private InterfaceShip[] shipDouble = new ShipDouble[4];
@@ -37,7 +39,9 @@ public class Engine {
 
     public Engine(Gui gui) {
         this.gui = gui;
-        rects = new Rects(this);
+        this.map=new Map(this);
+        this.logicMarked=new LogicMarked(map);
+        rects = new Rects(this, map, logicMarked);
         status = new Status();
     }
 
@@ -221,5 +225,12 @@ public class Engine {
 
     public Gui getGui() {
         return gui;
+    }
+
+    public Map getMap(){
+        return map;
+    }
+    public LogicMarked getLogicMarked(){
+        return logicMarked;
     }
 }

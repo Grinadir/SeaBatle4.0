@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
  */
 public class FunctionsOfMarkedByDifferentColor {
 
-    Rects rects;
+    private Rects rects;
 
     public FunctionsOfMarkedByDifferentColor(Rects rects) {
         this.rects = rects;

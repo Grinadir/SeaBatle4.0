@@ -4,14 +4,11 @@ package sample;
  * Created by Selkov Alexsandr on 22.02.2015.
  */
 
-
 import javafx.concurrent.Task;
-
 import java.io.IOException;
 import java.net.SocketException;
 
 public class ClientServerConnector extends Task {
-
     private Server server;
     private Client client;
     private SystemOfIncomingMessage systemOfIncomingMessage;

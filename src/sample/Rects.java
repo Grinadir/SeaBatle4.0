@@ -2,14 +2,16 @@ package sample;
 
 import javafx.scene.paint.Color;
 
-public class Rects {
+public class Rects implements ObserverOfMap {
 
     private Engine engine;
     private MyRectangle[] rectMY = new MyRectangle[100];
     private EnemyRectangle[] rectENEMY = new EnemyRectangle[100];
 
-    public Rects(Engine engine) {
+    public Rects(Engine engine, ObservableMap map, ObservableMap logicMarked) {
         this.engine = engine;
+        map.registerObserver(this);
+        logicMarked.registerObserver(this);
     }
 
     private void makeOneIterationRectMY(int i) {
@@ -46,4 +48,17 @@ public class Rects {
         return rectENEMY[i];
     }
 
+    @Override
+    public void update(int x, int y, String fettle) {
+        if (fettle.equals("non")) {
+            rectMY[x + y * 10].setFill(Color.GREEN);
+        }
+
+        if (fettle.equals("nearship")) {
+            rectMY[x + y * 10].setFill(Color.YELLOW);
+        }
+        if (fettle.equals("ship")) {
+            rectMY[x + y * 10].setFill(Color.BLUE);
+        }
+    }
 }
